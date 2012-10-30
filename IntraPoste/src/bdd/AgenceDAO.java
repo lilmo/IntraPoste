@@ -18,7 +18,8 @@ public class AgenceDAO {
 			ResultSet result = select
 					.executeQuery("SELECT CODE_AGENCE, NOM_AGENCE FROM AGENCE");
 			while (result.next())
-				results.add(new Agence(result.getString("CODE_AGENCE"), result.getString("NOM_AGENCE")));
+				results.add(new Agence(result.getString("CODE_AGENCE"), result
+						.getString("NOM_AGENCE")));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -27,32 +28,48 @@ public class AgenceDAO {
 	}
 
 	public static Agence selectByCode(String codeAgence) {
-		
+
 		try {
 			Statement select = UtilitairesDAO.connect().createStatement();
 			ResultSet result = select
-					.executeQuery("SELECT CODE_AGENCE, NOM_AGENCE FROM AGENCE WHERE CODE_AGENCE = '" + codeAgence + "'");
+					.executeQuery("SELECT CODE_AGENCE, NOM_AGENCE FROM AGENCE WHERE CODE_AGENCE = '"
+							+ codeAgence + "'");
 			if (result.next())
-				return (new Agence(result.getString("CODE_AGENCE"), result.getString("NOM_AGENCE")));
+				return (new Agence(result.getString("CODE_AGENCE"),
+						result.getString("NOM_AGENCE")));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	public static ArrayList<Agence> selectByNom(String nomAgence) {
 		ArrayList<Agence> results = new ArrayList<>();
 		try {
 			Statement select = UtilitairesDAO.connect().createStatement();
 			ResultSet result = select
-					.executeQuery("SELECT CODE_AGENCE, NOM_AGENCE FROM AGENCE WHERE NOM_AGENCE = '" + nomAgence + "'");
+					.executeQuery("SELECT CODE_AGENCE, NOM_AGENCE FROM AGENCE WHERE NOM_AGENCE = '"
+							+ nomAgence + "'");
 			while (result.next())
-				results.add(new Agence(result.getString("CODE_AGENCE"), result.getString("NOM_AGENCE")));
+				results.add(new Agence(result.getString("CODE_AGENCE"), result
+						.getString("NOM_AGENCE")));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return results;
+	}
+
+	public static void insert(String codeAgence, String nomAgence) {
+
+		try {
+			Statement insert = UtilitairesDAO.connect().createStatement();
+			insert.executeQuery("INSERT INTO AGENCE VALUES ('" + codeAgence
+					+ "', '" + nomAgence + "')");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

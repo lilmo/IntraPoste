@@ -16,7 +16,6 @@ public class Agent {
 
 	public Agent(String codeAgent, TypeAgent typeAgent, String mail,
 			String nom, String prenom, String motDePasse) {
-		super();
 		this.codeAgent = codeAgent;
 		this.typeAgent = typeAgent;
 		this.mail = mail;
