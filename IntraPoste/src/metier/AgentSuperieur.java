@@ -8,7 +8,13 @@ package metier;
 
 
 public class AgentSuperieur extends Agent {
-   /** @param codeAgence 
+	public AgentSuperieur(String codeAgent, TypeAgent typeAgent, String mail,
+			String nom, String prenom, String motDePasse) {
+		super(codeAgent, typeAgent, mail, nom, prenom, motDePasse);
+		// TODO Auto-generated constructor stub
+	}
+
+/** @param codeAgence 
     * @param typeErreur 
     * @param statusErreur 
     * @param dateDebut 
