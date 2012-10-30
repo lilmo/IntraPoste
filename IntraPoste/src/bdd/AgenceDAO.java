@@ -61,15 +61,34 @@ public class AgenceDAO {
 		return results;
 	}
 
-	public static void insert(String codeAgence, String nomAgence) {
+	public static boolean insert(String codeAgence, String nomAgence) {
 
 		try {
-			Statement insert = UtilitairesDAO.connect().createStatement();
-			insert.executeQuery("INSERT INTO AGENCE VALUES ('" + codeAgence
-					+ "', '" + nomAgence + "')");
+			if (selectByCode(codeAgence) == null) {
+				Statement insert = UtilitairesDAO.connect().createStatement();
+				insert.executeQuery("INSERT INTO AGENCE VALUES ('" + codeAgence
+						+ "', '" + nomAgence + "')");
+				return true;
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
+	}
+	
+	public static boolean update(String codeAgence, String nomAgence) {
+
+		try {
+			if (selectByCode(codeAgence) != null) {
+				Statement insert = UtilitairesDAO.connect().createStatement();
+				insert.executeQuery("UPDATE AGENCE SET NOM_AGENCE = '" + nomAgence + "' WHERE CODE_AGENCE = '" + codeAgence + "'");
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

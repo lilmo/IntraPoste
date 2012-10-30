@@ -30,6 +30,7 @@ public class Main {
 		// }
 //		ArrayList<Agence> agences = AgenceDAO.selectByNom("Marseille");
 		AgenceDAO.insert("AB", "CD");
+		AgenceDAO.update("AB", "CDEF");
 		ArrayList<Agence> agences = AgenceDAO.selectAll();
 		for (Agence a : agences) {
 			System.out.println(a.getCodeAgence());
