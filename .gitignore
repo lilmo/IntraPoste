@@ -1,3 +1,9 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
 .metadata
 Diagrammes/Espace de travail.sws
 IntraPoste.rar
