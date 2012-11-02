@@ -7,10 +7,28 @@
 package metier;
 
 public class AgentGuichet extends Agent {
+
+	private Agence agence;
+
 	public AgentGuichet(String codeAgent, TypeAgent typeAgent, String mail,
-			String nom, String prenom, String motDePasse) {
+			String nom, String prenom, String motDePasse, Agence agence) {
 		super(codeAgent, typeAgent, mail, nom, prenom, motDePasse);
-		// TODO Auto-generated constructor stub
+		this.agence = agence;
+	}
+
+	/**
+	 * @return the agence
+	 */
+	public Agence getAgence() {
+		return agence;
+	}
+
+	/**
+	 * @param agence
+	 *            the agence to set
+	 */
+	public void setAgence(Agence agence) {
+		this.agence = agence;
 	}
 
 	/**
