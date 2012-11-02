@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?PowerDesigner AppLocale="UTF16" ID="{C91F9C32-FC10-453D-A07E-4617CA76B2BB}" Label="" LastModificationDate="1351613324" Name="Diagramme de classes_2" Objects="89" Symbols="16" Target="Java" TargetLink="Reference" Type="{18112060-1A4B-11D1-83D9-444553540000}" signature="CLD_OBJECT_MODEL" version="15.1.0.2850"?>
+<?PowerDesigner AppLocale="UTF16" ID="{C91F9C32-FC10-453D-A07E-4617CA76B2BB}" Label="" LastModificationDate="1351883158" Name="Diagramme de classes_2" Objects="99" Symbols="15" Target="Java" TargetLink="Reference" Type="{18112060-1A4B-11D1-83D9-444553540000}" signature="CLD_OBJECT_MODEL" version="15.1.0.2850"?>
 <!-- Veuillez ne pas modifier ce fichier -->
 
 <Model xmlns:a="attribute" xmlns:c="collection" xmlns:o="object">
@@ -2947,9 +2947,9 @@ Shadow=0</a:DisplayPreferences>
 <c:Symbols>
 <o:GeneralizationSymbol Id="o8">
 <a:CreationDate>1351538141</a:CreationDate>
-<a:ModificationDate>1351539860</a:ModificationDate>
-<a:Rect>((-32254,12040), (-31254,28040))</a:Rect>
-<a:ListOfPoints>((-31754,12040),(-31754,28040))</a:ListOfPoints>
+<a:ModificationDate>1351883158</a:ModificationDate>
+<a:Rect>((-31752,26540), (32248,27540))</a:Rect>
+<a:ListOfPoints>((-31752,27040),(32248,27040))</a:ListOfPoints>
 <a:CornerStyle>2</a:CornerStyle>
 <a:ArrowStyle>7</a:ArrowStyle>
 <a:LineColor>16744576</a:LineColor>
@@ -2967,9 +2967,9 @@ Shadow=0</a:DisplayPreferences>
 </o:GeneralizationSymbol>
 <o:GeneralizationSymbol Id="o12">
 <a:CreationDate>1351538143</a:CreationDate>
-<a:ModificationDate>1351539860</a:ModificationDate>
-<a:Rect>((-31754,27540), (32246,28540))</a:Rect>
-<a:ListOfPoints>((32246,28040),(-31754,28040))</a:ListOfPoints>
+<a:ModificationDate>1351883158</a:ModificationDate>
+<a:Rect>((31748,11040), (32748,27040))</a:Rect>
+<a:ListOfPoints>((32248,11040),(32248,27040))</a:ListOfPoints>
 <a:CornerStyle>2</a:CornerStyle>
 <a:ArrowStyle>7</a:ArrowStyle>
 <a:LineColor>16744576</a:LineColor>
@@ -2987,9 +2987,9 @@ Shadow=0</a:DisplayPreferences>
 </o:GeneralizationSymbol>
 <o:GeneralizationSymbol Id="o15">
 <a:CreationDate>1351538146</a:CreationDate>
-<a:ModificationDate>1351539860</a:ModificationDate>
-<a:Rect>((-32254,-1960), (-31254,12040))</a:Rect>
-<a:ListOfPoints>((-31754,-1960),(-31754,12040))</a:ListOfPoints>
+<a:ModificationDate>1351883158</a:ModificationDate>
+<a:Rect>((-32252,11040), (-31252,27040))</a:Rect>
+<a:ListOfPoints>((-31752,11040),(-31752,27040))</a:ListOfPoints>
 <a:CornerStyle>2</a:CornerStyle>
 <a:ArrowStyle>7</a:ArrowStyle>
 <a:LineColor>16744576</a:LineColor>
@@ -3007,9 +3007,9 @@ Shadow=0</a:DisplayPreferences>
 </o:GeneralizationSymbol>
 <o:ClassSymbol Id="o18">
 <a:CreationDate>1351538098</a:CreationDate>
-<a:ModificationDate>1351613081</a:ModificationDate>
+<a:ModificationDate>1351883158</a:ModificationDate>
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((-62507,-16728), (-44999,-7190))</a:Rect>
+<a:Rect>((-62923,-3729), (-12579,5809))</a:Rect>
 <a:LineColor>16744448</a:LineColor>
 <a:FillColor>16770222</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
@@ -3030,9 +3030,9 @@ LABL 0 Arial,8,N</a:FontList>
 </o:ClassSymbol>
 <o:ClassSymbol Id="o10">
 <a:CreationDate>1351538100</a:CreationDate>
-<a:ModificationDate>1351613081</a:ModificationDate>
+<a:ModificationDate>1351883158</a:ModificationDate>
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((-54979,23751), (-8529,32328))</a:Rect>
+<a:Rect>((25810,22750), (38684,31328))</a:Rect>
 <a:LineColor>16744448</a:LineColor>
 <a:FillColor>16770222</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
@@ -3053,9 +3053,9 @@ LABL 0 Arial,8,N</a:FontList>
 </o:ClassSymbol>
 <o:ClassSymbol Id="o9">
 <a:CreationDate>1351538103</a:CreationDate>
-<a:ModificationDate>1351613081</a:ModificationDate>
+<a:ModificationDate>1351883158</a:ModificationDate>
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((-62947,10150), (-559,13929))</a:Rect>
+<a:Rect>((-62948,24191), (-554,29889))</a:Rect>
 <a:LineColor>16744448</a:LineColor>
 <a:FillColor>16770222</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
@@ -3076,9 +3076,9 @@ LABL 0 Arial,8,N</a:FontList>
 </o:ClassSymbol>
 <o:ClassSymbol Id="o13">
 <a:CreationDate>1351538104</a:CreationDate>
-<a:ModificationDate>1351613081</a:ModificationDate>
+<a:ModificationDate>1351883158</a:ModificationDate>
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((1544,26150), (62946,29929))</a:Rect>
+<a:Rect>((1546,9150), (62948,12929))</a:Rect>
 <a:LineColor>16744448</a:LineColor>
 <a:FillColor>16770222</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
@@ -3099,9 +3099,9 @@ LABL 0 Arial,8,N</a:FontList>
 </o:ClassSymbol>
 <o:ClassSymbol Id="o16">
 <a:CreationDate>1351538105</a:CreationDate>
-<a:ModificationDate>1351613081</a:ModificationDate>
+<a:ModificationDate>1351883158</a:ModificationDate>
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((-61099,-4808), (-2412,890))</a:Rect>
+<a:Rect>((-61097,8191), (-2410,13889))</a:Rect>
 <a:LineColor>16744448</a:LineColor>
 <a:FillColor>16770222</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
@@ -3122,9 +3122,9 @@ LABL 0 Arial,8,N</a:FontList>
 </o:ClassSymbol>
 <o:ClassSymbol Id="o24">
 <a:CreationDate>1351538535</a:CreationDate>
-<a:ModificationDate>1351613081</a:ModificationDate>
+<a:ModificationDate>1351883158</a:ModificationDate>
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((-62894,-24807), (-12612,-19111))</a:Rect>
+<a:Rect>((-42096,-23328), (-29408,-18590))</a:Rect>
 <a:LineColor>16744448</a:LineColor>
 <a:FillColor>16770222</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
@@ -3145,9 +3145,9 @@ LABL 0 Arial,8,N</a:FontList>
 </o:ClassSymbol>
 <o:ClassSymbol Id="o26">
 <a:CreationDate>1351539275</a:CreationDate>
-<a:ModificationDate>1351613081</a:ModificationDate>
+<a:ModificationDate>1351883158</a:ModificationDate>
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((-22623,-32328), (-8885,-27590))</a:Rect>
+<a:Rect>((-26621,-23328), (-12883,-18590))</a:Rect>
 <a:LineColor>16744448</a:LineColor>
 <a:FillColor>16770222</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
@@ -3168,9 +3168,9 @@ LABL 0 Arial,8,N</a:FontList>
 </o:ClassSymbol>
 <o:ClassSymbol Id="o28">
 <a:CreationDate>1351539323</a:CreationDate>
-<a:ModificationDate>1351613081</a:ModificationDate>
+<a:ModificationDate>1351883158</a:ModificationDate>
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((-6624,-32328), (7114,-27590))</a:Rect>
+<a:Rect>((-62620,-31328), (-48882,-26590))</a:Rect>
 <a:LineColor>16744448</a:LineColor>
 <a:FillColor>16770222</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
@@ -3191,9 +3191,9 @@ LABL 0 Arial,8,N</a:FontList>
 </o:ClassSymbol>
 <o:ClassSymbol Id="o30">
 <a:CreationDate>1351539355</a:CreationDate>
-<a:ModificationDate>1351613081</a:ModificationDate>
+<a:ModificationDate>1351883158</a:ModificationDate>
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((-8107,-24328), (8597,-19590))</a:Rect>
+<a:Rect>((-42104,-11328), (-25400,-6590))</a:Rect>
 <a:LineColor>16744448</a:LineColor>
 <a:FillColor>16770222</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
@@ -3214,9 +3214,9 @@ LABL 0 Arial,8,N</a:FontList>
 </o:ClassSymbol>
 <o:ClassSymbol Id="o32">
 <a:CreationDate>1351539395</a:CreationDate>
-<a:ModificationDate>1351613081</a:ModificationDate>
+<a:ModificationDate>1351883158</a:ModificationDate>
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((-62445,-32328), (-45061,-27590))</a:Rect>
+<a:Rect>((-22444,-11328), (-5060,-6590))</a:Rect>
 <a:LineColor>16744448</a:LineColor>
 <a:FillColor>16770222</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
@@ -3237,9 +3237,9 @@ LABL 0 Arial,8,N</a:FontList>
 </o:ClassSymbol>
 <o:ClassSymbol Id="o34">
 <a:CreationDate>1351539431</a:CreationDate>
-<a:ModificationDate>1351613081</a:ModificationDate>
+<a:ModificationDate>1351883158</a:ModificationDate>
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((-42137,-32328), (-25371,-27590))</a:Rect>
+<a:Rect>((-62134,-23328), (-45368,-18590))</a:Rect>
 <a:LineColor>16744448</a:LineColor>
 <a:FillColor>16770222</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
@@ -3260,9 +3260,9 @@ LABL 0 Arial,8,N</a:FontList>
 </o:ClassSymbol>
 <o:ClassSymbol Id="o36">
 <a:CreationDate>1351539634</a:CreationDate>
-<a:ModificationDate>1351613081</a:ModificationDate>
+<a:ModificationDate>1351883158</a:ModificationDate>
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((-42569,-16248), (-24939,-7670))</a:Rect>
+<a:Rect>((-62566,-15248), (-44936,-6670))</a:Rect>
 <a:LineColor>16744448</a:LineColor>
 <a:FillColor>16770222</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
@@ -3551,8 +3551,8 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Code>Agence</a:Code>
 <a:CreationDate>1351538535</a:CreationDate>
 <a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351613081</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
+<a:ModificationDate>1351883039</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
 <a:UseParentNamespace>0</a:UseParentNamespace>
 <a:Imports>import java.util.*;</a:Imports>
 <c:Attributes>
@@ -3579,125 +3579,6 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Attribute.Visibility>-</a:Attribute.Visibility>
 </o:Attribute>
 </c:Attributes>
-<c:Operations>
-<o:Operation Id="o56">
-<a:ObjectID>23CFB92F-5E74-4DC6-9219-D9C4F24A7C30</a:ObjectID>
-<a:Name>bilanJourneeErreursCaisse</a:Name>
-<a:Code>bilanJourneeErreursCaisse</a:Code>
-<a:CreationDate>1351538538</a:CreationDate>
-<a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351538608</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
-<a:ReturnType>float</a:ReturnType>
-<a:TemplateBody>%DefaultBody%</a:TemplateBody>
-<c:Parameters>
-<o:Parameter Id="o57">
-<a:ObjectID>B3B96B70-8181-46B2-BE2B-CD6AC08AF214</a:ObjectID>
-<a:Name>codeAgence</a:Name>
-<a:Code>codeAgence</a:Code>
-<a:CreationDate>1351538559</a:CreationDate>
-<a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351538608</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
-<a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
-<a:ParameterType>I</a:ParameterType>
-</o:Parameter>
-<o:Parameter Id="o58">
-<a:ObjectID>6E33B1A4-F5FF-4051-9207-B17F1E284D52</a:ObjectID>
-<a:Name>dateVacation</a:Name>
-<a:Code>dateVacation</a:Code>
-<a:CreationDate>1351538559</a:CreationDate>
-<a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351538608</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
-<a:Parameter.DataType>java.util.Date</a:Parameter.DataType>
-<a:ParameterType>I</a:ParameterType>
-</o:Parameter>
-<o:Parameter Id="o59">
-<a:ObjectID>D54A220B-E7CF-4434-8B17-BD1CCC059067</a:ObjectID>
-<a:Name>typeErreur</a:Name>
-<a:Code>typeErreur</a:Code>
-<a:CreationDate>1351538559</a:CreationDate>
-<a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351538608</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
-<a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
-<a:ParameterType>I</a:ParameterType>
-</o:Parameter>
-<o:Parameter Id="o60">
-<a:ObjectID>1DAE6AFC-F2AB-4DDF-93C5-E20B1B936B06</a:ObjectID>
-<a:Name>statusErreur</a:Name>
-<a:Code>statusErreur</a:Code>
-<a:CreationDate>1351538559</a:CreationDate>
-<a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351538608</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
-<a:Parameter.DataType>int</a:Parameter.DataType>
-<a:ParameterType>I</a:ParameterType>
-</o:Parameter>
-</c:Parameters>
-</o:Operation>
-<o:Operation Id="o61">
-<a:ObjectID>DD607062-B6C7-4ADF-8739-5FA99A2AF872</a:ObjectID>
-<a:Name>bilanErreursCaisse</a:Name>
-<a:Code>bilanErreursCaisse</a:Code>
-<a:CreationDate>1351538616</a:CreationDate>
-<a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351538668</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
-<a:ReturnType>float</a:ReturnType>
-<a:TemplateBody>%DefaultBody%</a:TemplateBody>
-<c:Parameters>
-<o:Parameter Id="o62">
-<a:ObjectID>3968DFAC-7921-48B9-B0C4-B7DC6415CD8C</a:ObjectID>
-<a:Name>codeAgence</a:Name>
-<a:Code>codeAgence</a:Code>
-<a:CreationDate>1351538616</a:CreationDate>
-<a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351538668</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
-<a:WSDLDataType>xsd:string</a:WSDLDataType>
-<a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
-<a:ParameterType>I</a:ParameterType>
-</o:Parameter>
-<o:Parameter Id="o63">
-<a:ObjectID>5D06BBF3-4D45-49B0-96CE-B72C99B21706</a:ObjectID>
-<a:Name>dateVacation</a:Name>
-<a:Code>dateVacation</a:Code>
-<a:CreationDate>1351538616</a:CreationDate>
-<a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351538668</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
-<a:WSDLDataType>xsd:date</a:WSDLDataType>
-<a:Parameter.DataType>java.util.Date</a:Parameter.DataType>
-<a:ParameterType>I</a:ParameterType>
-</o:Parameter>
-<o:Parameter Id="o64">
-<a:ObjectID>92EC4B54-9052-4784-941B-CA2E7C8C7B78</a:ObjectID>
-<a:Name>typeErreur</a:Name>
-<a:Code>typeErreur</a:Code>
-<a:CreationDate>1351538616</a:CreationDate>
-<a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351538668</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
-<a:WSDLDataType>xsd:string</a:WSDLDataType>
-<a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
-<a:ParameterType>I</a:ParameterType>
-</o:Parameter>
-<o:Parameter Id="o65">
-<a:ObjectID>180786A2-6706-4644-A7E4-31E225FA5EA2</a:ObjectID>
-<a:Name>statusErreur</a:Name>
-<a:Code>statusErreur</a:Code>
-<a:CreationDate>1351538616</a:CreationDate>
-<a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351538668</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
-<a:Parameter.DataType>int</a:Parameter.DataType>
-<a:ParameterType>I</a:ParameterType>
-</o:Parameter>
-</c:Parameters>
-</o:Operation>
-</c:Operations>
 </o:Class>
 <o:Class Id="o23">
 <a:ObjectID>69CA04E0-0D8F-4F5B-A702-333D41AB817F</a:ObjectID>
@@ -3709,7 +3590,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Modifier>Morgane</a:Modifier>
 <a:UseParentNamespace>0</a:UseParentNamespace>
 <c:Operations>
-<o:Operation Id="o66">
+<o:Operation Id="o56">
 <a:ObjectID>43BF0FBE-9082-4E35-818C-1DA241AD90E5</a:ObjectID>
 <a:Name>declarerErreurCaisse</a:Name>
 <a:Code>declarerErreurCaisse</a:Code>
@@ -3720,7 +3601,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:ReturnType>int</a:ReturnType>
 <a:TemplateBody>%DefaultBody%</a:TemplateBody>
 <c:Parameters>
-<o:Parameter Id="o67">
+<o:Parameter Id="o57">
 <a:ObjectID>EAE309A2-8FC2-496D-AAA3-4A67F6624254</a:ObjectID>
 <a:Name>codeAgence</a:Name>
 <a:Code>codeAgence</a:Code>
@@ -3731,7 +3612,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
 <a:ParameterType>I</a:ParameterType>
 </o:Parameter>
-<o:Parameter Id="o68">
+<o:Parameter Id="o58">
 <a:ObjectID>7E3A5434-BD62-44D9-A57B-FD5146188956</a:ObjectID>
 <a:Name>codeAgent</a:Name>
 <a:Code>codeAgent</a:Code>
@@ -3742,7 +3623,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
 <a:ParameterType>I</a:ParameterType>
 </o:Parameter>
-<o:Parameter Id="o69">
+<o:Parameter Id="o59">
 <a:ObjectID>82FA3159-CF12-475E-8739-9267D887679F</a:ObjectID>
 <a:Name>dateVacation</a:Name>
 <a:Code>dateVacation</a:Code>
@@ -3753,7 +3634,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Parameter.DataType>java.util.Date</a:Parameter.DataType>
 <a:ParameterType>I</a:ParameterType>
 </o:Parameter>
-<o:Parameter Id="o70">
+<o:Parameter Id="o60">
 <a:ObjectID>5EC14098-0B75-4783-A3C4-2B60D1FBCA0B</a:ObjectID>
 <a:Name>typeErreur</a:Name>
 <a:Code>typeErreur</a:Code>
@@ -3764,7 +3645,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
 <a:ParameterType>I</a:ParameterType>
 </o:Parameter>
-<o:Parameter Id="o71">
+<o:Parameter Id="o61">
 <a:ObjectID>C2D5072E-49DA-4835-9331-0EB44A8EE51B</a:ObjectID>
 <a:Name>montant</a:Name>
 <a:Code>montant</a:Code>
@@ -3777,7 +3658,7 @@ LABL 0 Arial,8,N</a:FontList>
 </o:Parameter>
 </c:Parameters>
 </o:Operation>
-<o:Operation Id="o72">
+<o:Operation Id="o62">
 <a:ObjectID>E2E5E317-D239-46AD-BAFD-0F73D69ED41A</a:ObjectID>
 <a:Name>isBilanDepasse</a:Name>
 <a:Code>isBilanDepasse</a:Code>
@@ -3788,7 +3669,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:ReturnType>boolean</a:ReturnType>
 <a:TemplateBody>%DefaultBody%</a:TemplateBody>
 </o:Operation>
-<o:Operation Id="o73">
+<o:Operation Id="o63">
 <a:ObjectID>63DD9D2E-8435-479D-AAA3-3EF88DC1C8CC</a:ObjectID>
 <a:Name>envoyerMail</a:Name>
 <a:Code>envoyerMail</a:Code>
@@ -3799,7 +3680,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:ReturnType>void</a:ReturnType>
 <a:TemplateBody>%DefaultBody%</a:TemplateBody>
 <c:Parameters>
-<o:Parameter Id="o74">
+<o:Parameter Id="o64">
 <a:ObjectID>A0CEFE71-E81E-4CAF-AB11-15984E08522D</a:ObjectID>
 <a:Name>mail</a:Name>
 <a:Code>mail</a:Code>
@@ -3824,7 +3705,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Modifier>Morgane</a:Modifier>
 <a:UseParentNamespace>0</a:UseParentNamespace>
 <c:Operations>
-<o:Operation Id="o75">
+<o:Operation Id="o65">
 <a:ObjectID>301EBCD8-043D-484E-AFAE-889D97C2AC9C</a:ObjectID>
 <a:Name>consulterErreursCaisseAgent(</a:Name>
 <a:Code>consulterErreursCaisseAgent_</a:Code>
@@ -3839,7 +3720,7 @@ LABL 0 Arial,8,N</a:FontList>
 <o:Class Ref="o19"/>
 </c:ObjectReturnType>
 <c:Parameters>
-<o:Parameter Id="o76">
+<o:Parameter Id="o66">
 <a:ObjectID>3340F404-5D66-47DD-827A-9A2FF536D5BC</a:ObjectID>
 <a:Name>codeAgent</a:Name>
 <a:Code>codeAgent</a:Code>
@@ -3850,7 +3731,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
 <a:ParameterType>I</a:ParameterType>
 </o:Parameter>
-<o:Parameter Id="o77">
+<o:Parameter Id="o67">
 <a:ObjectID>601D36B7-69A4-446E-A33B-46B87588B022</a:ObjectID>
 <a:Name>typeErreur</a:Name>
 <a:Code>typeErreur</a:Code>
@@ -3861,7 +3742,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
 <a:ParameterType>I</a:ParameterType>
 </o:Parameter>
-<o:Parameter Id="o78">
+<o:Parameter Id="o68">
 <a:ObjectID>6A218B23-1F10-4A5D-9388-80041CDCED6F</a:ObjectID>
 <a:Name>statusErreur</a:Name>
 <a:Code>statusErreur</a:Code>
@@ -3872,7 +3753,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Parameter.DataType>int</a:Parameter.DataType>
 <a:ParameterType>I</a:ParameterType>
 </o:Parameter>
-<o:Parameter Id="o79">
+<o:Parameter Id="o69">
 <a:ObjectID>C3F983B2-5058-4D26-8F6F-54C52FA2F61F</a:ObjectID>
 <a:Name>dateDebut</a:Name>
 <a:Code>dateDebut</a:Code>
@@ -3883,7 +3764,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Parameter.DataType>java.util.Date</a:Parameter.DataType>
 <a:ParameterType>I</a:ParameterType>
 </o:Parameter>
-<o:Parameter Id="o80">
+<o:Parameter Id="o70">
 <a:ObjectID>0AA1004C-D775-443F-B6BF-75726043ABCD</a:ObjectID>
 <a:Name>dateFin</a:Name>
 <a:Code>dateFin</a:Code>
@@ -3904,11 +3785,11 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Code>AgentSuperieur</a:Code>
 <a:CreationDate>1351538103</a:CreationDate>
 <a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351613081</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
+<a:ModificationDate>1351883027</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
 <a:UseParentNamespace>0</a:UseParentNamespace>
 <c:Operations>
-<o:Operation Id="o81">
+<o:Operation Id="o71">
 <a:ObjectID>1A5EDD91-AAAF-4AAE-B6DC-D433D48DBA8D</a:ObjectID>
 <a:Name>consulterErreursCaisseAgence</a:Name>
 <a:Code>consulterErreursCaisseAgence</a:Code>
@@ -3923,7 +3804,7 @@ LABL 0 Arial,8,N</a:FontList>
 <o:Class Ref="o19"/>
 </c:ObjectReturnType>
 <c:Parameters>
-<o:Parameter Id="o82">
+<o:Parameter Id="o72">
 <a:ObjectID>6848B8B4-0BBE-443D-A30D-26DD966AA3EC</a:ObjectID>
 <a:Name>codeAgence</a:Name>
 <a:Code>codeAgence</a:Code>
@@ -3934,7 +3815,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
 <a:ParameterType>I</a:ParameterType>
 </o:Parameter>
-<o:Parameter Id="o83">
+<o:Parameter Id="o73">
 <a:ObjectID>8EDBC565-289F-4FB9-ACAD-D7F85849716B</a:ObjectID>
 <a:Name>typeErreur</a:Name>
 <a:Code>typeErreur</a:Code>
@@ -3945,7 +3826,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
 <a:ParameterType>I</a:ParameterType>
 </o:Parameter>
-<o:Parameter Id="o84">
+<o:Parameter Id="o74">
 <a:ObjectID>A149C82D-D318-44BE-9A84-EA2DFD132D23</a:ObjectID>
 <a:Name>statusErreur</a:Name>
 <a:Code>statusErreur</a:Code>
@@ -3956,7 +3837,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Parameter.DataType>int</a:Parameter.DataType>
 <a:ParameterType>I</a:ParameterType>
 </o:Parameter>
-<o:Parameter Id="o85">
+<o:Parameter Id="o75">
 <a:ObjectID>9C62976F-377A-4B9E-86F4-0708665F3B32</a:ObjectID>
 <a:Name>dateDebut</a:Name>
 <a:Code>dateDebut</a:Code>
@@ -3967,7 +3848,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Parameter.DataType>java.util.Date</a:Parameter.DataType>
 <a:ParameterType>I</a:ParameterType>
 </o:Parameter>
-<o:Parameter Id="o86">
+<o:Parameter Id="o76">
 <a:ObjectID>26394FA4-CC3C-4232-A082-3AD81452F9E9</a:ObjectID>
 <a:Name>dateFin</a:Name>
 <a:Code>dateFin</a:Code>
@@ -3980,6 +3861,120 @@ LABL 0 Arial,8,N</a:FontList>
 </o:Parameter>
 </c:Parameters>
 </o:Operation>
+<o:Operation Id="o77">
+<a:ObjectID>2E76ED79-66BD-4E47-8D19-3F3BC7811BC3</a:ObjectID>
+<a:Name>bilanJourneeErreursCaisse</a:Name>
+<a:Code>bilanJourneeErreursCaisse</a:Code>
+<a:CreationDate>1351883010</a:CreationDate>
+<a:Creator>LOPVET</a:Creator>
+<a:ModificationDate>1351883027</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
+<a:ReturnType>float</a:ReturnType>
+<a:TemplateBody>%DefaultBody%</a:TemplateBody>
+<c:Parameters>
+<o:Parameter Id="o78">
+<a:ObjectID>643AD4BE-B625-433D-A228-A5716EEA8F82</a:ObjectID>
+<a:Name>codeAgence</a:Name>
+<a:Code>codeAgence</a:Code>
+<a:CreationDate>1351883010</a:CreationDate>
+<a:Creator>LOPVET</a:Creator>
+<a:ModificationDate>1351883027</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
+<a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
+<a:ParameterType>I</a:ParameterType>
+</o:Parameter>
+<o:Parameter Id="o79">
+<a:ObjectID>EF6E1E8A-F98E-4B72-939C-CB136E278AFE</a:ObjectID>
+<a:Name>dateVacation</a:Name>
+<a:Code>dateVacation</a:Code>
+<a:CreationDate>1351883010</a:CreationDate>
+<a:Creator>LOPVET</a:Creator>
+<a:ModificationDate>1351883027</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
+<a:Parameter.DataType>java.util.Date</a:Parameter.DataType>
+<a:ParameterType>I</a:ParameterType>
+</o:Parameter>
+<o:Parameter Id="o80">
+<a:ObjectID>BC6F2964-0702-4A52-A3F9-626E860CA061</a:ObjectID>
+<a:Name>typeErreur</a:Name>
+<a:Code>typeErreur</a:Code>
+<a:CreationDate>1351883010</a:CreationDate>
+<a:Creator>LOPVET</a:Creator>
+<a:ModificationDate>1351883027</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
+<a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
+<a:ParameterType>I</a:ParameterType>
+</o:Parameter>
+<o:Parameter Id="o81">
+<a:ObjectID>75213C76-EA09-402A-92BA-F78E4C1AA406</a:ObjectID>
+<a:Name>statusErreur</a:Name>
+<a:Code>statusErreur</a:Code>
+<a:CreationDate>1351883010</a:CreationDate>
+<a:Creator>LOPVET</a:Creator>
+<a:ModificationDate>1351883027</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
+<a:Parameter.DataType>int</a:Parameter.DataType>
+<a:ParameterType>I</a:ParameterType>
+</o:Parameter>
+</c:Parameters>
+</o:Operation>
+<o:Operation Id="o82">
+<a:ObjectID>E36CFAA4-8D2C-4B39-9D25-CDEE11811385</a:ObjectID>
+<a:Name>bilanErreursCaisse</a:Name>
+<a:Code>bilanErreursCaisse</a:Code>
+<a:CreationDate>1351883010</a:CreationDate>
+<a:Creator>LOPVET</a:Creator>
+<a:ModificationDate>1351883027</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
+<a:ReturnType>float</a:ReturnType>
+<a:TemplateBody>%DefaultBody%</a:TemplateBody>
+<c:Parameters>
+<o:Parameter Id="o83">
+<a:ObjectID>75AC4CC9-3D24-4877-B8B2-9F466FBFCD9F</a:ObjectID>
+<a:Name>codeAgence</a:Name>
+<a:Code>codeAgence</a:Code>
+<a:CreationDate>1351883010</a:CreationDate>
+<a:Creator>LOPVET</a:Creator>
+<a:ModificationDate>1351883027</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
+<a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
+<a:ParameterType>I</a:ParameterType>
+</o:Parameter>
+<o:Parameter Id="o84">
+<a:ObjectID>14F1ADEC-FBEB-4829-BB54-A009A1CED652</a:ObjectID>
+<a:Name>dateVacation</a:Name>
+<a:Code>dateVacation</a:Code>
+<a:CreationDate>1351883010</a:CreationDate>
+<a:Creator>LOPVET</a:Creator>
+<a:ModificationDate>1351883027</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
+<a:Parameter.DataType>java.util.Date</a:Parameter.DataType>
+<a:ParameterType>I</a:ParameterType>
+</o:Parameter>
+<o:Parameter Id="o85">
+<a:ObjectID>1785962F-C9E8-4F54-9808-3E90EC3BCAE5</a:ObjectID>
+<a:Name>typeErreur</a:Name>
+<a:Code>typeErreur</a:Code>
+<a:CreationDate>1351883010</a:CreationDate>
+<a:Creator>LOPVET</a:Creator>
+<a:ModificationDate>1351883027</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
+<a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
+<a:ParameterType>I</a:ParameterType>
+</o:Parameter>
+<o:Parameter Id="o86">
+<a:ObjectID>B3A0BE5E-B29F-44F6-8CBB-156BF70109ED</a:ObjectID>
+<a:Name>statusErreur</a:Name>
+<a:Code>statusErreur</a:Code>
+<a:CreationDate>1351883010</a:CreationDate>
+<a:Creator>LOPVET</a:Creator>
+<a:ModificationDate>1351883027</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
+<a:Parameter.DataType>int</a:Parameter.DataType>
+<a:ParameterType>I</a:ParameterType>
+</o:Parameter>
+</c:Parameters>
+</o:Operation>
 </c:Operations>
 </o:Class>
 <o:Class Id="o20">
@@ -3988,8 +3983,8 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Code>Agent</a:Code>
 <a:CreationDate>1351538100</a:CreationDate>
 <a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351613081</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
+<a:ModificationDate>1351882716</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
 <a:UseParentNamespace>0</a:UseParentNamespace>
 <c:Attributes>
 <o:Attribute Id="o87">
@@ -4062,54 +4057,6 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Attribute.Visibility>-</a:Attribute.Visibility>
 </o:Attribute>
 </c:Attributes>
-<c:Operations>
-<o:Operation Id="o93">
-<a:ObjectID>3CFD8D34-02A9-43EE-8A54-83D87245E247</a:ObjectID>
-<a:Name>regulariserErreurCaisse</a:Name>
-<a:Code>regulariserErreurCaisse</a:Code>
-<a:CreationDate>1351538427</a:CreationDate>
-<a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351538500</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
-<a:ReturnType>int</a:ReturnType>
-<a:TemplateBody>%DefaultBody%</a:TemplateBody>
-<c:Parameters>
-<o:Parameter Id="o94">
-<a:ObjectID>2D898456-4298-4A8D-B2FE-1A65AD40BC8B</a:ObjectID>
-<a:Name>montantRegulation</a:Name>
-<a:Code>montantRegulation</a:Code>
-<a:CreationDate>1351538446</a:CreationDate>
-<a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351538500</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
-<a:Parameter.DataType>float</a:Parameter.DataType>
-<a:ParameterType>I</a:ParameterType>
-</o:Parameter>
-<o:Parameter Id="o95">
-<a:ObjectID>75D36B26-B6CB-46C8-BEAC-F009F46E1A98</a:ObjectID>
-<a:Name>codeAgentRegulateur</a:Name>
-<a:Code>codeAgentRegulateur</a:Code>
-<a:CreationDate>1351538446</a:CreationDate>
-<a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351538500</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
-<a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
-<a:ParameterType>I</a:ParameterType>
-</o:Parameter>
-<o:Parameter Id="o96">
-<a:ObjectID>6DB2CD24-B4CF-4B5D-B1D4-F4F946A4DC24</a:ObjectID>
-<a:Name>motifRegulation</a:Name>
-<a:Code>motifRegulation</a:Code>
-<a:CreationDate>1351538446</a:CreationDate>
-<a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351538500</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
-<a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
-<a:ParameterType>I</a:ParameterType>
-</o:Parameter>
-</c:Parameters>
-</o:Operation>
-</c:Operations>
 </o:Class>
 <o:Class Id="o19">
 <a:ObjectID>5D307DC5-B64D-47A3-B493-76AFD2177401</a:ObjectID>
@@ -4117,11 +4064,11 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Code>ErreurCaisse</a:Code>
 <a:CreationDate>1351538098</a:CreationDate>
 <a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351613081</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
+<a:ModificationDate>1351882696</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
 <a:UseParentNamespace>0</a:UseParentNamespace>
 <c:Attributes>
-<o:Attribute Id="o97">
+<o:Attribute Id="o93">
 <a:ObjectID>CBBCBF5E-1302-463E-AB2F-F785DAF9CC1D</a:ObjectID>
 <a:Name>erreurCaisseId</a:Name>
 <a:Code>erreurCaisseId</a:Code>
@@ -4132,7 +4079,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:DataType>int</a:DataType>
 <a:Attribute.Visibility>-</a:Attribute.Visibility>
 </o:Attribute>
-<o:Attribute Id="o98">
+<o:Attribute Id="o94">
 <a:ObjectID>EAB9BFE8-6FAD-4361-AB88-44DE6FCEECFE</a:ObjectID>
 <a:Name>agent</a:Name>
 <a:Code>agent</a:Code>
@@ -4146,7 +4093,7 @@ LABL 0 Arial,8,N</a:FontList>
 <o:Class Ref="o20"/>
 </c:ObjectDataType>
 </o:Attribute>
-<o:Attribute Id="o99">
+<o:Attribute Id="o95">
 <a:ObjectID>905CE7D3-CC33-4BF0-A7D9-242EB9EFB80E</a:ObjectID>
 <a:Name>typeErreur</a:Name>
 <a:Code>typeErreur</a:Code>
@@ -4160,7 +4107,7 @@ LABL 0 Arial,8,N</a:FontList>
 <o:Class Ref="o29"/>
 </c:ObjectDataType>
 </o:Attribute>
-<o:Attribute Id="o100">
+<o:Attribute Id="o96">
 <a:ObjectID>8AB22735-941C-453C-BF5C-798C861C39FE</a:ObjectID>
 <a:Name>agence</a:Name>
 <a:Code>agence</a:Code>
@@ -4174,7 +4121,7 @@ LABL 0 Arial,8,N</a:FontList>
 <o:Class Ref="o25"/>
 </c:ObjectDataType>
 </o:Attribute>
-<o:Attribute Id="o101">
+<o:Attribute Id="o97">
 <a:ObjectID>B1607B0B-A6BC-40D3-AF6C-A30FD80E72D3</a:ObjectID>
 <a:Name>statusRegularisation</a:Name>
 <a:Code>statusRegularisation</a:Code>
@@ -4188,7 +4135,7 @@ LABL 0 Arial,8,N</a:FontList>
 <o:Class Ref="o33"/>
 </c:ObjectDataType>
 </o:Attribute>
-<o:Attribute Id="o102">
+<o:Attribute Id="o98">
 <a:ObjectID>CD4648DC-FD0E-44D4-9255-DB65098AE5BA</a:ObjectID>
 <a:Name>dateVacation</a:Name>
 <a:Code>dateVacation</a:Code>
@@ -4199,7 +4146,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:DataType>java.util.Date</a:DataType>
 <a:Attribute.Visibility>-</a:Attribute.Visibility>
 </o:Attribute>
-<o:Attribute Id="o103">
+<o:Attribute Id="o99">
 <a:ObjectID>11A1BCD9-41C4-4EB3-9471-BE60BCC71710</a:ObjectID>
 <a:Name>montant</a:Name>
 <a:Code>montant</a:Code>
@@ -4211,6 +4158,54 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Attribute.Visibility>-</a:Attribute.Visibility>
 </o:Attribute>
 </c:Attributes>
+<c:Operations>
+<o:Operation Id="o100">
+<a:ObjectID>3347BD1E-3419-4A2C-8029-99B7CED7CF3B</a:ObjectID>
+<a:Name>regulariserErreurCaisse</a:Name>
+<a:Code>regulariserErreurCaisse</a:Code>
+<a:CreationDate>1351882680</a:CreationDate>
+<a:Creator>LOPVET</a:Creator>
+<a:ModificationDate>1351882696</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
+<a:ReturnType>int</a:ReturnType>
+<a:TemplateBody>%DefaultBody%</a:TemplateBody>
+<c:Parameters>
+<o:Parameter Id="o101">
+<a:ObjectID>9A5973C1-7D40-4752-B615-2EC4F34B0615</a:ObjectID>
+<a:Name>montantRegularisation</a:Name>
+<a:Code>montantRegularisation</a:Code>
+<a:CreationDate>1351882680</a:CreationDate>
+<a:Creator>LOPVET</a:Creator>
+<a:ModificationDate>1351883144</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
+<a:Parameter.DataType>float</a:Parameter.DataType>
+<a:ParameterType>I</a:ParameterType>
+</o:Parameter>
+<o:Parameter Id="o102">
+<a:ObjectID>F0FF08F2-E520-42E1-9D5C-7EDE440C2111</a:ObjectID>
+<a:Name>codeAgentRegularisateur</a:Name>
+<a:Code>codeAgentRegularisateur</a:Code>
+<a:CreationDate>1351882680</a:CreationDate>
+<a:Creator>LOPVET</a:Creator>
+<a:ModificationDate>1351883144</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
+<a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
+<a:ParameterType>I</a:ParameterType>
+</o:Parameter>
+<o:Parameter Id="o103">
+<a:ObjectID>4CC61EBE-2318-4B02-9858-F2EC249F286A</a:ObjectID>
+<a:Name>motifRegularisation</a:Name>
+<a:Code>motifRegularisation</a:Code>
+<a:CreationDate>1351882680</a:CreationDate>
+<a:Creator>LOPVET</a:Creator>
+<a:ModificationDate>1351883144</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
+<a:Parameter.DataType>java.lang.String</a:Parameter.DataType>
+<a:ParameterType>I</a:ParameterType>
+</o:Parameter>
+</c:Parameters>
+</o:Operation>
+</c:Operations>
 </o:Class>
 </c:Classes>
 <c:Generalizations>
@@ -4272,8 +4267,8 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Code>Java</a:Code>
 <a:CreationDate>1351534514</a:CreationDate>
 <a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351534514</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
+<a:ModificationDate>1351882811</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
 <a:TargetModelURL>file:///%_OBJLANG%/java5-j2ee14.xol</a:TargetModelURL>
 <a:TargetModelID>0DEDDB90-46E2-45A0-886E-411709DA0DC9</a:TargetModelID>
 <a:TargetModelClassID>1811206C-1A4B-11D1-83D9-444553540000</a:TargetModelClassID>
@@ -4287,8 +4282,8 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Code>WSDLJava</a:Code>
 <a:CreationDate>1351534514</a:CreationDate>
 <a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351534514</a:ModificationDate>
-<a:Modifier>Morgane</a:Modifier>
+<a:ModificationDate>1351882811</a:ModificationDate>
+<a:Modifier>LOPVET</a:Modifier>
 <a:TargetModelURL>file:///%_XEM%/WSDLJ2EE.xem</a:TargetModelURL>
 <a:TargetModelID>C8F5F7B2-CF9D-4E98-8301-959BB6E86C8A</a:TargetModelID>
 <a:TargetModelClassID>186C8AC3-D3DC-11D3-881C-00508B03C75C</a:TargetModelClassID>

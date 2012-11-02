@@ -35,13 +35,14 @@ public class AgentSuperieur extends Agent {
 	/**
 	 * @param codeAgence
 	 * @param dateVacation
-	 * @param typeErreur
-	 * @param statusErreur
+	 * @param codeTypeErreur
+	 * @param codeStatusRegularisation
 	 */
 	public float bilanJourneeErreursCaisse(String codeAgence,
 			java.util.Date dateVacation, String codeTypeErreur,
 			int codeStatusRegularisation) {
 		// TODO: implement
+		//TODO: déplacer dans AgentSupérieurDAO
 		float somme = 0;
 		try {
 			Statement select = UtilitairesDAO.connect().createStatement();

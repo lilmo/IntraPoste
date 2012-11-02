@@ -30,6 +30,18 @@ public class ErreurCaisse {
 	}
 
 	/**
+	 * @param montantRegulation
+	 * @param codeAgentRegulateur
+	 * @param motifRegulation
+	 */
+	public int regulariserErreurCaisse(float montantRegularisation,
+			String codeAgentRegularisateur, String motifRegularisation) {
+		// TODO: implement
+
+		return 0;
+	}
+	
+	/**
 	 * @return the erreurCaisseId
 	 */
 	public int getErreurCaisseId() {

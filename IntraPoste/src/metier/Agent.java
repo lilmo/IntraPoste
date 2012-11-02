@@ -113,16 +113,4 @@ public class Agent {
 	public void setMotDePasse(String motDePasse) {
 		this.motDePasse = motDePasse;
 	}
-
-	/**
-	 * @param montantRegulation
-	 * @param codeAgentRegulateur
-	 * @param motifRegulation
-	 */
-	public int regulariserErreurCaisse(float montantRegulation,
-			String codeAgentRegulateur, String motifRegulation) {
-		// TODO: implement
-		return 0;
-	}
-
 }
