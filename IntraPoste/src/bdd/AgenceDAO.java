@@ -33,8 +33,12 @@ public class AgenceDAO {
 					.executeQuery("SELECT CODE_AGENCE, NOM_AGENCE FROM AGENCE WHERE CODE_AGENCE = '"
 							+ codeAgence + "'");
 			if (result.next())
+			{
+//				System.out.println(result.getString("CODE_AGENCE"));
 				return (new Agence(result.getString("CODE_AGENCE"),
 						result.getString("NOM_AGENCE")));
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -31,12 +31,6 @@ public class AgentComptable extends AgentSuperieur {
 		this.agence = agence;
 	}
 
-	public AgentComptable(String codeAgent, TypeAgent typeAgent, String mail,
-			String nom, String prenom, String motDePasse) {
-		super(codeAgent, typeAgent, mail, nom, prenom, motDePasse);
-		// TODO Auto-generated constructor stub
-	}
-
 	/**
 	 * @param codeAgence
 	 * @param codeAgent

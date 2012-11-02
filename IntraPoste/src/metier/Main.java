@@ -25,7 +25,7 @@ public class Main {
 		// System.out.println("val = " + val);
 		// }
 //		ArrayList<Agence> agences = AgenceDAO.selectByNom("Marseille");
-		AgenceDAO.insert("AB", "CD");
+		AgenceDAO.insert("ABc", "CD");
 		ArrayList<Agence> agences = AgenceDAO.selectAll();
 		for (Agence a : agences) {
 			System.out.println(a.getCodeAgence());

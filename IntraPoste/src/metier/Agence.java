@@ -43,22 +43,4 @@ public void setNomAgence(String nomAgence) {
 	this.nomAgence = nomAgence;
 }
 
-/** @param codeAgence 
-    * @param dateVacation 
-    * @param typeErreur 
-    * @param statusErreur */
-   public float bilanJourneeErreursCaisse(String codeAgence, java.util.Date dateVacation, String typeErreur, int statusErreur) {
-      // TODO: implement
-      return 0;
-   }
-   
-   /** @param codeAgence 
-    * @param dateVacation 
-    * @param typeErreur 
-    * @param statusErreur */
-   public float bilanErreursCaisse(String codeAgence, java.util.Date dateVacation, String typeErreur, int statusErreur) {
-      // TODO: implement
-      return 0;
-   }
-
 }
