@@ -9,7 +9,8 @@ import metier.TypeAgent;
 
 public class TypeAgentDAO {
 
-	public static void init() {
+	public static void init() throws SQLException {
+		empty();
 		insert(0, "DIRECTION");
 		insert(1, "COMPTABLE");
 		insert(2, "GUICHET");

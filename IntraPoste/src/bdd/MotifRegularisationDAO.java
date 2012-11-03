@@ -10,12 +10,13 @@ import metier.MotifRegularisation;
 public class MotifRegularisationDAO {
 
 	public static void init() throws SQLException {
-			insert("REJET REGULARISE");
-			insert("ERREUR RETROUVEE");
-			insert("COMBLEE EN NUMERAIRE");
-			insert("PRISE EN RECETTE");
-			insert("REMBOURSEE A L UTILISATEUR");
-			insert("ERREUR DE COMPTABILITE RETROUVEE");
+		empty();
+		insert("REJET REGULARISE");
+		insert("ERREUR RETROUVEE");
+		insert("COMBLEE EN NUMERAIRE");
+		insert("PRISE EN RECETTE");
+		insert("REMBOURSEE A L UTILISATEUR");
+		insert("ERREUR DE COMPTABILITE RETROUVEE");
 	}
 
 	public static ArrayList<MotifRegularisation> selectAll()

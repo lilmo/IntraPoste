@@ -9,7 +9,8 @@ import metier.TypeErreur;
 
 public class TypeErreurDAO {
 
-	public static void init() {
+	public static void init() throws SQLException {
+		empty();
 		insert("E", "EXCEDENT");
 		insert("D", "DEFICIT");
 	}

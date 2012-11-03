@@ -9,7 +9,8 @@ import metier.TypeRegularisation;
 
 public class TypeRegularisationDAO {
 
-	public static void init() {
+	public static void init() throws SQLException {
+		empty();
 		insert(0, "PARTIELLE");
 		insert(1, "TOTALE");
 	}

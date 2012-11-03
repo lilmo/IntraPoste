@@ -9,8 +9,9 @@ import metier.StatusRegularisation;
 
 public class StatusRegularisationDAO {
 	
-	public static void init()
+	public static void init() throws SQLException
 	{
+		empty();
 		insert(0, "DECLAREE");
 		insert(1, "PARTIELLEMENT REGULARISEE");
 		insert(2, "TOTALEMENT REGULARISEE");
