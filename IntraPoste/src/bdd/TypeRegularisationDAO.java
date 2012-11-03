@@ -19,7 +19,7 @@ public class TypeRegularisationDAO {
 		try {
 			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
-					.executeQuery("SELECT CODE_TYPE_REGULARISATION, NOM_TYPE_REGULARISATION FROM TYPE_REGULARISATION;");
+					.executeQuery("SELECT CODE_TYPE_REGULARISATION, NOM_TYPE_REGULARISATION FROM TYPE_REGULARISATION");
 			while (result.next())
 				results.add(new TypeRegularisation(result
 						.getInt("CODE_TYPE_REGULARISATION"), result
@@ -37,7 +37,7 @@ public class TypeRegularisationDAO {
 			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
 					.executeQuery("SELECT CODE_TYPE_REGULARISATION, NOM_TYPE_REGULARISATION FROM TYPE_REGULARISATION WHERE CODE_TYPE_REGULARISATION = "
-							+ codeTypeRegularisation + ";");
+							+ codeTypeRegularisation);
 			if (result.next())
 				return (new TypeRegularisation(
 						result.getInt("CODE_TYPE_REGULARISATION"),
@@ -56,7 +56,7 @@ public class TypeRegularisationDAO {
 			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
 					.executeQuery("SELECT CODE_TYPE_REGULARISATION, NOM_TYPE_REGULARISATION FROM TYPE_REGULARISATION WHERE NOM_TYPE_REGULARISATION = '"
-							+ nomTypeRegularisation + "';");
+							+ nomTypeRegularisation + "'");
 			while (result.next())
 				results.add(new TypeRegularisation(result
 						.getInt("CODE_TYPE_REGULARISATION"), result
@@ -68,7 +68,7 @@ public class TypeRegularisationDAO {
 		return results;
 	}
 
-	private static boolean insert(int codeTypeRegularisation,
+	public static boolean insert(int codeTypeRegularisation,
 			String nomTypeRegularisation) {
 
 		try {
@@ -76,7 +76,7 @@ public class TypeRegularisationDAO {
 				Statement insert = Connexion.getInstance().getConnection().createStatement();
 				insert.executeQuery("INSERT INTO TYPE_REGULARISATION VALUES ("
 						+ codeTypeRegularisation + ", '"
-						+ nomTypeRegularisation + "');");
+						+ nomTypeRegularisation + "')");
 				return true;
 			}
 		} catch (SQLException e) {
@@ -86,4 +86,19 @@ public class TypeRegularisationDAO {
 		return false;
 	}
 
+	public static void empty() throws SQLException {
+		Statement insert = null;
+		try {
+			insert = Connexion.getInstance().getConnection().createStatement();
+			insert.executeQuery("DELETE FROM TYPE_REGULARISATION");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (insert != null)
+				insert.close();
+		}
+	}
+	
 }
