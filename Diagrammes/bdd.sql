@@ -5,6 +5,10 @@ drop trigger TIB_MOTIF_REGULARISATION
 /
 
 alter table AGENT
+   drop constraint FK_AGENT_DEPENDRE_AGENCE
+/
+
+alter table AGENT
    drop constraint FK_AGENT_ETRE_TYPE_AGE
 /
 
@@ -120,6 +124,7 @@ create table AGENT
 (
    CODE_AGENT           VARCHAR2(32)         not null
       constraint CKC_CODE_AGENT_AGENT check (CODE_AGENT = upper(CODE_AGENT)),
+   CODE_AGENCE          VARCHAR(32),
    CODE_TYPE_AGENT      INTEGER              not null
       constraint CKC_CODE_TYPE_AGENT_AGENT check (CODE_TYPE_AGENT in (0,1,2)),
    MAIL                 VARCHAR2(320)       
@@ -298,6 +303,11 @@ create table TYPE_REGULARISATION
       constraint CKC_NOM_TYPE_REGULARI_TYPE_REG check (NOM_TYPE_REGULARISATION = upper(NOM_TYPE_REGULARISATION)),
    constraint PK_TYPE_REGULARISATION primary key (CODE_TYPE_REGULARISATION)
 )
+/
+
+alter table AGENT
+   add constraint FK_AGENT_DEPENDRE_AGENCE foreign key (CODE_AGENCE)
+      references AGENCE (CODE_AGENCE)
 /
 
 alter table AGENT
