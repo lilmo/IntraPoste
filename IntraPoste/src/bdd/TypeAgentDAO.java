@@ -21,7 +21,7 @@ public class TypeAgentDAO {
 		try {
 			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
-					.executeQuery("SELECT CODE_TYPE_AGENT, NOM_TYPE_AGENT FROM TYPE_AGENT;");
+					.executeQuery("SELECT CODE_TYPE_AGENT, NOM_TYPE_AGENT FROM TYPE_AGENT");
 			while (result.next())
 				results.add(new TypeAgent(result.getInt("CODE_TYPE_AGENT"), result
 						.getString("NOM_TYPE_AGENT")));
@@ -38,7 +38,7 @@ public class TypeAgentDAO {
 			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
 					.executeQuery("SELECT CODE_TYPE_AGENT, NOM_TYPE_AGENT FROM TYPE_AGENT WHERE CODE_TYPE_AGENT = "
-							+ codeTypeAgent + ";");
+							+ codeTypeAgent);
 			if (result.next())
 				return (new TypeAgent(result.getInt("CODE_TYPE_AGENT"),
 						result.getString("NOM_TYPE_AGENT")));
@@ -55,7 +55,7 @@ public class TypeAgentDAO {
 			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
 					.executeQuery("SELECT CODE_TYPE_AGENT, NOM_TYPE_AGENT FROM TYPE_AGENT WHERE NOM_TYPE_AGENT = '"
-							+ nomTypeAgent + "';");
+							+ nomTypeAgent + "'");
 			while (result.next())
 				results.add(new TypeAgent(result.getInt("CODE_TYPE_AGENT"), result
 						.getString("NOM_TYPE_AGENT")));
@@ -66,13 +66,13 @@ public class TypeAgentDAO {
 		return results;
 	}
 
-	private static boolean insert(int codeTypeAgent, String nomTypeAgent) {
+	public static boolean insert(int codeTypeAgent, String nomTypeAgent) {
 
 		try {
 			if (selectByCode(codeTypeAgent) == null) {
 				Statement insert = Connexion.getInstance().getConnection().createStatement();
 				insert.executeQuery("INSERT INTO TYPE_AGENT VALUES (" + codeTypeAgent
-						+ ", '" + nomTypeAgent + "');");
+						+ ", '" + nomTypeAgent + "')");
 				return true;
 			}
 		} catch (SQLException e) {
@@ -80,5 +80,20 @@ public class TypeAgentDAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public static void empty() throws SQLException {
+		Statement insert = null;
+		try {
+			insert = Connexion.getInstance().getConnection().createStatement();
+			insert.executeQuery("DELETE FROM TYPE_AGENT");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (insert != null)
+				insert.close();
+		}
 	}
 }

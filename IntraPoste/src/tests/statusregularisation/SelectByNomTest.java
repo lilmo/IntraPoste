@@ -1,7 +1,6 @@
-package tests.statusregularisationtests;
+package tests.statusregularisation;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,25 +12,24 @@ import org.junit.Test;
 
 import bdd.StatusRegularisationDAO;
 
-public class SelectByCodeTest {
+public class SelectByNomTest {
 
 	ArrayList<StatusRegularisation> status;
-	int codeStatus;
+	String nomStatus;
 
 	@Before
 	public void setUp() throws Exception {
 		StatusRegularisationDAO.empty();
-
+		
 		StatusRegularisationDAO.insert(0, "DECLAREE");
 
 		status = StatusRegularisationDAO.selectAll();
-
-		codeStatus = status.get(0).getCodeStatusRegularisation();
+		nomStatus = status.get(0).getNomStatusRegularisation();
 	}
 
 	@Test
 	public void test() throws SQLException {
-		assertTrue(StatusRegularisationDAO.selectByCode(codeStatus) != null);
-		assertFalse(StatusRegularisationDAO.selectByCode(codeStatus + 1) != null);
+		assertTrue(StatusRegularisationDAO.selectByNom(nomStatus).size() == 1);
+		assertTrue(StatusRegularisationDAO.selectByNom("B").isEmpty());
 	}
 }

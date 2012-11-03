@@ -1,9 +1,7 @@
-package tests.statusregularisationtests;
+package tests.statusregularisation;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import metier.StatusRegularisation;
@@ -13,26 +11,29 @@ import org.junit.Test;
 
 import bdd.StatusRegularisationDAO;
 
-public class EmptyTest {
+public class InsertTest {
 
 	ArrayList<StatusRegularisation> status;
 
 	@Before
 	public void setUp() throws Exception {
+		StatusRegularisationDAO.empty();
+
 		StatusRegularisationDAO.insert(0, "DECLAREE");
 		StatusRegularisationDAO.insert(1, "PARTIELLEMENT REGULARISEE");
 		StatusRegularisationDAO.insert(2, "TOTALEMENT REGULARISEE");
 
 		status = StatusRegularisationDAO.selectAll();
-		assertFalse(status.isEmpty());
-		
-		StatusRegularisationDAO.empty();
-		status = StatusRegularisationDAO.selectAll();
 	}
 
 	@Test
-	public void test() throws SQLException {
-		assertTrue(status.isEmpty());
+	public void test() {
+		assertTrue(status.size() == 3);
+		for (StatusRegularisation s : status)
+			assertTrue(s.getNomStatusRegularisation().equals("DECLAREE")
+					|| s.getNomStatusRegularisation().equals(
+							"PARTIELLEMENT REGULARISEE")
+					|| s.getNomStatusRegularisation().equals(
+							"TOTALEMENT REGULARISEE"));
 	}
-
 }

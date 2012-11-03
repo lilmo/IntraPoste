@@ -1,4 +1,4 @@
-package tests.motifregularisationtests;
+package tests.motifregularisation;
 
 import static org.junit.Assert.*;
 

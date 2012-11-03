@@ -1,4 +1,4 @@
-package tests.motifregularisationtests;
+package tests.motifregularisation;
 
 import static org.junit.Assert.*;
 
@@ -11,25 +11,33 @@ import org.junit.Test;
 
 import bdd.MotifRegularisationDAO;
 
-public class EmptyTest {
-	
+public class InsertTest {
+
 	ArrayList<MotifRegularisation> motifs;
 
 	@Before
 	public void setUp() throws Exception {
+		MotifRegularisationDAO.empty();
+		
 		MotifRegularisationDAO.insert("REJET REGULARISE");
 		MotifRegularisationDAO.insert("ERREUR RETROUVEE");
 		MotifRegularisationDAO.insert("COMBLEE EN NUMERAIRE");
 		MotifRegularisationDAO.insert("PRISE EN RECETTE");
 		MotifRegularisationDAO.insert("REMBOURSEE A L UTILISATEUR");
 		MotifRegularisationDAO.insert("ERREUR DE COMPTABILITE RETROUVEE");
-		MotifRegularisationDAO.empty();
+
 		motifs = MotifRegularisationDAO.selectAll();
 	}
 
 	@Test
 	public void test() {
-		assertTrue(motifs.isEmpty());
+		assertTrue(motifs.size() == 6);
+		for (MotifRegularisation m : motifs)
+			assertTrue(m.getNomMotifRegularisation().equals("REJET REGULARISE")
+					|| m.getNomMotifRegularisation().equals("ERREUR RETROUVEE")
+					|| m.getNomMotifRegularisation().equals("COMBLEE EN NUMERAIRE")
+					|| m.getNomMotifRegularisation().equals("PRISE EN RECETTE")
+					|| m.getNomMotifRegularisation().equals("REMBOURSEE A L UTILISATEUR")
+					|| m.getNomMotifRegularisation().equals("ERREUR DE COMPTABILITE RETROUVEE"));
 	}
-
 }

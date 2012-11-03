@@ -1,4 +1,4 @@
-package tests.motifregularisationtests;
+package tests.motifregularisation;
 
 import static org.junit.Assert.*;
 
@@ -12,10 +12,10 @@ import org.junit.Test;
 
 import bdd.MotifRegularisationDAO;
 
-public class SelectByCodeTest {
+public class SelectByNomTest {
 
 	ArrayList<MotifRegularisation> motifs;
-	int codeMotif;
+	String nomMotif;
 
 	@Before
 	public void setUp() throws Exception {
@@ -24,12 +24,12 @@ public class SelectByCodeTest {
 		MotifRegularisationDAO.insert("REJET REGULARISE");
 
 		motifs = MotifRegularisationDAO.selectAll();
-		codeMotif = motifs.get(0).getCodeMotifRegularisation();
+		nomMotif = motifs.get(0).getNomMotifRegularisation();
 	}
 
 	@Test
 	public void test() throws SQLException {
-		assertTrue(MotifRegularisationDAO.selectByCode(codeMotif) != null);
-		assertFalse(MotifRegularisationDAO.selectByCode(codeMotif + 1) != null);
+		assertTrue(MotifRegularisationDAO.selectByNom(nomMotif).size() == 1);
+		assertTrue(MotifRegularisationDAO.selectByNom("B").isEmpty());
 	}
 }
