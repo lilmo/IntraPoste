@@ -43,7 +43,6 @@ public class AgentComptable extends AgentSuperieur {
 
 	/** @param mail */
 	private ArrayList<String> getMailsDirection(String codeAgence) {
-		// TODO: implement
 		ArrayList<String> mails = new ArrayList<String>();
 		for (Agent a : AgentDAO.selectByAgence(codeAgence))
 			if (!a.getMail().equals(""))
