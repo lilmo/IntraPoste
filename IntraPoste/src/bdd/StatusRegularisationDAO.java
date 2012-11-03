@@ -21,7 +21,7 @@ public class StatusRegularisationDAO {
 		try {
 			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
-					.executeQuery("SELECT CODE_STATUT_REGULARISATION, NOM_STATUS_REGULARISATION FROM STATUS_REGULARISATION;");
+					.executeQuery("SELECT CODE_STATUT_REGULARISATION, NOM_STATUS_REGULARISATION FROM STATUS_REGULARISATION");
 			while (result.next())
 				results.add(new StatusRegularisation(result
 						.getInt("CODE_STATUT_REGULARISATION"), result
@@ -39,7 +39,7 @@ public class StatusRegularisationDAO {
 			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
 					.executeQuery("SELECT CODE_STATUT_REGULARISATION, NOM_STATUS_REGULARISATION FROM STATUS_REGULARISATION WHERE CODE_STATUT_REGULARISATION = "
-							+ codeStatusRegularisation + ";");
+							+ codeStatusRegularisation);
 			if (result.next())
 				return (new StatusRegularisation(
 						result.getInt("CODE_STATUT_REGULARISATION"),
@@ -58,7 +58,7 @@ public class StatusRegularisationDAO {
 			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
 					.executeQuery("SELECT CODE_STATUT_REGULARISATION, NOM_STATUS_REGULARISATION FROM STATUS_REGULARISATION WHERE NOM_STATUS_REGULARISATION = '"
-							+ nomStatusRegularisation + "';");
+							+ nomStatusRegularisation + "'");
 			while (result.next())
 				results.add(new StatusRegularisation(result
 						.getInt("CODE_STATUT_REGULARISATION"), result
@@ -70,7 +70,7 @@ public class StatusRegularisationDAO {
 		return results;
 	}
 
-	private static boolean insert(int codeStatusRegularisation,
+	public static boolean insert(int codeStatusRegularisation,
 			String nomStatusRegularisation) {
 
 		try {
@@ -81,7 +81,7 @@ public class StatusRegularisationDAO {
 					insert.executeQuery("INSERT INTO STATUS_REGULARISATION VALUES ("
 							+ codeStatusRegularisation
 							+ ", '"
-							+ nomStatusRegularisation + "');");
+							+ nomStatusRegularisation + "')");
 					return true;
 				}
 			}
@@ -90,5 +90,20 @@ public class StatusRegularisationDAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public static void empty() throws SQLException {
+		Statement insert = null;
+		try {
+			insert = Connexion.getInstance().getConnection().createStatement();
+			insert.executeQuery("DELETE FROM STATUS_REGULARISATION");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (insert != null)
+				insert.close();
+		}
 	}
 }

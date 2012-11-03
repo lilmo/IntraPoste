@@ -9,18 +9,13 @@ import metier.MotifRegularisation;
 
 public class MotifRegularisationDAO {
 
-	public static void init() {
-		try {
+	public static void init() throws SQLException {
 			insert("REJET REGULARISE");
 			insert("ERREUR RETROUVEE");
 			insert("COMBLEE EN NUMERAIRE");
 			insert("PRISE EN RECETTE");
 			insert("REMBOURSEE A L UTILISATEUR");
 			insert("ERREUR DE COMPTABILITE RETROUVEE");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	public static ArrayList<MotifRegularisation> selectAll()
