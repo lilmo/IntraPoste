@@ -7,10 +7,10 @@
 package metier;
 
 public class TypeAgent {
-	private String codeTypeAgent;
+	private int codeTypeAgent;
 	private String nomTypeAgent;
 
-	public TypeAgent(String codeTypeAgent, String nomTypeAgent) {
+	public TypeAgent(int codeTypeAgent, String nomTypeAgent) {
 		super();
 		this.codeTypeAgent = codeTypeAgent;
 		this.nomTypeAgent = nomTypeAgent;
@@ -19,7 +19,7 @@ public class TypeAgent {
 	/**
 	 * @return the codeTypeAgent
 	 */
-	public String getCodeTypeAgent() {
+	public int getCodeTypeAgent() {
 		return codeTypeAgent;
 	}
 
@@ -27,7 +27,7 @@ public class TypeAgent {
 	 * @param codeTypeAgent
 	 *            the codeTypeAgent to set
 	 */
-	public void setCodeTypeAgent(String codeTypeAgent) {
+	public void setCodeTypeAgent(int codeTypeAgent) {
 		this.codeTypeAgent = codeTypeAgent;
 	}
 

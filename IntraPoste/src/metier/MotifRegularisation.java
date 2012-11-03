@@ -7,10 +7,10 @@
 package metier;
 
 public class MotifRegularisation {
-	private String codeMotifRegularisation;
+	private int codeMotifRegularisation;
 	private String nomMotifRegularisation;
 
-	public MotifRegularisation(String codeMotifRegularisation,
+	public MotifRegularisation(int codeMotifRegularisation,
 			String nomMotifRegularisation) {
 		super();
 		this.codeMotifRegularisation = codeMotifRegularisation;
@@ -20,7 +20,7 @@ public class MotifRegularisation {
 	/**
 	 * @return the codeMotifRegularisation
 	 */
-	public String getCodeMotifRegularisation() {
+	public int getCodeMotifRegularisation() {
 		return codeMotifRegularisation;
 	}
 
@@ -28,7 +28,7 @@ public class MotifRegularisation {
 	 * @param codeMotifRegularisation
 	 *            the codeMotifRegularisation to set
 	 */
-	public void setCodeMotifRegularisation(String codeMotifRegularisation) {
+	public void setCodeMotifRegularisation(int codeMotifRegularisation) {
 		this.codeMotifRegularisation = codeMotifRegularisation;
 	}
 
@@ -45,6 +45,16 @@ public class MotifRegularisation {
 	 */
 	public void setNomMotifRegularisation(String nomMotifRegularisation) {
 		this.nomMotifRegularisation = nomMotifRegularisation;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "MotifRegularisation [codeMotifRegularisation="
+				+ codeMotifRegularisation + ", nomMotifRegularisation="
+				+ nomMotifRegularisation + "]";
 	}
 
 }

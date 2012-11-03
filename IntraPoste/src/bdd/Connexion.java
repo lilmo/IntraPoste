@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class UtilitairesDAO {
+public class Connexion {
 
-	public static Connection connect()
-	{
+	private static Connexion INSTANCE = new Connexion();
+
+	Connection connection;
+
+	private Connexion() {
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
 		} catch (SQLException e) {
@@ -15,7 +18,7 @@ public class UtilitairesDAO {
 			e.printStackTrace();
 		}
 		System.out.println("Connecting to the database...");
-		Connection connection = null;
+		connection = null;
 		try {
 			connection = DriverManager.getConnection(
 					"jdbc:oracle:thin:@localhost:1521:", "INTRAPOSTE", "a");
@@ -23,6 +26,14 @@ public class UtilitairesDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public static Connexion getInstance() {
+		return INSTANCE;
+	}
+	
+	public Connection getConnection()
+	{
 		return connection;
 	}
 }

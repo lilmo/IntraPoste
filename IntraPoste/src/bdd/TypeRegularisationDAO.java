@@ -8,15 +8,26 @@ import java.util.ArrayList;
 import metier.TypeRegularisation;
 
 public class TypeRegularisationDAO {
+
+	private static void init() {
+		insert(0, "PARTIELLE");
+		insert(1, "TOTALE");
+	}
+
 	public static ArrayList<TypeRegularisation> selectAll() {
 		ArrayList<TypeRegularisation> results = new ArrayList<>();
 		try {
-			Statement select = UtilitairesDAO.connect().createStatement();
+			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
-					.executeQuery("SELECT CODE_TYPE_REGULARISATION, NOM_TYPE_REGULARISATION FROM TYPE_REGULARISATION");
+					.executeQuery("SELECT CODE_TYPE_REGULARISATION, NOM_TYPE_REGULARISATION FROM TYPE_REGULARISATION;");
 			while (result.next())
-				results.add(new TypeRegularisation(result.getString("CODE_TYPE_REGULARISATION"), result
+				results.add(new TypeRegularisation(result
+						.getInt("CODE_TYPE_REGULARISATION"), result
 						.getString("NOM_TYPE_REGULARISATION")));
+			if (results.size() == 0) {
+				init();
+				return selectAll();
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -24,15 +35,16 @@ public class TypeRegularisationDAO {
 		return results;
 	}
 
-	public static TypeRegularisation selectByCode(String codeTypeRegularisation) {
+	public static TypeRegularisation selectByCode(int codeTypeRegularisation) {
 
 		try {
-			Statement select = UtilitairesDAO.connect().createStatement();
+			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
-					.executeQuery("SELECT CODE_TYPE_REGULARISATION, NOM_TYPE_REGULARISATION FROM TYPE_REGULARISATION WHERE CODE_TYPE_REGULARISATION = '"
-							+ codeTypeRegularisation + "'");
+					.executeQuery("SELECT CODE_TYPE_REGULARISATION, NOM_TYPE_REGULARISATION FROM TYPE_REGULARISATION WHERE CODE_TYPE_REGULARISATION = "
+							+ codeTypeRegularisation + ";");
 			if (result.next())
-				return (new TypeRegularisation(result.getString("CODE_TYPE_REGULARISATION"),
+				return (new TypeRegularisation(
+						result.getInt("CODE_TYPE_REGULARISATION"),
 						result.getString("NOM_TYPE_REGULARISATION")));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -41,15 +53,17 @@ public class TypeRegularisationDAO {
 		return null;
 	}
 
-	public static ArrayList<TypeRegularisation> selectByNom(String nomTypeRegularisation) {
+	public static ArrayList<TypeRegularisation> selectByNom(
+			String nomTypeRegularisation) {
 		ArrayList<TypeRegularisation> results = new ArrayList<>();
 		try {
-			Statement select = UtilitairesDAO.connect().createStatement();
+			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
 					.executeQuery("SELECT CODE_TYPE_REGULARISATION, NOM_TYPE_REGULARISATION FROM TYPE_REGULARISATION WHERE NOM_TYPE_REGULARISATION = '"
-							+ nomTypeRegularisation + "'");
+							+ nomTypeRegularisation + "';");
 			while (result.next())
-				results.add(new TypeRegularisation(result.getString("CODE_TYPE_REGULARISATION"), result
+				results.add(new TypeRegularisation(result
+						.getInt("CODE_TYPE_REGULARISATION"), result
 						.getString("NOM_TYPE_REGULARISATION")));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -58,30 +72,15 @@ public class TypeRegularisationDAO {
 		return results;
 	}
 
-	public static boolean insert(String codeTypeRegularisation, String nomTypeRegularisation) {
+	private static boolean insert(int codeTypeRegularisation,
+			String nomTypeRegularisation) {
 
 		try {
 			if (selectByCode(codeTypeRegularisation) == null) {
-				Statement insert = UtilitairesDAO.connect().createStatement();
-				insert.executeQuery("INSERT INTO TYPE_REGULARISATION VALUES ('" + codeTypeRegularisation
-						+ "', '" + nomTypeRegularisation + "')");
-				return true;
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	public static boolean update(String codeTypeRegularisation, String nomTypeRegularisation) {
-
-		try {
-			if (selectByCode(codeTypeRegularisation) != null) {
-				Statement insert = UtilitairesDAO.connect().createStatement();
-				insert.executeQuery("UPDATE TYPE_REGULARISATION SET NOM_TYPE_REGULARISATION = '"
-						+ nomTypeRegularisation + "' WHERE CODE_TYPE_REGULARISATION = '" + codeTypeRegularisation
-						+ "'");
+				Statement insert = Connexion.getInstance().getConnection().createStatement();
+				insert.executeQuery("INSERT INTO TYPE_REGULARISATION VALUES ("
+						+ codeTypeRegularisation + ", '"
+						+ nomTypeRegularisation + "');");
 				return true;
 			}
 		} catch (SQLException e) {

@@ -8,87 +8,149 @@ import java.util.ArrayList;
 import metier.MotifRegularisation;
 
 public class MotifRegularisationDAO {
-	public static ArrayList<MotifRegularisation> selectAll() {
-		ArrayList<MotifRegularisation> results = new ArrayList<>();
+
+	private static void init() {
 		try {
-			Statement select = UtilitairesDAO.connect().createStatement();
-			ResultSet result = select
-					.executeQuery("SELECT CODE_MOTIF_REGULARISATION, DESCRIPTION_MOTIF_REGUL FROM MOTIF_REGULARISATION");
-			while (result.next())
-				results.add(new MotifRegularisation(result.getString("CODE_MOTIF_REGULARISATION"), result
-						.getString("DESCRIPTION_MOTIF_REGUL")));
+			insert("REJET REGULARISE");
+			insert("ERREUR RETROUVEE");
+			insert("COMBLEE EN NUMERAIRE");
+			insert("PRISE EN RECETTE");
+			insert("REMBOURSEE A L UTILISATEUR");
+			insert("ERREUR DE COMPTABILITE RETROUVEE");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public static ArrayList<MotifRegularisation> selectAll()
+			throws SQLException {
+		ArrayList<MotifRegularisation> results = new ArrayList<>();
+		Statement select = null;
+		try {
+			select = Connexion.getInstance().getConnection().createStatement();
+			ResultSet result = select
+					.executeQuery("SELECT CODE_MOTIF_REGULARISATION, DESCRIPTION_MOTIF_REGUL FROM MOTIF_REGULARISATION");
+			while (result.next())
+				results.add(new MotifRegularisation(result
+						.getInt("CODE_MOTIF_REGULARISATION"), result
+						.getString("DESCRIPTION_MOTIF_REGUL")));
+			if (results.size() == 0) {
+				init();
+				return selectAll();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (select != null)
+				select.close();
+		}
 		return results;
 	}
 
-	public static MotifRegularisation selectByCode(String codeMotifRegularisation) {
-
+	public static MotifRegularisation selectByCode(int codeMotifRegularisation)
+			throws SQLException {
+		Statement select = null;
 		try {
-			Statement select = UtilitairesDAO.connect().createStatement();
+			select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
-					.executeQuery("SELECT CODE_MOTIF_REGULARISATION, DESCRIPTION_MOTIF_REGUL FROM MOTIF_REGULARISATION WHERE CODE_MOTIF_REGULARISATION = '"
-							+ codeMotifRegularisation + "'");
+					.executeQuery("SELECT CODE_MOTIF_REGULARISATION, DESCRIPTION_MOTIF_REGUL FROM MOTIF_REGULARISATION WHERE CODE_MOTIF_REGULARISATION = "
+							+ codeMotifRegularisation);
 			if (result.next())
-				return (new MotifRegularisation(result.getString("CODE_MOTIF_REGULARISATION"),
+				return (new MotifRegularisation(
+						result.getInt("CODE_MOTIF_REGULARISATION"),
 						result.getString("DESCRIPTION_MOTIF_REGUL")));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (select != null)
+				select.close();
 		}
 		return null;
 	}
 
-	public static ArrayList<MotifRegularisation> selectByNom(String nomMotifRegularisation) {
+	public static ArrayList<MotifRegularisation> selectByNom(
+			String nomMotifRegularisation) throws SQLException {
 		ArrayList<MotifRegularisation> results = new ArrayList<>();
+		Statement select = null;
 		try {
-			Statement select = UtilitairesDAO.connect().createStatement();
+			select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
-					.executeQuery("SELECT CODE_MOTIF_REGULARISATION, DESCRIPTION_MOTIF_REGUL FROM MOTIF_REGULARISATION WHERE DESCRIPTION_MOTIF_REGUL = '"
+					.executeQuery("SELECT CODE_MOTIF_REGULARISATION, DESCRIPTION_MOTIF_REGUL FROM MOTIF_REGULARISATION WHERE DESCRIPTION_MOTIF_REGUL LIKE '"
 							+ nomMotifRegularisation + "'");
 			while (result.next())
-				results.add(new MotifRegularisation(result.getString("CODE_MOTIF_REGULARISATION"), result
+				results.add(new MotifRegularisation(result
+						.getInt("CODE_MOTIF_REGULARISATION"), result
 						.getString("DESCRIPTION_MOTIF_REGUL")));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (select != null)
+				select.close();
 		}
 		return results;
 	}
 
-	public static boolean insert(String codeMotifRegularisation, String nomMotifRegularisation) {
-
+	public static boolean insert(String nomMotifRegularisation)
+			throws SQLException {
+		Statement insert = null;
 		try {
-			if (selectByCode(codeMotifRegularisation) == null) {
-				Statement insert = UtilitairesDAO.connect().createStatement();
-				insert.executeQuery("INSERT INTO MOTIF_REGULARISATION VALUES ('" + codeMotifRegularisation
-						+ "', '" + nomMotifRegularisation + "')");
+			if (selectByNom(nomMotifRegularisation).size() == 0) {
+				insert = Connexion.getInstance().getConnection()
+						.createStatement();
+				insert.executeQuery("INSERT INTO MOTIF_REGULARISATION VALUES ('', '"
+						+ nomMotifRegularisation.toUpperCase() + "')");
 				return true;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (insert != null)
+				insert.close();
 		}
 		return false;
 	}
 
-	public static boolean update(String codeMotifRegularisation, String nomMotifRegularisation) {
-
+	public static boolean update(int codeMotifRegularisation,
+			String nomMotifRegularisation) throws SQLException {
+		Statement insert = null;
 		try {
 			if (selectByCode(codeMotifRegularisation) != null) {
-				Statement insert = UtilitairesDAO.connect().createStatement();
+				insert = Connexion.getInstance().getConnection()
+						.createStatement();
 				insert.executeQuery("UPDATE MOTIF_REGULARISATION SET DESCRIPTION_MOTIF_REGUL = '"
-						+ nomMotifRegularisation + "' WHERE CODE_MOTIF_REGULARISATION = '" + codeMotifRegularisation
-						+ "'");
+						+ nomMotifRegularisation
+						+ "' WHERE CODE_MOTIF_REGULARISATION = "
+						+ codeMotifRegularisation);
 				return true;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (insert != null)
+				insert.close();
 		}
 		return false;
+	}
+
+	public static void empty() throws SQLException {
+		Statement insert = null;
+		try {
+			insert = Connexion.getInstance().getConnection().createStatement();
+			insert.executeQuery("DELETE FROM MOTIF_REGULARISATION");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (insert != null)
+				insert.close();
+		}
 	}
 
 }

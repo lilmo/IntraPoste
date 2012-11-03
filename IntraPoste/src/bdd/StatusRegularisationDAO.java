@@ -8,15 +8,29 @@ import java.util.ArrayList;
 import metier.StatusRegularisation;
 
 public class StatusRegularisationDAO {
+	
+	private static void init()
+	{
+		insert(0, "DECLAREE");
+		insert(1, "PARTIELLEMENT REGULARISEE");
+		insert(2, "TOTALEMENT REGULARISEE");
+	}
+	
 	public static ArrayList<StatusRegularisation> selectAll() {
 		ArrayList<StatusRegularisation> results = new ArrayList<>();
 		try {
-			Statement select = UtilitairesDAO.connect().createStatement();
+			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
-					.executeQuery("SELECT CODE_STATUT_REGULARISATION, NOM_REGULARISATION FROM STATUS_REGULARISATION");
+					.executeQuery("SELECT CODE_STATUT_REGULARISATION, NOM_STATUS_REGULARISATION FROM STATUS_REGULARISATION;");
 			while (result.next())
-				results.add(new StatusRegularisation(result.getString("CODE_STATUT_REGULARISATION"), result
-						.getString("NOM_REGULARISATION")));
+				results.add(new StatusRegularisation(result
+						.getInt("CODE_STATUT_REGULARISATION"), result
+						.getString("NOM_STATUS_REGULARISATION")));
+			if (results.size() == 0)
+			{
+				init();
+				return selectAll();
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -24,16 +38,17 @@ public class StatusRegularisationDAO {
 		return results;
 	}
 
-	public static StatusRegularisation selectByCode(String codeStatusRegularisation) {
+	public static StatusRegularisation selectByCode(int codeStatusRegularisation) {
 
 		try {
-			Statement select = UtilitairesDAO.connect().createStatement();
+			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
-					.executeQuery("SELECT CODE_STATUT_REGULARISATION, NOM_REGULARISATION FROM STATUS_REGULARISATION WHERE CODE_STATUT_REGULARISATION = '"
-							+ codeStatusRegularisation + "'");
+					.executeQuery("SELECT CODE_STATUT_REGULARISATION, NOM_STATUS_REGULARISATION FROM STATUS_REGULARISATION WHERE CODE_STATUT_REGULARISATION = "
+							+ codeStatusRegularisation + ";");
 			if (result.next())
-				return (new StatusRegularisation(result.getString("CODE_STATUT_REGULARISATION"),
-						result.getString("NOM_REGULARISATION")));
+				return (new StatusRegularisation(
+						result.getInt("CODE_STATUT_REGULARISATION"),
+						result.getString("NOM_STATUS_REGULARISATION")));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,16 +56,18 @@ public class StatusRegularisationDAO {
 		return null;
 	}
 
-	public static ArrayList<StatusRegularisation> selectByNom(String nomMotifRegularisation) {
+	public static ArrayList<StatusRegularisation> selectByNom(
+			String nomStatusRegularisation) {
 		ArrayList<StatusRegularisation> results = new ArrayList<>();
 		try {
-			Statement select = UtilitairesDAO.connect().createStatement();
+			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
-					.executeQuery("SELECT CODE_STATUT_REGULARISATION, NOM_REGULARISATION FROM STATUS_REGULARISATION WHERE NOM_REGULARISATION = '"
-							+ nomMotifRegularisation + "'");
+					.executeQuery("SELECT CODE_STATUT_REGULARISATION, NOM_STATUS_REGULARISATION FROM STATUS_REGULARISATION WHERE NOM_STATUS_REGULARISATION = '"
+							+ nomStatusRegularisation + "';");
 			while (result.next())
-				results.add(new StatusRegularisation(result.getString("CODE_STATUT_REGULARISATION"), result
-						.getString("NOM_REGULARISATION")));
+				results.add(new StatusRegularisation(result
+						.getInt("CODE_STATUT_REGULARISATION"), result
+						.getString("NOM_STATUS_REGULARISATION")));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -58,14 +75,20 @@ public class StatusRegularisationDAO {
 		return results;
 	}
 
-	public static boolean insert(String codeStatusRegularisation, String nomMotifRegularisation) {
+	private static boolean insert(int codeStatusRegularisation,
+			String nomStatusRegularisation) {
 
 		try {
 			if (selectByCode(codeStatusRegularisation) == null) {
-				Statement insert = UtilitairesDAO.connect().createStatement();
-				insert.executeQuery("INSERT INTO STATUS_REGULARISATION VALUES ('" + codeStatusRegularisation
-						+ "', '" + nomMotifRegularisation + "')");
-				return true;
+				if (codeStatusRegularisation >= 0
+						&& codeStatusRegularisation <= 2) {
+					Statement insert = Connexion.getInstance().getConnection().createStatement();
+					insert.executeQuery("INSERT INTO STATUS_REGULARISATION VALUES ("
+							+ codeStatusRegularisation
+							+ ", '"
+							+ nomStatusRegularisation + "');");
+					return true;
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -73,22 +96,4 @@ public class StatusRegularisationDAO {
 		}
 		return false;
 	}
-
-	public static boolean update(String codeStatusRegularisation, String nomMotifRegularisation) {
-
-		try {
-			if (selectByCode(codeStatusRegularisation) != null) {
-				Statement insert = UtilitairesDAO.connect().createStatement();
-				insert.executeQuery("UPDATE STATUS_REGULARISATION SET NOM_REGULARISATION = '"
-						+ nomMotifRegularisation + "' WHERE CODE_STATUT_REGULARISATION = '" + codeStatusRegularisation
-						+ "'");
-				return true;
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
-
 }

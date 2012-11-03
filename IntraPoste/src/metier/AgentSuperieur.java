@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import bdd.UtilitairesDAO;
+import bdd.Connexion;
 
 public class AgentSuperieur extends Agent {
 	public AgentSuperieur(String codeAgent, TypeAgent typeAgent, String mail,
@@ -45,7 +45,7 @@ public class AgentSuperieur extends Agent {
 		//TODO: déplacer dans AgentSupérieurDAO
 		float somme = 0;
 		try {
-			Statement select = UtilitairesDAO.connect().createStatement();
+			Statement select = Connexion.getInstance().getConnection().createStatement();
 			String query = "SELECT MONTANT FROM ERREUR_CAISSE WHERE CODE_AGENCE = '"
 					+ codeAgence
 					+ "' AND DATE_VACATION = '"

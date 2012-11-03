@@ -7,10 +7,10 @@
 package metier;
 
 public class TypeRegularisation {
-	private String codeTypeRegularisation;
+	private int codeTypeRegularisation;
 	private String nomTypeRegularisation;
 
-	public TypeRegularisation(String codeTypeRegularisation,
+	public TypeRegularisation(int codeTypeRegularisation,
 			String nomTypeRegularisation) {
 		super();
 		this.codeTypeRegularisation = codeTypeRegularisation;
@@ -20,7 +20,7 @@ public class TypeRegularisation {
 	/**
 	 * @return the codeTypeRegularisation
 	 */
-	public String getCodeTypeRegularisation() {
+	public int getCodeTypeRegularisation() {
 		return codeTypeRegularisation;
 	}
 
@@ -28,7 +28,7 @@ public class TypeRegularisation {
 	 * @param codeTypeRegularisation
 	 *            the codeTypeRegularisation to set
 	 */
-	public void setCodeTypeRegularisation(String codeTypeRegularisation) {
+	public void setCodeTypeRegularisation(int codeTypeRegularisation) {
 		this.codeTypeRegularisation = codeTypeRegularisation;
 	}
 

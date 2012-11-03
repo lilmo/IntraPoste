@@ -12,7 +12,7 @@ public class AgenceDAO {
 	public static ArrayList<Agence> selectAll() {
 		ArrayList<Agence> results = new ArrayList<>();
 		try {
-			Statement select = UtilitairesDAO.connect().createStatement();
+			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
 					.executeQuery("SELECT CODE_AGENCE, NOM_AGENCE FROM AGENCE");
 			while (result.next())
@@ -28,7 +28,7 @@ public class AgenceDAO {
 	public static Agence selectByCode(String codeAgence) {
 
 		try {
-			Statement select = UtilitairesDAO.connect().createStatement();
+			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
 					.executeQuery("SELECT CODE_AGENCE, NOM_AGENCE FROM AGENCE WHERE CODE_AGENCE = '"
 							+ codeAgence + "'");
@@ -49,7 +49,7 @@ public class AgenceDAO {
 	public static ArrayList<Agence> selectByNom(String nomAgence) {
 		ArrayList<Agence> results = new ArrayList<>();
 		try {
-			Statement select = UtilitairesDAO.connect().createStatement();
+			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
 					.executeQuery("SELECT CODE_AGENCE, NOM_AGENCE FROM AGENCE WHERE NOM_AGENCE = '"
 							+ nomAgence + "'");
@@ -67,7 +67,7 @@ public class AgenceDAO {
 
 		try {
 			if (selectByCode(codeAgence) == null) {
-				Statement insert = UtilitairesDAO.connect().createStatement();
+				Statement insert = Connexion.getInstance().getConnection().createStatement();
 				insert.executeQuery("INSERT INTO AGENCE VALUES ('" + codeAgence
 						+ "', '" + nomAgence + "')");
 				return true;
@@ -83,7 +83,7 @@ public class AgenceDAO {
 
 		try {
 			if (selectByCode(codeAgence) != null) {
-				Statement insert = UtilitairesDAO.connect().createStatement();
+				Statement insert = Connexion.getInstance().getConnection().createStatement();
 				insert.executeQuery("UPDATE AGENCE SET NOM_AGENCE = '" + nomAgence + "' WHERE CODE_AGENCE = '" + codeAgence + "'");
 				return true;
 			}

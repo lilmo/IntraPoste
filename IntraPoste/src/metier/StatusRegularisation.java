@@ -7,10 +7,10 @@
 package metier;
 
 public class StatusRegularisation {
-	private String codeStatusRegularisation;
+	private int codeStatusRegularisation;
 	private String nomStatusRegularisation;
 
-	public StatusRegularisation(String codeStatusRegularisation,
+	public StatusRegularisation(int codeStatusRegularisation,
 			String nomStatusRegularisation) {
 		super();
 		this.codeStatusRegularisation = codeStatusRegularisation;
@@ -20,7 +20,7 @@ public class StatusRegularisation {
 	/**
 	 * @return the codeStatusRegularisation
 	 */
-	public String getCodeStatusRegularisation() {
+	public int getCodeStatusRegularisation() {
 		return codeStatusRegularisation;
 	}
 
@@ -28,7 +28,7 @@ public class StatusRegularisation {
 	 * @param codeStatusRegularisation
 	 *            the codeStatusRegularisation to set
 	 */
-	public void setCodeStatusRegularisation(String codeStatusRegularisation) {
+	public void setCodeStatusRegularisation(int codeStatusRegularisation) {
 		this.codeStatusRegularisation = codeStatusRegularisation;
 	}
 

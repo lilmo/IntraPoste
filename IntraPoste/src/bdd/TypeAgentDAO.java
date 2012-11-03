@@ -8,15 +8,28 @@ import java.util.ArrayList;
 import metier.TypeAgent;
 
 public class TypeAgentDAO {
+
+	private static void init() {
+		insert(0, "DIRECTION");
+		insert(1, "COMPTABLE");
+		insert(2, "GUICHET");
+	}
+
+	
 	public static ArrayList<TypeAgent> selectAll() {
 		ArrayList<TypeAgent> results = new ArrayList<>();
 		try {
-			Statement select = UtilitairesDAO.connect().createStatement();
+			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
-					.executeQuery("SELECT CODE_TYPE_AGENT, NOM_TYPE_AGENT FROM TYPE_AGENT");
+					.executeQuery("SELECT CODE_TYPE_AGENT, NOM_TYPE_AGENT FROM TYPE_AGENT;");
 			while (result.next())
-				results.add(new TypeAgent(result.getString("CODE_TYPE_AGENT"), result
+				results.add(new TypeAgent(result.getInt("CODE_TYPE_AGENT"), result
 						.getString("NOM_TYPE_AGENT")));
+			if (results.size() == 0)
+			{
+				init();
+				return selectAll();
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -24,15 +37,15 @@ public class TypeAgentDAO {
 		return results;
 	}
 
-	public static TypeAgent selectByCode(String codeTypeAgent) {
+	public static TypeAgent selectByCode(int codeTypeAgent) {
 
 		try {
-			Statement select = UtilitairesDAO.connect().createStatement();
+			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
-					.executeQuery("SELECT CODE_TYPE_AGENT, NOM_TYPE_AGENT FROM TYPE_AGENT WHERE CODE_TYPE_AGENT = '"
-							+ codeTypeAgent + "'");
+					.executeQuery("SELECT CODE_TYPE_AGENT, NOM_TYPE_AGENT FROM TYPE_AGENT WHERE CODE_TYPE_AGENT = "
+							+ codeTypeAgent + ";");
 			if (result.next())
-				return (new TypeAgent(result.getString("CODE_TYPE_AGENT"),
+				return (new TypeAgent(result.getInt("CODE_TYPE_AGENT"),
 						result.getString("NOM_TYPE_AGENT")));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -44,12 +57,12 @@ public class TypeAgentDAO {
 	public static ArrayList<TypeAgent> selectByNom(String nomTypeAgent) {
 		ArrayList<TypeAgent> results = new ArrayList<>();
 		try {
-			Statement select = UtilitairesDAO.connect().createStatement();
+			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
 					.executeQuery("SELECT CODE_TYPE_AGENT, NOM_TYPE_AGENT FROM TYPE_AGENT WHERE NOM_TYPE_AGENT = '"
-							+ nomTypeAgent + "'");
+							+ nomTypeAgent + "';");
 			while (result.next())
-				results.add(new TypeAgent(result.getString("CODE_TYPE_AGENT"), result
+				results.add(new TypeAgent(result.getInt("CODE_TYPE_AGENT"), result
 						.getString("NOM_TYPE_AGENT")));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -58,13 +71,13 @@ public class TypeAgentDAO {
 		return results;
 	}
 
-	public static boolean insert(String codeTypeAgent, String nomTypeAgent) {
+	private static boolean insert(int codeTypeAgent, String nomTypeAgent) {
 
 		try {
 			if (selectByCode(codeTypeAgent) == null) {
-				Statement insert = UtilitairesDAO.connect().createStatement();
-				insert.executeQuery("INSERT INTO TYPE_AGENT VALUES ('" + codeTypeAgent
-						+ "', '" + nomTypeAgent + "')");
+				Statement insert = Connexion.getInstance().getConnection().createStatement();
+				insert.executeQuery("INSERT INTO TYPE_AGENT VALUES (" + codeTypeAgent
+						+ ", '" + nomTypeAgent + "');");
 				return true;
 			}
 		} catch (SQLException e) {
@@ -73,22 +86,4 @@ public class TypeAgentDAO {
 		}
 		return false;
 	}
-
-	public static boolean update(String codeTypeAgent, String nomTypeAgent) {
-
-		try {
-			if (selectByCode(codeTypeAgent) != null) {
-				Statement insert = UtilitairesDAO.connect().createStatement();
-				insert.executeQuery("UPDATE TYPE_AGENT SET NOM_TYPE_AGENT = '"
-						+ nomTypeAgent + "' WHERE CODE_TYPE_AGENT = '" + codeTypeAgent
-						+ "'");
-				return true;
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
-
 }
