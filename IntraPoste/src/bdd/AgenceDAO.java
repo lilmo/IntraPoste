@@ -93,4 +93,19 @@ public class AgenceDAO {
 		}
 		return false;
 	}
+	
+	public static void empty() throws SQLException {
+		Statement insert = null;
+		try {
+			insert = Connexion.getInstance().getConnection().createStatement();
+			insert.executeQuery("DELETE FROM AGENCE");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (insert != null)
+				insert.close();
+		}
+	}
 }
