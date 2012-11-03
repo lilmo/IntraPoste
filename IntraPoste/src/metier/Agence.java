@@ -7,40 +7,42 @@
 package metier;
 
 public class Agence {
-   private String codeAgence;
-   private String nomAgence;
-   
-   public Agence(String codeAgence, String nomAgence) {
-	this.codeAgence = codeAgence;
-	this.nomAgence = nomAgence;
-}
+	private String codeAgence;
+	private String nomAgence;
 
-/**
- * @return the codeAgence
- */
-public String getCodeAgence() {
-	return codeAgence;
-}
+	public Agence(String codeAgence, String nomAgence) {
+		this.codeAgence = codeAgence;
+		this.nomAgence = nomAgence;
+	}
 
-/**
- * @param codeAgence the codeAgence to set
- */
-public void setCodeAgence(String codeAgence) {
-	this.codeAgence = codeAgence;
-}
+	/**
+	 * @return the codeAgence
+	 */
+	public String getCodeAgence() {
+		return codeAgence;
+	}
 
-/**
- * @return the nomAgence
- */
-public String getNomAgence() {
-	return nomAgence;
-}
+	/**
+	 * @param codeAgence
+	 *            the codeAgence to set
+	 */
+	public void setCodeAgence(String codeAgence) {
+		this.codeAgence = codeAgence;
+	}
 
-/**
- * @param nomAgence the nomAgence to set
- */
-public void setNomAgence(String nomAgence) {
-	this.nomAgence = nomAgence;
-}
+	/**
+	 * @return the nomAgence
+	 */
+	public String getNomAgence() {
+		return nomAgence;
+	}
+
+	/**
+	 * @param nomAgence
+	 *            the nomAgence to set
+	 */
+	public void setNomAgence(String nomAgence) {
+		this.nomAgence = nomAgence;
+	}
 
 }

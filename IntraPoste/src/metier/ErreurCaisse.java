@@ -8,6 +8,11 @@ package metier;
 
 import java.util.Date;
 
+import bdd.AgenceDAO;
+import bdd.AgentDAO;
+import bdd.StatusRegularisationDAO;
+import bdd.TypeErreurDAO;
+
 public class ErreurCaisse {
 	private int erreurCaisseId;
 	private Agent agent;
@@ -29,6 +34,19 @@ public class ErreurCaisse {
 		this.montant = montant;
 	}
 
+	public ErreurCaisse(int erreurCaisseId, String codeAgent,
+			String codeTypeErreur, String codeAgence,
+			int codeStatusRegularisation, Date dateVacation, float montant) {
+		this.erreurCaisseId = erreurCaisseId;
+		this.agent = AgentDAO.selectByCode(codeAgent);
+		this.typeErreur = TypeErreurDAO.selectByCode(codeTypeErreur);
+		this.agence = AgenceDAO.selectByCode(codeAgence);
+		this.statusRegularisation = StatusRegularisationDAO
+				.selectByCode(codeStatusRegularisation);
+		this.dateVacation = dateVacation;
+		this.montant = montant;
+	}
+
 	/**
 	 * @param montantRegulation
 	 * @param codeAgentRegulateur
@@ -40,7 +58,7 @@ public class ErreurCaisse {
 
 		return 0;
 	}
-	
+
 	/**
 	 * @return the erreurCaisseId
 	 */

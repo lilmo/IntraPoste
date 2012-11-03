@@ -6,11 +6,10 @@
 
 package metier;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
 
-import bdd.Connexion;
+import bdd.ErreurCaisseDAO;
 
 public class AgentSuperieur extends Agent {
 	public AgentSuperieur(String codeAgent, TypeAgent typeAgent, String mail,
@@ -37,51 +36,45 @@ public class AgentSuperieur extends Agent {
 	 * @param dateVacation
 	 * @param codeTypeErreur
 	 * @param codeStatusRegularisation
+	 * @throws SQLException
 	 */
 	public float bilanJourneeErreursCaisse(String codeAgence,
 			java.util.Date dateVacation, String codeTypeErreur,
-			int codeStatusRegularisation) {
-		// TODO: implement
-		//TODO: déplacer dans AgentSupérieurDAO
+			int codeStatusRegularisation) throws SQLException {
 		float somme = 0;
-		try {
-			Statement select = Connexion.getInstance().getConnection().createStatement();
-			String query = "SELECT MONTANT FROM ERREUR_CAISSE WHERE CODE_AGENCE = '"
-					+ codeAgence
-					+ "' AND DATE_VACATION = '"
-					+ dateVacation
-					+ "'";
-			if ((codeTypeErreur.equals("D")) || (codeTypeErreur.equals("E")))
-				query += "' AND CODE_TYPE_ERREUR = '" + codeTypeErreur + "'";
-			if ((codeStatusRegularisation >= 0)
-					&& (codeStatusRegularisation <= 2))
-				query += " AND CODE_STATUT_REGULARISATION = '"
-						+ codeStatusRegularisation + "'";
-			ResultSet result = select.executeQuery(query);
-
-			while (result.next()) {
-				if (result.getString("CODE_TYPE_ERREUR") == "D")
-					somme -= result.getFloat("MONTANT");
+		ArrayList<ErreurCaisse> erreurs = ErreurCaisseDAO
+				.selectErreursCaisseForBilanJournee(codeAgence, dateVacation,
+						codeTypeErreur, codeStatusRegularisation);
+		if (erreurs != null)
+			for (ErreurCaisse e : erreurs)
+				if (e.getTypeErreur().getNomTypeErreur().equals("D"))
+					somme -= e.getMontant();
 				else
-					somme += result.getFloat("MONTANT");
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+					somme += e.getMontant();
 		return somme;
 	}
 
 	/**
 	 * @param codeAgence
 	 * @param dateVacation
-	 * @param typeErreur
-	 * @param statusErreur
+	 * @param codeTypeErreur
+	 * @param codeStatusRegularisation
+	 * @throws SQLException
 	 */
 	public float bilanErreursCaisse(String codeAgence,
-			java.util.Date dateVacation, String typeErreur, int statusErreur) {
-		// TODO: implement
-		return 0;
+			java.util.Date dateVacation, String codeTypeErreur,
+			int codeStatusRegularisation) throws SQLException {
+		float somme = 0;
+		ArrayList<ErreurCaisse> erreurs = ErreurCaisseDAO
+				.selectErreursCaisseForBilan(codeAgence, dateVacation,
+						codeTypeErreur, codeStatusRegularisation);
+		if (erreurs != null)
+			for (ErreurCaisse e : erreurs)
+				if (e.getTypeErreur().getNomTypeErreur().equals("D"))
+					somme -= e.getMontant();
+				else
+					somme += e.getMontant();
+		return somme;
 	}
 
 }
