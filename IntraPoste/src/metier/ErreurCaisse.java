@@ -6,10 +6,13 @@
 
 package metier;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import bdd.AgenceDAO;
 import bdd.AgentDAO;
+import bdd.ErreurCaisseDAO;
+import bdd.ErreurCaisseRegularisationDAO;
 import bdd.StatusRegularisationDAO;
 import bdd.TypeErreurDAO;
 
@@ -48,15 +51,49 @@ public class ErreurCaisse {
 	}
 
 	/**
+	 * @return int : 0 désigne la régularisation s’est effectuée avec Succès 1
+	 *         Erreur de caisse déjà régularisée totallement 2 Régularisation
+	 *         non autorisée (selon type de l'agent) 3 Erreur système (base de
+	 *         données ou autre)
 	 * @param montantRegulation
 	 * @param codeAgentRegulateur
 	 * @param motifRegulation
 	 */
 	public int regulariserErreurCaisse(float montantRegularisation,
-			String codeAgentRegularisateur, String motifRegularisation) {
+			String codeAgentRegularisateur,
+			MotifRegularisation motifRegularisation) {
 		// TODO: implement
+		Calendar calendar = Calendar.getInstance();
+		java.util.Date now = calendar.getTime();
 
-		return 0;
+		// TODO: mettre des enums au lieu des chiffres
+		if (this.statusRegularisation.getCodeStatusRegularisation() != 2) // totallement
+																			// régularisée
+		{
+			if (this.statusRegularisation.getCodeStatusRegularisation() == 0) // pas
+																				// régularisée
+			{
+				if (this.montant == montantRegularisation) {
+					// TODO: vérifier les droits en fonction de codeMotif
+					this.setStatusRegularisation(StatusRegularisationDAO
+							.selectByCode(2));
+					if (ErreurCaisseDAO.updateStatus(this.erreurCaisseId, 2)) {
+						// TODO: Si pas d'exception...
+						ErreurCaisseRegularisationDAO.insert(
+								new java.sql.Timestamp(now.getTime()),
+								codeAgentRegularisateur, motifRegularisation,
+								1, this.erreurCaisseId,
+								montantRegularisation);
+						return 0; // Tout s'est bien passé
+					} else
+						return 3; // Erreur base de données
+				} else {
+
+				}
+			}
+		} else
+			return 1; // Déjà régularisée
+		return 3; // Autre erreur
 	}
 
 	/**

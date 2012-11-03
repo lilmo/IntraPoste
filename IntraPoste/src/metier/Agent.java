@@ -15,8 +15,8 @@ public class Agent {
 	private String prenom;
 	private String motDePasse;
 
-	public Agent(String codeAgent, Agence agence, TypeAgent typeAgent, String mail,
-			String nom, String prenom, String motDePasse) {
+	public Agent(String codeAgent, Agence agence, TypeAgent typeAgent,
+			String mail, String nom, String prenom, String motDePasse) {
 		this.codeAgent = codeAgent;
 		this.agence = agence;
 		this.typeAgent = typeAgent;
@@ -39,6 +39,21 @@ public class Agent {
 	 */
 	public void setCodeAgent(String codeAgent) {
 		this.codeAgent = codeAgent;
+	}
+
+	/**
+	 * @return the agence
+	 */
+	public Agence getAgence() {
+		return agence;
+	}
+
+	/**
+	 * @param agence
+	 *            the agence to set
+	 */
+	public void setAgence(Agence agence) {
+		this.agence = agence;
 	}
 
 	/**

@@ -23,12 +23,14 @@ public class AgentSuperieur extends Agent {
 	 * @param statusErreur
 	 * @param dateDebut
 	 * @param dateFin
+	 * @throws SQLException
 	 */
-	public ErreurCaisse[] consulterErreursCaisseAgence(String codeAgence,
-			String typeErreur, int statusErreur, java.util.Date dateDebut,
-			java.util.Date dateFin) {
-		// TODO: implement
-		return null;
+	public ArrayList<ErreurCaisse> consulterErreursCaisseAgence(
+			String codeAgence, String codeTypeErreur,
+			int codeStatusRegularisation, java.util.Date dateDebut,
+			java.util.Date dateFin) throws SQLException {
+		return ErreurCaisseDAO.selectErreursCaisseByAgence(codeAgence,
+				dateDebut, dateFin, codeTypeErreur, codeStatusRegularisation);
 	}
 
 	/**
