@@ -13,8 +13,8 @@ import bdd.ErreurCaisseDAO;
 
 public class AgentSuperieur extends Agent {
 	public AgentSuperieur(String codeAgent, TypeAgent typeAgent, String mail,
-			String nom, String prenom, String motDePasse) {
-		super(codeAgent, typeAgent, mail, nom, prenom, motDePasse);
+			String nom, String prenom, String motDePasse, Agence agence) {
+		super(codeAgent, agence, typeAgent, mail, nom, prenom, motDePasse);
 	}
 
 	/**

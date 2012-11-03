@@ -8,15 +8,17 @@ package metier;
 
 public class Agent {
 	private String codeAgent;
+	private Agence agence;
 	private TypeAgent typeAgent;
 	private String mail;
 	private String nom;
 	private String prenom;
 	private String motDePasse;
 
-	public Agent(String codeAgent, TypeAgent typeAgent, String mail,
+	public Agent(String codeAgent, Agence agence, TypeAgent typeAgent, String mail,
 			String nom, String prenom, String motDePasse) {
 		this.codeAgent = codeAgent;
+		this.agence = agence;
 		this.typeAgent = typeAgent;
 		this.mail = mail;
 		this.nom = nom;

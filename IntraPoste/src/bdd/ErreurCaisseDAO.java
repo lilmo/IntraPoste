@@ -92,4 +92,11 @@ public class ErreurCaisseDAO {
 		}
 		return results;
 	}
+
+	public static void insert(String codeAgence, String codeAgent,
+			Date dateVacation, String typeErreur, float montant) {
+		// TODO Auto-generated method stub
+		// Ne pas oublier de mettre le "CODE_STATUS_REGULARISATION" à 0 (erreur
+		// déclarée et non encore régularisée)
+	}
 }
