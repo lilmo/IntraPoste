@@ -9,7 +9,7 @@ import metier.TypeErreur;
 
 public class TypeErreurDAO {
 
-	private static void init() {
+	public static void init() {
 		insert("E", "EXCEDENT");
 		insert("D", "DEFICIT");
 	}
@@ -24,10 +24,6 @@ public class TypeErreurDAO {
 				results.add(new TypeErreur(
 						result.getString("CODE_TYPE_ERREUR"), result
 								.getString("NOM_TYPE_ERREUR")));
-			if (results.size() == 0) {
-				init();
-				return selectAll();
-			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

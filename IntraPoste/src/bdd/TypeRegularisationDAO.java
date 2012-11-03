@@ -9,7 +9,7 @@ import metier.TypeRegularisation;
 
 public class TypeRegularisationDAO {
 
-	private static void init() {
+	public static void init() {
 		insert(0, "PARTIELLE");
 		insert(1, "TOTALE");
 	}
@@ -24,10 +24,6 @@ public class TypeRegularisationDAO {
 				results.add(new TypeRegularisation(result
 						.getInt("CODE_TYPE_REGULARISATION"), result
 						.getString("NOM_TYPE_REGULARISATION")));
-			if (results.size() == 0) {
-				init();
-				return selectAll();
-			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

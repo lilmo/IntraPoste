@@ -9,7 +9,7 @@ import metier.TypeAgent;
 
 public class TypeAgentDAO {
 
-	private static void init() {
+	public static void init() {
 		insert(0, "DIRECTION");
 		insert(1, "COMPTABLE");
 		insert(2, "GUICHET");
@@ -25,11 +25,6 @@ public class TypeAgentDAO {
 			while (result.next())
 				results.add(new TypeAgent(result.getInt("CODE_TYPE_AGENT"), result
 						.getString("NOM_TYPE_AGENT")));
-			if (results.size() == 0)
-			{
-				init();
-				return selectAll();
-			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

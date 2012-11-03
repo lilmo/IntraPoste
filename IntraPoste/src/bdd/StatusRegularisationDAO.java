@@ -9,7 +9,7 @@ import metier.StatusRegularisation;
 
 public class StatusRegularisationDAO {
 	
-	private static void init()
+	public static void init()
 	{
 		insert(0, "DECLAREE");
 		insert(1, "PARTIELLEMENT REGULARISEE");
@@ -26,11 +26,6 @@ public class StatusRegularisationDAO {
 				results.add(new StatusRegularisation(result
 						.getInt("CODE_STATUT_REGULARISATION"), result
 						.getString("NOM_STATUS_REGULARISATION")));
-			if (results.size() == 0)
-			{
-				init();
-				return selectAll();
-			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -40,7 +40,6 @@ public class Main {
 		m = MotifRegularisationDAO.selectByCode(MotifRegularisationDAO.selectByNom("OSSI").get(0).getCodeMotifRegularisation());
 		if (m != null)
 			System.out.println(m.toString());
-		System.out.println(m.toString());
 		
 		AgenceDAO.insert("ABC", "CD");
 		ArrayList<Agence> agences = AgenceDAO.selectAll();

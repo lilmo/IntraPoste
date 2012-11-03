@@ -9,7 +9,7 @@ import metier.MotifRegularisation;
 
 public class MotifRegularisationDAO {
 
-	private static void init() {
+	public static void init() {
 		try {
 			insert("REJET REGULARISE");
 			insert("ERREUR RETROUVEE");
@@ -35,10 +35,6 @@ public class MotifRegularisationDAO {
 				results.add(new MotifRegularisation(result
 						.getInt("CODE_MOTIF_REGULARISATION"), result
 						.getString("DESCRIPTION_MOTIF_REGUL")));
-			if (results.size() == 0) {
-				init();
-				return selectAll();
-			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
