@@ -57,7 +57,6 @@ public class AgentComptable extends AgentSuperieur {
 		for (String mail : mails)
 			//Envoyer mail avec JavaMail?
 			;
-		
 	}
 
 }
