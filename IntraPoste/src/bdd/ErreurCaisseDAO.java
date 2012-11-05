@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import metier.Agence;
+import metier.Agent;
 import metier.ErreurCaisse;
 
 public class ErreurCaisseDAO {
@@ -276,7 +277,27 @@ public class ErreurCaisseDAO {
 	}
 
 	private static ErreurCaisse selectErreursCaisseById(int erreurCaisseId) {
-		// TODO Auto-generated method stub
+		try {
+			Statement select = Connexion.getInstance().getConnection().createStatement();
+			ResultSet result = select
+					.executeQuery("SELECT * FROM ERREUR_CAISSE WHERE ERREUR_CAISSE_ID = '"
+							+ erreurCaisseId + "'");
+			if (result.next())
+			{
+//				System.out.println(result.getInt("ERREUR_CAISSE_ID"));
+				return (new ErreurCaisse(result.getInt("ERREUR_CAISSE_ID"),
+						result.getString("CODE_AGENT"), 
+						result.getString("CODE_TYPE_ERREUR"), 
+						result.getString("CODE_AGENCE"), 
+						result.getInt("CODE_STATUT_REGULARISATION"),
+						result.getDate("DATE_VACATION"),
+						result.getFloat("MONTANT")));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 }

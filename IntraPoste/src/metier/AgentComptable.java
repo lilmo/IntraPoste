@@ -25,9 +25,10 @@ public class AgentComptable extends AgentSuperieur {
 	 * @param dateVacation
 	 * @param codeTypeErreur
 	 * @param montant
+	 * @throws SQLException 
 	 */
 	public int declarerErreurCaisse(String codeAgence, String codeAgent,
-			java.util.Date dateVacation, String codeTypeErreur, float montant) {
+			java.util.Date dateVacation, String codeTypeErreur, float montant) throws SQLException {
 		ErreurCaisseDAO.insert(codeAgence, codeAgent, dateVacation,
 				codeTypeErreur, montant);
 		int maxMontant = 10;
@@ -41,8 +42,9 @@ public class AgentComptable extends AgentSuperieur {
 		return 0;
 	}
 
-	/** @param mail */
-	private ArrayList<String> getMailsDirection(String codeAgence) {
+	/** @param mail 
+	 * @throws SQLException */
+	private ArrayList<String> getMailsDirection(String codeAgence) throws SQLException {
 		ArrayList<String> mails = new ArrayList<String>();
 		for (Agent a : AgentDAO.selectByAgence(codeAgence))
 			if (!a.getMail().equals(""))
