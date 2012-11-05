@@ -3,7 +3,9 @@ package bdd;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
+import metier.ErreursCaisseRegularisation;
 import metier.MotifRegularisation;
 
 public class ErreurCaisseRegularisationDAO {
@@ -28,6 +30,12 @@ public class ErreurCaisseRegularisationDAO {
 			if (insert != null)
 				insert.close();
 		}
+	}
+
+	public static ArrayList<ErreursCaisseRegularisation> selectByErreurCaisse(
+			int erreurCaisseId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
