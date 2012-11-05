@@ -25,9 +25,10 @@ public class AgentComptable extends AgentSuperieur {
 	 * @param dateVacation
 	 * @param codeTypeErreur
 	 * @param montant
+	 * @throws SQLException 
 	 */
 	public int declarerErreurCaisse(String codeAgence, String codeAgent,
-			java.util.Date dateVacation, String codeTypeErreur, float montant) {
+			java.util.Date dateVacation, String codeTypeErreur, float montant) throws SQLException {
 		ErreurCaisseDAO.insert(codeAgence, codeAgent, dateVacation,
 				codeTypeErreur, montant);
 		int maxMontant = 10;
