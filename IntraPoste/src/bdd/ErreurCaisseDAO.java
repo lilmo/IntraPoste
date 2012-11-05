@@ -120,8 +120,9 @@ public class ErreurCaisseDAO {
 	}
 
 	public static ArrayList<ErreurCaisse> selectErreursCaisseByAgent(
-			String codeAgent, Date dateDebut, Date dateFin, String codeTypeErreur,
-			int codeStatusRegularisation) throws SQLException {
+			String codeAgent, Date dateDebut, Date dateFin,
+			String codeTypeErreur, int codeStatusRegularisation)
+			throws SQLException {
 		Statement select = null;
 		ArrayList<ErreurCaisse> results = new ArrayList<ErreurCaisse>();
 		try {
@@ -195,8 +196,9 @@ public class ErreurCaisseDAO {
 	
 	
 	public static ArrayList<ErreurCaisse> selectErreursCaisseByAgence(
-			String codeAgence, Date dateDebut, Date dateFin, String codeTypeErreur,
-			int codeStatusRegularisation) throws SQLException {
+			String codeAgence, Date dateDebut, Date dateFin,
+			String codeTypeErreur, int codeStatusRegularisation)
+			throws SQLException {
 		Statement select = null;
 		ArrayList<ErreurCaisse> results = new ArrayList<ErreurCaisse>();
 		try {
@@ -232,7 +234,7 @@ public class ErreurCaisseDAO {
 		}
 		return results;
 	}
-	
+
 	public static void insert(String codeAgence, String codeAgent,
 			Date dateVacation, String typeErreur, float montant) throws SQLException {
 		Statement insert = null;
@@ -253,9 +255,28 @@ public class ErreurCaisseDAO {
 		}
 	}
 
-	public static boolean updateStatus(int erreurCaisseId, int nouveauCodeStatusRegularisation) {
-		return false;
+	public static ErreurCaisse updateStatus(int erreurCaisseId,
+			int nouveauCodeStatusRegularisation) throws SQLException {
+		String query = "UPDATE TABLE ERREUR_CAISSE SET CODE_STATUS_REGULARISATION = "
+				+ nouveauCodeStatusRegularisation
+				+ "WHERE ERREUR_CAISSE_ID = "
+				+ erreurCaisseId;
+		Statement select = null;
+		try {
+			select = Connexion.getInstance().getConnection().createStatement();
+			select.execute(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (select != null)
+				select.close();
+		}
+		return selectErreursCaisseById(erreurCaisseId);
+	}
+
+	private static ErreurCaisse selectErreursCaisseById(int erreurCaisseId) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 }
