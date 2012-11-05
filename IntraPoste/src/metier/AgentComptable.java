@@ -42,8 +42,9 @@ public class AgentComptable extends AgentSuperieur {
 		return 0;
 	}
 
-	/** @param mail */
-	private ArrayList<String> getMailsDirection(String codeAgence) {
+	/** @param mail 
+	 * @throws SQLException */
+	private ArrayList<String> getMailsDirection(String codeAgence) throws SQLException {
 		ArrayList<String> mails = new ArrayList<String>();
 		for (Agent a : AgentDAO.selectByAgence(codeAgence))
 			if (!a.getMail().equals(""))
@@ -54,9 +55,8 @@ public class AgentComptable extends AgentSuperieur {
 	/** @param mail */
 	private void envoyerMail(ArrayList<String> mails) {
 		// TODO: implement
-		for (String mail : mails)
+		//for (String mail : mails)
 			//Envoyer mail avec JavaMail?
-			;
 	}
 
 }
