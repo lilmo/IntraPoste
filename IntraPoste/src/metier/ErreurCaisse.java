@@ -6,6 +6,8 @@
 
 package metier;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -52,8 +54,8 @@ public class ErreurCaisse {
 
 	/**
 	 * @return int : 0 désigne la régularisation s’est effectuée avec Succès 1
-	 *         Erreur de caisse déjà régularisée totallement 2 Régularisation
-	 *         non autorisée (selon type de l'agent) 3 Erreur système (base de
+	 *         Erreur de caisse déjà régularisée totalement 2 Régularisation non
+	 *         autorisée (selon type de l'agent) 3 Erreur système (base de
 	 *         données ou autre)
 	 * @param montantRegulation
 	 * @param codeAgentRegulateur
@@ -63,37 +65,69 @@ public class ErreurCaisse {
 			String codeAgentRegularisateur,
 			MotifRegularisation motifRegularisation) {
 		// TODO: implement
-		Calendar calendar = Calendar.getInstance();
-		java.util.Date now = calendar.getTime();
 
 		// TODO: mettre des enums au lieu des chiffres
-		if (this.statusRegularisation.getCodeStatusRegularisation() != 2) // totallement
+		if (this.statusRegularisation.getCodeStatusRegularisation() != 2) // totalement
 																			// régularisée
 		{
 			if (this.statusRegularisation.getCodeStatusRegularisation() == 0) // pas
 																				// régularisée
 			{
-				if (this.montant == montantRegularisation) {
-					// TODO: vérifier les droits en fonction de codeMotif
-					this.setStatusRegularisation(StatusRegularisationDAO
-							.selectByCode(2));
-					if (ErreurCaisseDAO.updateStatus(this.erreurCaisseId, 2)) {
-						// TODO: Si pas d'exception...
-						ErreurCaisseRegularisationDAO.insert(
-								new java.sql.Timestamp(now.getTime()),
-								codeAgentRegularisateur, motifRegularisation,
-								1, this.erreurCaisseId,
-								montantRegularisation);
-						return 0; // Tout s'est bien passé
-					} else
-						return 3; // Erreur base de données
-				} else {
-
-				}
+				// TODO: vérifier les droits en fonction de codeMotif
+				if (this.montant == montantRegularisation) // On fait une
+															// régularisation
+															// totale
+					return subRegularisation(1, 2, codeAgentRegularisateur,
+							motifRegularisation, montantRegularisation);
+				else
+					// On fait une régularisation partielle
+					return subRegularisation(0, 1, codeAgentRegularisateur,
+							motifRegularisation, montantRegularisation);
+			} else { // partiellement régularisée
+				if (resteARegulariser() == montantRegularisation) {
+					return subRegularisation(0, 2, codeAgentRegularisateur,
+							motifRegularisation, montantRegularisation);
+				} else if (resteARegulariser() > montantRegularisation) {
+					return subRegularisation(0, 1, codeAgentRegularisateur,
+							motifRegularisation, montantRegularisation);
+				} else
+					return 3; // Le montant ne doit pas être supérieur au
+								// montant restant à régulariser
 			}
 		} else
 			return 1; // Déjà régularisée
-		return 3; // Autre erreur
+	}
+
+	private int subRegularisation(int codeTypeRegularisation,
+			int codeStatusRegularisation, String codeAgentRegularisateur,
+			MotifRegularisation motifRegularisation, float montantRegularisation) {
+		Calendar calendar = Calendar.getInstance();
+		java.util.Date now = calendar.getTime();
+
+		try {
+			ErreurCaisseRegularisationDAO.insert(
+					new java.sql.Timestamp(now.getTime()),
+					codeAgentRegularisateur, motifRegularisation,
+					codeTypeRegularisation, this.erreurCaisseId,
+					montantRegularisation);
+			this.statusRegularisation = ErreurCaisseDAO.updateStatus(
+					this.erreurCaisseId, codeStatusRegularisation)
+					.getStatusRegularisation();
+			return 0; // Tout s'est bien passé
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 3;
+		}
+	}
+
+	private int resteARegulariser() {
+		ArrayList<ErreursCaisseRegularisation> reguls = ErreurCaisseRegularisationDAO
+				.selectByErreurCaisse(this.erreurCaisseId);
+		int dejaRegularise = 0;
+		for (ErreursCaisseRegularisation e : reguls)
+			dejaRegularise += e.getMontantRegularisation();
+		return dejaRegularise;
 	}
 
 	/**
