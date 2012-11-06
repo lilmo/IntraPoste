@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import metier.Agence;
 import metier.Agent;
 
 public class AgentDAO {
@@ -87,6 +88,28 @@ public class AgentDAO {
 			e.printStackTrace();
 		}
 		return codeAgent;
+	}
+	
+	public static ArrayList<Agent> selectAll() {
+		ArrayList<Agent> results = new ArrayList<Agent>();
+		try {
+			Statement select = Connexion.getInstance().getConnection()
+					.createStatement();
+			ResultSet result = select
+					.executeQuery("SELECT * FROM AGENT");
+			while (result.next())
+				results.add(new Agent(result.getString("CODE_AGENT"), AgenceDAO
+						.selectByCode(result.getString("CODE_AGENCE")),
+						TypeAgentDAO.selectByCode(result
+								.getInt("CODE_TYPE_AGENT")), result
+								.getString("MAIL"), result.getString("NOM"),
+						result.getString("PRENOM"), result
+								.getString("MOT_DE_PASSE")));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return results;
 	}
 	
 	public static Agent selectByCode(String codeAgent) {

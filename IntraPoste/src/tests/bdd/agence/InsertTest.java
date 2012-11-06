@@ -17,21 +17,20 @@ public class InsertTest {
 
 	@Before
 	public void setUp() throws Exception {
-		AgenceDAO.empty();
-		
-		AgenceDAO.insert("AB", "AGNEAU");
-		AgenceDAO.insert("CD", "BOEUF");
-		AgenceDAO.insert("EF", "POULE");
+		AgenceDAO.init();
 
 		agences = AgenceDAO.selectAll();
 	}
 
 	@Test
 	public void test() {
-		assertTrue(agences.size() == 3);
+		assertTrue(agences.size() == 6);
 		for (Agence m : agences)
-			assertTrue(m.getNomAgence().equals("AGNEAU")
-					|| m.getNomAgence().equals("BOEUF")
-					|| m.getNomAgence().equals("POULE"));
+			assertTrue(m.getNomAgence().equals("POSTE PARIS 1")
+					|| m.getNomAgence().equals("POSTE PARIS 20")
+					|| m.getNomAgence().equals("POSTE ANTONY GARE")
+					|| m.getNomAgence().equals("POSTE VINCENNES FONTENAY")
+					|| m.getNomAgence().equals("POSTE ARCHE DEFENSE")
+					|| m.getNomAgence().equals("POSTE LA DEFENSE CENTRE CIAL"));
 	}
 }

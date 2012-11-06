@@ -120,7 +120,7 @@ public class ErreurCaisse {
 		try {
 			ErreurCaisseRegularisationDAO.insert(
 					new java.sql.Timestamp(now.getTime()),
-					codeAgentRegularisateur, motifRegularisation,
+					codeAgentRegularisateur, motifRegularisation.getCodeMotifRegularisation(),
 					codeTypeRegularisation, this.erreurCaisseId,
 					montantRegularisation);
 			this.statusRegularisation = ErreurCaisseDAO.updateStatus(
