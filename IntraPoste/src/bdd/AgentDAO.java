@@ -114,7 +114,7 @@ public class AgentDAO {
 		return null;
 	}
 
-	public static ArrayList<Agent> selectByAgence(String codeAgence)
+	
 	public static ArrayList<Agent> selectByNom(
 			String nomAgent) throws SQLException {
 		ArrayList<Agent> results = new ArrayList<Agent>();
@@ -167,7 +167,9 @@ public class AgentDAO {
 				select.close();
 		}
 		return results;
-	}	
+	}
+	
+	public static ArrayList<Agent> selectByAgence(String codeAgence) throws SQLException {
 		ArrayList<Agent> results = new ArrayList<Agent>();
 		Statement select = null;
 		try {
