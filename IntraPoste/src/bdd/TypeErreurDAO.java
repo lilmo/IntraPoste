@@ -67,6 +67,29 @@ public class TypeErreurDAO {
 		return results;
 	}
 
+	public static boolean update(String codeTypeErreur,
+			String nomTypeErreur) throws SQLException {
+		Statement insert = null;
+		try {
+			if (selectByCode(codeTypeErreur) != null) {
+				insert = Connexion.getInstance().getConnection()
+						.createStatement();
+				insert.executeQuery("UPDATE TYPE_ERREUR SET NOM_TYPE_ERREUR = '"
+						+ nomTypeErreur
+						+ "' WHERE CODE_TYPE_ERREUR = "
+						+ codeTypeErreur);
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (insert != null)
+				insert.close();
+		}
+		return false;
+	}
+	
 	public static boolean insert(String codeTypeErreur, String nomTypeErreur) {
 
 		try {
@@ -83,6 +106,7 @@ public class TypeErreurDAO {
 		return false;
 	}
 
+	
 	public static void empty() throws SQLException {
 		Statement insert = null;
 		try {

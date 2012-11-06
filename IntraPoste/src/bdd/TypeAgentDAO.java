@@ -33,6 +33,29 @@ public class TypeAgentDAO {
 		return results;
 	}
 
+	public static boolean update(int codeTypeAgent,
+			String nomTypeAgent) throws SQLException {
+		Statement insert = null;
+		try {
+			if (selectByCode(codeTypeAgent) != null) {
+				insert = Connexion.getInstance().getConnection()
+						.createStatement();
+				insert.executeQuery("UPDATE TYPE_AGENT SET NOM_TYPE_AGENT = '"
+						+ nomTypeAgent
+						+ "' WHERE CODE_TYPE_AGENT = "
+						+ codeTypeAgent);
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (insert != null)
+				insert.close();
+		}
+		return false;
+	}
+	
 	public static TypeAgent selectByCode(int codeTypeAgent) {
 
 		try {

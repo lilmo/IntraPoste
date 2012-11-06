@@ -87,6 +87,29 @@ public class TypeRegularisationDAO {
 		return false;
 	}
 
+	public static boolean update(int codeTypeRegul,
+			String nomTypeRegul) throws SQLException {
+		Statement insert = null;
+		try {
+			if (selectByCode(codeTypeRegul) != null) {
+				insert = Connexion.getInstance().getConnection()
+						.createStatement();
+				insert.executeQuery("UPDATE TYPE_REGULARISATION SET NOM_TYPE_REGULARISATION = '"
+						+ nomTypeRegul
+						+ "' WHERE CODE_TYPE_REGULARISATION = "
+						+ codeTypeRegul);
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (insert != null)
+				insert.close();
+		}
+		return false;
+	}
+	
 	public static void empty() throws SQLException {
 		Statement insert = null;
 		try {

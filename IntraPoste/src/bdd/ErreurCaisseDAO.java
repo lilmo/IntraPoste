@@ -7,12 +7,22 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import metier.Agence;
-import metier.Agent;
 import metier.ErreurCaisse;
 
 public class ErreurCaisseDAO {
 
+	public static void init() throws SQLException {
+		
+		// TODO init ErreurCaisse
+		empty();
+		insert("", "", new Date() , "", 0);
+		insert("", "", new Date() , "", 0);
+		insert("", "", new Date() , "", 0);
+		insert("", "", new Date() , "", 0);
+		insert("", "", new Date() , "", 0);
+		insert("", "", new Date() , "", 0);
+	}	
+	
 	public static ErreurCaisse selectByCode(String codeErreurCaisse) {
 
 		try {
@@ -300,4 +310,20 @@ public class ErreurCaisseDAO {
 		}
 		return null;
 	}
+	
+	public static void empty() throws SQLException {
+		Statement insert = null;
+		try {
+			insert = Connexion.getInstance().getConnection().createStatement();
+			insert.executeQuery("DELETE FROM ERREUR_CAISSE");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (insert != null)
+				insert.close();
+		}
+	}
+	
 }

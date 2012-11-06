@@ -9,6 +9,17 @@ import metier.Agence;
 
 public class AgenceDAO {
 
+	
+	public static void init() throws SQLException {
+		empty();
+		insert("PAR011", "POSTE PARIS 1");
+		insert("PAR201", "POSTE PARIS 20");
+		insert("ANT001", "POSTE ANTONY GARE");
+		insert("VIN001", "POSTE VINCENNES FONTENAY");
+		insert("DEF001", "POSTE ARCHE DEFENSE");
+		insert("DEF002", "POSTE LA DEFENSE CENTRE CIAL");
+	}	
+	
 	public static ArrayList<Agence> selectAll() {
 		ArrayList<Agence> results = new ArrayList<>();
 		try {

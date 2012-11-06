@@ -34,6 +34,29 @@ public class StatusRegularisationDAO {
 		return results;
 	}
 
+	public static boolean update(int codeStatusRegularisation,
+			String nomStatusRegularisation) throws SQLException {
+		Statement insert = null;
+		try {
+			if (selectByCode(codeStatusRegularisation) != null) {
+				insert = Connexion.getInstance().getConnection()
+						.createStatement();
+				insert.executeQuery("UPDATE STATUS_REGULARISATION SET NOM_STATUS_REGULARISATION = '"
+						+ nomStatusRegularisation
+						+ "' WHERE CODE_STATUS_REGULARISATION = "
+						+ codeStatusRegularisation);
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (insert != null)
+				insert.close();
+		}
+		return false;
+	}
+	
 	public static StatusRegularisation selectByCode(int codeStatusRegularisation) {
 
 		try {
