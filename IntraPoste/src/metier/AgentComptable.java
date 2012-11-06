@@ -55,10 +55,8 @@ public class AgentComptable extends AgentSuperieur {
 	/** @param mail */
 	private void envoyerMail(ArrayList<String> mails) {
 		// TODO: implement
-		for (String mail : mails)
+		//for (String mail : mails)
 			//Envoyer mail avec JavaMail?
-			;
-		
 	}
 
 }

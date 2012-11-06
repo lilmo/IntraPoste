@@ -61,11 +61,10 @@ public class ErreurCaisse {
 	 * @param codeAgentRegulateur
 	 * @param motifRegulation
 	 */
-	public int regulariserErreurCaisse(float montantRegularisation,
+	public int regulariserErreurCaisseComptable(float montantRegularisation,
 			String codeAgentRegularisateur,
 			MotifRegularisation motifRegularisation) {
 		// TODO: implement
-
 		// TODO: mettre des enums au lieu des chiffres
 		if (this.statusRegularisation.getCodeStatusRegularisation() != 2) // totalement
 																			// régularisée
@@ -76,7 +75,7 @@ public class ErreurCaisse {
 				// TODO: vérifier les droits en fonction de codeMotif
 				if (this.montant == montantRegularisation) // On fait une
 															// régularisation
-															// totale
+															// totalement
 					return subRegularisation(1, 2, codeAgentRegularisateur,
 							motifRegularisation, montantRegularisation);
 				else
@@ -96,6 +95,20 @@ public class ErreurCaisse {
 			}
 		} else
 			return 1; // Déjà régularisée
+	}
+
+	public int regulariserErreurCaisseGuichet(float montantRegularisation,
+			String codeAgentRegularisateur,
+			MotifRegularisation motifRegularisation) {
+		// TODO: implement
+		// TODO: mettre des enums au lieu des chiffres
+		int maxRegul = 5;
+		if (this.typeErreur.getCodeTypeErreur().equals("E"))
+			if (this.montant < maxRegul)
+				return subRegularisation(1, 2, codeAgentRegularisateur,
+						motifRegularisation, montantRegularisation);
+		return 2;
+
 	}
 
 	private int subRegularisation(int codeTypeRegularisation,
