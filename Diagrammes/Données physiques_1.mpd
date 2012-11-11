@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?PowerDesigner AppLocale="UTF16" ID="{4A5C32EC-B6A6-4799-BF48-50FE50760EE0}" Label="" LastModificationDate="1351971884" Name="Données physiques_1" Objects="133" Symbols="19" Target="ORACLE Version 11g" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" signature="PDM_DATA_MODEL_XML" version="15.1.0.2850"?>
+<?PowerDesigner AppLocale="UTF16" ID="{4A5C32EC-B6A6-4799-BF48-50FE50760EE0}" Label="" LastModificationDate="1352654108" Name="Données physiques_1" Objects="119" Symbols="19" Target="ORACLE Version 11g" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" signature="PDM_DATA_MODEL_XML" version="15.1.0.2850"?>
 <!-- Veuillez ne pas modifier ce fichier -->
 
 <Model xmlns:a="attribute" xmlns:c="collection" xmlns:o="object">
@@ -5389,8 +5389,8 @@ start with 0
 <a:Code>ORA11GR1</a:Code>
 <a:CreationDate>1351529479</a:CreationDate>
 <a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1351941169</a:ModificationDate>
-<a:Modifier>LOPVET</a:Modifier>
+<a:ModificationDate>1352654108</a:ModificationDate>
+<a:Modifier>Morgane LOPVET</a:Modifier>
 <a:TargetModelURL>file:///%_DBMS%/ora11g.xdb</a:TargetModelURL>
 <a:TargetModelID>BAE632F3-AC04-4059-9893-259ABA89351C</a:TargetModelID>
 <a:TargetModelClassID>4BA9F647-DAB1-11D1-9944-006097355D9B</a:TargetModelClassID>
@@ -5407,6 +5407,7 @@ start with 0
 <a:ObjectID>C93F1DAA-6620-4D10-821D-39B8F9426BA3</a:ObjectID>
 <a:Name>Données conceptuelles_1</a:Name>
 <a:Code>DONNEES_CONCEPTUELLES_1</a:Code>
+<a:ExtractionID>4522066</a:ExtractionID>
 <a:CreationDate>1351529491</a:CreationDate>
 <a:Creator>Morgane</a:Creator>
 <a:ModificationDate>1351529491</a:ModificationDate>
