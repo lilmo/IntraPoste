@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <constant name="struts.devMode" value="true"/>
+    <package name="action" namespace="/" extends="struts-default">
+        
+        <action name="LoginPage" class="action.LoginPageAction">
+            <result name="error">/loginPage.jsp</result>
+            <result name="guichet" type="redirectAction">AccueilGuichet</result>
+            <result name="superieur" type="redirectAction">AccueilSuperieur</result>
+        </action>
+        
+        <action name="AccueilGuichet" class="action.AccueilGuichetAction">
+            <result name="success">/AccueilGuichet.jsp</result>
+        </action>
+
+    </package>
+</struts>

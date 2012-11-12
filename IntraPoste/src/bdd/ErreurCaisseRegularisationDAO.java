@@ -4,12 +4,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
-
-import org.apache.tomcat.util.buf.TimeStamp;
 
 import metier.ErreursCaisseRegularisation;
-import metier.MotifRegularisation;
 
 public class ErreurCaisseRegularisationDAO {
 
