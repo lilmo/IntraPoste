@@ -15,5 +15,15 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="lib/ojdbc6.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/Struts 2/Minimum/commons-fileupload-1.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/Struts 2/Minimum/commons-io-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/Struts 2/Minimum/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/Struts 2/Minimum/commons-logging-api-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/Struts 2/Minimum/freemarker-2.3.19.jar"/>
+	<classpathentry kind="lib" path="lib/Struts 2/Minimum/javassist-3.11.0.GA.jar"/>
+	<classpathentry kind="lib" path="lib/Struts 2/Minimum/ognl-3.0.5.jar"/>
+	<classpathentry kind="lib" path="lib/Struts 2/Minimum/struts2-core-2.3.4.1.jar"/>
+	<classpathentry kind="lib" path="lib/Struts 2/Minimum/xwork-core-2.3.4.1.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import metier.Agence;
 import metier.Agent;
 
 public class AgentDAO {

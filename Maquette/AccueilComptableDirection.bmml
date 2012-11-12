@@ -1,36 +1,35 @@
-<mockup version="1.0" skin="sketch" measuredW="1429" measuredH="639" mockupW="1397" mockupH="633">
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1429" measuredH="639" mockupW="1397" mockupH="633">
   <controls>
-    <control controlID="0" controlTypeID="com.balsamiq.mockups::TabBar" x="32" y="6" w="1397" h="457" measuredW="260" measuredH="100" zOrder="0" locked="false" isInGroup="-1">
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::TabBar" x="32" y="6" w="1397" h="457" measuredW="230" measuredH="100" zOrder="0" locked="false" isInGroup="-1">
       <controlProperties>
         <hrefs/>
-        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2220%2C0%2C164%2C29%22%20href%3D%22Accueil%2520patients.bmml%22%20alt%3D%22Accueil%20patients%22%20id%3D%220_0%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%22164%2C0%2C304%2C29%22%20href%3D%22GestionPersonnel.bmml%22%20alt%3D%22GestionPersonnel%22%20id%3D%220_1%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%22304%2C0%2C438%2C29%22%20href%3D%22GestionSoins.bmml%22%20alt%3D%22GestionSoins%22%20id%3D%220_2%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%22438%2C0%2C541%2C29%22%20href%3D%22Import-Export.bmml%22%20alt%3D%22Import-Export%22%20id%3D%220_3%22/%3E%0A</map>
         <selectedIndex>0</selectedIndex>
         <text>Erreurs%20de%20caisse%2C%20Bilan</text>
       </controlProperties>
     </control>
     <control controlID="5" controlTypeID="com.balsamiq.mockups::Canvas" x="51" y="50" w="1358" h="72" measuredW="100" measuredH="70" zOrder="1" locked="false" isInGroup="-1"/>
-    <control controlID="6" controlTypeID="com.balsamiq.mockups::Label" x="430" y="53" w="195" h="25" measuredW="122" measuredH="25" zOrder="2" locked="false" isInGroup="-1">
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Label" x="430" y="53" w="195" h="25" measuredW="116" measuredH="21" zOrder="2" locked="false" isInGroup="-1">
       <controlProperties>
         <align>left</align>
         <text>Rechercher%20erreur</text>
       </controlProperties>
     </control>
-    <control controlID="7" controlTypeID="com.balsamiq.mockups::Label" x="58" y="78" w="139" h="25" measuredW="97" measuredH="25" zOrder="3" locked="false" isInGroup="-1">
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Label" x="58" y="78" w="139" h="25" measuredW="87" measuredH="21" zOrder="3" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Date%20de%20d%E9but</text>
       </controlProperties>
     </control>
-    <control controlID="8" controlTypeID="com.balsamiq.mockups::TextInput" x="159" y="77" w="105" h="-1" measuredW="79" measuredH="29" zOrder="4" locked="false" isInGroup="-1">
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::TextInput" x="159" y="77" w="105" h="-1" measuredW="79" measuredH="27" zOrder="4" locked="false" isInGroup="-1">
       <controlProperties>
         <text/>
       </controlProperties>
     </control>
-    <control controlID="9" controlTypeID="com.balsamiq.mockups::Label" x="295" y="79" w="87" h="25" measuredW="78" measuredH="25" zOrder="5" locked="false" isInGroup="-1">
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Label" x="295" y="79" w="87" h="25" measuredW="67" measuredH="21" zOrder="5" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Date%20de%20fin</text>
       </controlProperties>
     </control>
-    <control controlID="10" controlTypeID="com.balsamiq.mockups::TextInput" x="382" y="78" w="105" h="-1" measuredW="79" measuredH="29" zOrder="6" locked="false" isInGroup="-1">
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::TextInput" x="382" y="78" w="105" h="-1" measuredW="79" measuredH="27" zOrder="6" locked="false" isInGroup="-1">
       <controlProperties>
         <text/>
       </controlProperties>
@@ -40,7 +39,7 @@
         <text>Patients</text>
       </controlProperties>
     </control>
-    <control controlID="15" controlTypeID="com.balsamiq.mockups::DataGrid" x="64" y="144" w="1326" h="300" measuredW="728" measuredH="88" zOrder="8" locked="false" isInGroup="-1">
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::DataGrid" x="64" y="144" w="1326" h="300" measuredW="689" measuredH="83" zOrder="8" locked="false" isInGroup="-1">
       <controlProperties>
         <selectedIndex>0</selectedIndex>
         <text>N%B0%20Agence%2C%20N%B0%20Agent%2C%20Numero%20d%27erreur%2C%20Type%20d%27erreur%2C%20Status%20de%20regularisation%2C%20Date%2C%20Montant%0A1%2C%202%2C%201234%2C%20Excedent%2C%20Totalement%20Regularis%E9e%2C%2028/04/2012%2C%203%u20AC%0A3%2C%204%2C%201299%2C%20D%E9ficit%2C%20Partiellement%20Regularis%E9e%2C%2030/08/2012%2C%20123%u20AC</text>
@@ -48,7 +47,7 @@
         <verticalScrollbar>true</verticalScrollbar>
       </controlProperties>
     </control>
-    <control controlID="16" controlTypeID="com.balsamiq.mockups::Button" x="1298" y="77" w="-1" h="-1" measuredW="95" measuredH="28" zOrder="9" locked="false" isInGroup="-1">
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Button" x="1298" y="77" w="-1" h="-1" measuredW="91" measuredH="27" zOrder="9" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Rechercher</text>
       </controlProperties>
@@ -64,42 +63,42 @@
         <text>Au%20clic%20sur%3A%0A-%20N%B0%20Erreur%20partiellement%20r%E9gularis%E9e%3A%20on%20arrive%20sur%20la%20page%20recapitulant%20les%20pr%E9c%E9dentes%20r%E9gularisations%20pour%20cette%20erreur.%20On%20peut%20alors%20la%20regulariser.%0A-%20N%B0%20Erreur%20totallement%20r%E9gularis%E9e%3A%20on%20arrive%20sur%20la%20page%20recapitulant%20les%20pr%E9c%E9dentes%20r%E9gularisations%20pour%20cette%20erreur.%20%28sans%20le%20bouton%20regulariser%29%0A-%20N%B0%20Erreur%20d%E9clar%E9e%20%28pas%20r%E9gularis%E9e%29%3A%20on%20arrive%20directement%20sur%20la%20page%20de%20r%E9gularisation%0A%20%0A-%20N%B0%20Agent%3A%20la%20m%EAme%20page%20avec%20toutes%20les%20erreurs%20de%20l%27agent%0A-%20N%B0%20Agence%3A%20la%20m%EAme%20page%20avec%20toutes%20les%20erreurs%20de%20l%27agence</text>
       </controlProperties>
     </control>
-    <control controlID="23" controlTypeID="com.balsamiq.mockups::ComboBox" x="608" y="78" w="-1" h="-1" measuredW="75" measuredH="54" zOrder="12" locked="false" isInGroup="-1">
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::ComboBox" x="608" y="78" w="-1" h="-1" measuredW="68" measuredH="48" zOrder="12" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Deficit%0AExcedent</text>
       </controlProperties>
     </control>
-    <control controlID="24" controlTypeID="com.balsamiq.mockups::Label" x="511" y="79" w="-1" h="-1" measuredW="94" measuredH="25" zOrder="13" locked="false" isInGroup="-1">
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::Label" x="511" y="79" w="-1" h="-1" measuredW="87" measuredH="21" zOrder="13" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Type%20d%27erreur</text>
       </controlProperties>
     </control>
-    <control controlID="25" controlTypeID="com.balsamiq.mockups::ComboBox" x="793" y="78" w="-1" h="-1" measuredW="186" measuredH="54" zOrder="14" locked="false" isInGroup="-1">
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::ComboBox" x="793" y="78" w="-1" h="-1" measuredW="173" measuredH="48" zOrder="14" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Partiellement%20r%E9gularis%E9e%0ATotalement%20r%E9gularis%E9e</text>
       </controlProperties>
     </control>
-    <control controlID="26" controlTypeID="com.balsamiq.mockups::Label" x="698" y="79" w="-1" h="-1" measuredW="47" measuredH="25" zOrder="15" locked="false" isInGroup="-1">
+    <control controlID="26" controlTypeID="com.balsamiq.mockups::Label" x="698" y="79" w="-1" h="-1" measuredW="42" measuredH="21" zOrder="15" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Status</text>
       </controlProperties>
     </control>
-    <control controlID="27" controlTypeID="com.balsamiq.mockups::Label" x="994" y="91" w="87" h="25" measuredW="75" measuredH="25" zOrder="16" locked="false" isInGroup="-1">
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::Label" x="994" y="91" w="87" h="25" measuredW="69" measuredH="21" zOrder="16" locked="false" isInGroup="-1">
       <controlProperties>
         <text>N%B0%20Agence</text>
       </controlProperties>
     </control>
-    <control controlID="28" controlTypeID="com.balsamiq.mockups::TextInput" x="1081" y="90" w="105" h="-1" measuredW="79" measuredH="29" zOrder="17" locked="false" isInGroup="-1">
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::TextInput" x="1081" y="90" w="105" h="-1" measuredW="79" measuredH="27" zOrder="17" locked="false" isInGroup="-1">
       <controlProperties>
         <text/>
       </controlProperties>
     </control>
-    <control controlID="29" controlTypeID="com.balsamiq.mockups::Label" x="1000" y="58" w="87" h="25" measuredW="67" measuredH="25" zOrder="18" locked="false" isInGroup="-1">
+    <control controlID="29" controlTypeID="com.balsamiq.mockups::Label" x="1000" y="58" w="87" h="25" measuredW="59" measuredH="21" zOrder="18" locked="false" isInGroup="-1">
       <controlProperties>
         <text>N%B0%20Agent</text>
       </controlProperties>
     </control>
-    <control controlID="30" controlTypeID="com.balsamiq.mockups::TextInput" x="1087" y="57" w="105" h="-1" measuredW="79" measuredH="29" zOrder="19" locked="false" isInGroup="-1">
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::TextInput" x="1087" y="57" w="105" h="-1" measuredW="79" measuredH="27" zOrder="19" locked="false" isInGroup="-1">
       <controlProperties>
         <text/>
       </controlProperties>
