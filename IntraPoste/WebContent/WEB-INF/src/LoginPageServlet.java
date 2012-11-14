@@ -1,4 +1,4 @@
-package servlet;
+
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,7 +32,7 @@ public class LoginPageServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		try {
-			out.println("<html><body><p>Hello</p></body></html>");
+			out.println("<html><body><p>Hello Monsieur B</p></body></html>");
 		} finally {
 			out.close();
 		}
