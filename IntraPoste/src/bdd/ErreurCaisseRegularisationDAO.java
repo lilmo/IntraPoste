@@ -4,23 +4,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import metier.ErreursCaisseRegularisation;
 
 public class ErreurCaisseRegularisationDAO {
 
-	@SuppressWarnings("deprecation")
 	public static void init() throws SQLException {
 		
 		// TODO init ErreurCaisse
 		empty();
-		insert(new Timestamp(0, 0, 0, 0, 0, 0, 0), "", 0, 0, 0, 0.0f);
-		insert(new Timestamp(0, 0, 0, 0, 0, 0, 0), "", 0, 0, 0, 0.0f);
-		insert(new Timestamp(0, 0, 0, 0, 0, 0, 0), "", 0, 0, 0, 0.0f);
-		insert(new Timestamp(0, 0, 0, 0, 0, 0, 0), "", 0, 0, 0, 0.0f);
-		insert(new Timestamp(0, 0, 0, 0, 0, 0, 0), "", 0, 0, 0, 0.0f);
-		insert(new Timestamp(0, 0, 0, 0, 0, 0, 0), "", 0, 0, 0, 0.0f);
-		insert(new Timestamp(0, 0, 0, 0, 0, 0, 0), "", 0, 0, 0, 0.0f);
+		insert(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()), "TOTO_C", MotifRegularisationDAO.selectAll().get(0).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get(0).getErreurCaisseId(), 0.0f);
+		insert(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()), "TOTO_T", MotifRegularisationDAO.selectAll().get(0).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get(0).getErreurCaisseId(), 0.0f);
+		insert(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()), "TOTO_C", MotifRegularisationDAO.selectAll().get(0).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get(0).getErreurCaisseId(), 0.0f);
+		insert(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()), "TOTO_B", MotifRegularisationDAO.selectAll().get(0).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get(0).getErreurCaisseId(), 0.0f);
+		insert(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()), "TOTO_P", MotifRegularisationDAO.selectAll().get(0).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get(0).getErreurCaisseId(), 0.0f);
+		insert(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()), "TOTO_C", MotifRegularisationDAO.selectAll().get(0).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get(0).getErreurCaisseId(), 0.0f);
+		insert(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()), "TOTO_B", MotifRegularisationDAO.selectAll().get(0).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get(0).getErreurCaisseId(), 0.0f);
 		
 	}	
 	
@@ -35,7 +35,7 @@ public class ErreurCaisseRegularisationDAO {
 		try {
 				insert = Connexion.getInstance().getConnection()
 						.createStatement();
-				insert.executeQuery("INSERT INTO ERREURS_CAISSES_REGULARISATIONS VALUES ('" + timestamp + "', '"
+				insert.executeQuery("INSERT INTO ERREURS_CAISSES_REGUL VALUES (to_timestamp ('" + timestamp.toString() + "', 'YYYY-MM-DD HH24:MI:SS.FF3'), '"
 						+ codeAgentRegularisateur + "', " + motifRegularisation + ", " + erreurCaisseId + 
 						", " + codeTypeRegularisation + ", " + montantRegularisation + ")");
 		} catch (SQLException e) {
@@ -57,7 +57,7 @@ public class ErreurCaisseRegularisationDAO {
 		Statement insert = null;
 		try {
 			insert = Connexion.getInstance().getConnection().createStatement();
-			insert.executeQuery("DELETE FROM ERREURS_CAISSES_REGULARISATIONS");
+			insert.executeQuery("DELETE FROM ERREURS_CAISSES_REGUL");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

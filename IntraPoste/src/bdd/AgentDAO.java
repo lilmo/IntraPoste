@@ -44,7 +44,7 @@ public class AgentDAO {
 				insert = Connexion.getInstance().getConnection()
 						.createStatement();
 				insert.executeQuery("INSERT INTO AGENT VALUES ('" + codeAgent.toUpperCase() + "', '"
-						+ codeAgence.toUpperCase() + "', " + codeTypeAgent + ", '" + mail.toUpperCase() + "', '" 
+						+ codeAgence.toUpperCase() + "', " + codeTypeAgent + ", '" + mail.toLowerCase() + "', '" 
 						+ motDePasse + "', '" + nom.toUpperCase() + "', '" + prenom.toUpperCase() + "')");
 				return true;
 			}
@@ -116,8 +116,8 @@ public class AgentDAO {
 			Statement select = Connexion.getInstance().getConnection()
 					.createStatement();
 			ResultSet result = select
-					.executeQuery("SELECT * FROM AGENT WHERE CODE_AGENT = '"
-							+ codeAgent + "'");
+					.executeQuery("SELECT * FROM AGENT WHERE CODE_AGENT LIKE '"
+							+ codeAgent.toUpperCase() + "'");
 			if (result.next()) {
 				// System.out.println(result.getString("CODE_AGENCE"));
 				return (new Agent(result.getString("CODE_AGENT"), AgenceDAO
