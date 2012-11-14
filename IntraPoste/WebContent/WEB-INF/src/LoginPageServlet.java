@@ -1,7 +1,5 @@
 
-
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,13 +27,21 @@ public class LoginPageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		try {
-			out.println("<html><body><p>Hello Monsieur B</p></body></html>");
-		} finally {
-			out.close();
-		}
+		// response.setContentType("text/html;charset=UTF-8");
+		// PrintWriter out = response.getWriter();
+		// try {
+		// out.println("<html><body><p>Hello Monsieur B</p></body></html>");
+		// } finally {
+		// out.close();
+		// }
+		
+		String paramAuteur = request.getParameter("auteur");
+		// Si on appelle la servlet avec "?auteur=Coyote", on verra Coyote
+		// s'afficher après OK !
+		String message = "Transmission de variables : OK !<br>paramAuteur : " + paramAuteur;
+		request.setAttribute("test", message);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/login_page.jsp")
+				.forward(request, response);
 	}
 
 	/**
