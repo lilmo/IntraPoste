@@ -13,13 +13,13 @@ import metier.ErreurCaisse;
 public class ErreurCaisseDAO {
 
 	public static void init() throws SQLException {
-		
+
 		// TODO init ErreurCaisse
 		empty();
-		insert("PAR201", "TOTO_C", new Date() , "E", 0);
-		insert("PAR201", "TOTO_C", new Date() , "E", 12);
-	}	
-	
+		insert("PAR201", "TOTO_C", new Date(), "E", 0);
+		insert("PAR201", "TOTO_C", new Date(), "E", 12);
+	}
+
 	public static ErreurCaisse selectById(int idErreurCaisse) {
 
 		try {
@@ -54,9 +54,11 @@ public class ErreurCaisseDAO {
 		ArrayList<ErreurCaisse> results = new ArrayList<ErreurCaisse>();
 		try {
 			select = Connexion.getInstance().getConnection().createStatement();
-			String query = "SELECT MONTANT FROM ERREUR_CAISSE WHERE CODE_AGENCE = '"
+			String query = "SELECT * FROM ERREUR_CAISSE WHERE CODE_AGENCE = '"
 					+ codeAgence
-					+ "' AND DATE_VACATION = to_date('" + new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(dateVacation)
+					+ "' AND DATE_VACATION = to_date('"
+					+ new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+							.format(dateVacation)
 					+ "', 'yyyy/mm/dd hh24:mi:ss')";
 			if ((codeTypeErreur.equals("D")) || (codeTypeErreur.equals("E")))
 				query += "' AND CODE_TYPE_ERREUR = '" + codeTypeErreur + "'";
@@ -95,10 +97,13 @@ public class ErreurCaisseDAO {
 			select = Connexion.getInstance().getConnection().createStatement();
 			Date debut = new Date(Calendar.getInstance().get(Calendar.YEAR), 1,
 					1);
-			String query = "SELECT MONTANT FROM ERREUR_CAISSE WHERE CODE_AGENCE = '"
+			String query = "SELECT * FROM ERREUR_CAISSE WHERE CODE_AGENCE = '"
 					+ codeAgence
-					+ "' AND DATE_VACATION BETWEEN to_date('" + new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(debut)
-					+ "', 'yyyy/mm/dd hh24:mi:ss') AND to_date('" + new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(dateVacation)
+					+ "' AND DATE_VACATION BETWEEN to_date('"
+					+ new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(debut)
+					+ "', 'yyyy/mm/dd hh24:mi:ss') AND to_date('"
+					+ new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+							.format(dateVacation)
 					+ "', 'yyyy/mm/dd hh24:mi:ss')";
 			if ((codeTypeErreur.equals("D")) || (codeTypeErreur.equals("E")))
 				query += "' AND CODE_TYPE_ERREUR = '" + codeTypeErreur + "'";
@@ -128,6 +133,36 @@ public class ErreurCaisseDAO {
 	}
 
 	public static ArrayList<ErreurCaisse> selectErreursCaisseByAgent(
+			String codeAgent) throws SQLException {
+		Statement select = null;
+		ArrayList<ErreurCaisse> results = new ArrayList<ErreurCaisse>();
+		try {
+			select = Connexion.getInstance().getConnection().createStatement();
+			String query = "SELECT * FROM ERREUR_CAISSE WHERE CODE_AGENT LIKE '"
+					+ codeAgent + "'";
+			ResultSet result = select.executeQuery(query);
+
+			while (result.next()) {
+
+				results.add(new ErreurCaisse(result.getInt("ERREUR_CAISSE_ID"),
+						result.getString("CODE_AGENT"), result
+								.getString("CODE_TYPE_ERREUR"), result
+								.getString("CODE_AGENCE"), result
+								.getInt("CODE_STATUT_REGULARISATION"), result
+								.getDate("DATE_VACATION"), result
+								.getFloat("MONTANT")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (select != null)
+				select.close();
+		}
+		return results;
+	}
+
+	public static ArrayList<ErreurCaisse> selectErreursCaisseByAgent(
 			String codeAgent, Date dateDebut, Date dateFin,
 			String codeTypeErreur, int codeStatusRegularisation)
 			throws SQLException {
@@ -135,11 +170,14 @@ public class ErreurCaisseDAO {
 		ArrayList<ErreurCaisse> results = new ArrayList<ErreurCaisse>();
 		try {
 			select = Connexion.getInstance().getConnection().createStatement();
-			String query = "SELECT MONTANT FROM ERREUR_CAISSE WHERE CODE_AGENT = '"
+			String query = "SELECT * FROM ERREUR_CAISSE WHERE CODE_AGENT = '"
 					+ codeAgent
-					+ "' AND DATE_VACATION BETWEEN to_date('" + new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(dateDebut)
-					+ "', 'yyyy/mm/dd hh24:mi:ss') AND to_date('" + new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(dateFin)
-					+ "', 'yyyy/mm/dd hh24:mi:ss')";
+					+ "' AND DATE_VACATION BETWEEN to_date('"
+					+ new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+							.format(dateDebut)
+					+ "', 'yyyy/mm/dd hh24:mi:ss') AND to_date('"
+					+ new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+							.format(dateFin) + "', 'yyyy/mm/dd hh24:mi:ss')";
 			if ((codeTypeErreur.equals("D")) || (codeTypeErreur.equals("E")))
 				query += "' AND CODE_TYPE_ERREUR = '" + codeTypeErreur + "'";
 			if ((codeStatusRegularisation >= 0)
@@ -175,8 +213,12 @@ public class ErreurCaisseDAO {
 		try {
 			select = Connexion.getInstance().getConnection().createStatement();
 			String query = "SELECT * FROM ERREUR_CAISSE WHERE CODE_AGENT LIKE '"
-					+ codeAgent + "' AND DATE_VACATION = to_date('" + new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(dateVacation)
-					+ "', 'yyyy/mm/dd hh24:mi:ss') AND CODE_TYPE_ERREUR LIKE '" + codeTypeErreur + "'";
+					+ codeAgent
+					+ "' AND DATE_VACATION = to_date('"
+					+ new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+							.format(dateVacation)
+					+ "', 'yyyy/mm/dd hh24:mi:ss') AND CODE_TYPE_ERREUR LIKE '"
+					+ codeTypeErreur + "'";
 
 			ResultSet result = select.executeQuery(query);
 
@@ -209,9 +251,12 @@ public class ErreurCaisseDAO {
 			select = Connexion.getInstance().getConnection().createStatement();
 			String query = "SELECT MONTANT FROM ERREUR_CAISSE WHERE CODE_AGENCE = '"
 					+ codeAgence
-					+ "' AND DATE_VACATION BETWEEN to_date('" + new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(dateDebut)
-					+ "', 'yyyy/mm/dd hh24:mi:ss') AND to_date('" + new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(dateFin)
-					+ "', 'yyyy/mm/dd hh24:mi:ss')";
+					+ "' AND DATE_VACATION BETWEEN to_date('"
+					+ new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+							.format(dateDebut)
+					+ "', 'yyyy/mm/dd hh24:mi:ss') AND to_date('"
+					+ new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+							.format(dateFin) + "', 'yyyy/mm/dd hh24:mi:ss')";
 			if ((codeTypeErreur.equals("D")) || (codeTypeErreur.equals("E")))
 				query += "' AND CODE_TYPE_ERREUR = '" + codeTypeErreur + "'";
 			if ((codeStatusRegularisation >= 0)
@@ -244,15 +289,18 @@ public class ErreurCaisseDAO {
 			throws SQLException {
 		Statement insert = null;
 		try {
-			if (selectErreursCaisseByAgent(codeAgent, dateVacation, typeErreur).size() == 0) {
 				insert = Connexion.getInstance().getConnection()
 						.createStatement();
 				insert.executeQuery("INSERT INTO ERREUR_CAISSE VALUES ('', '"
-						+ codeAgent + "', '" + typeErreur + "', '" + codeAgence
-						+ "', 0 , to_date('" + new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(dateVacation)
-			+ "', 'yyyy/mm/dd hh24:mi:ss'), " + montant + ")");
-			}
-			
+						+ codeAgent
+						+ "', '"
+						+ typeErreur
+						+ "', '"
+						+ codeAgence
+						+ "', 0 , to_date('"
+						+ new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+								.format(dateVacation)
+						+ "', 'yyyy/mm/dd hh24:mi:ss'), " + montant + ")");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -284,29 +332,29 @@ public class ErreurCaisseDAO {
 
 	private static ErreurCaisse selectErreursCaisseById(int erreurCaisseId) {
 		try {
-			Statement select = Connexion.getInstance().getConnection().createStatement();
+			Statement select = Connexion.getInstance().getConnection()
+					.createStatement();
 			ResultSet result = select
 					.executeQuery("SELECT * FROM ERREUR_CAISSE WHERE ERREUR_CAISSE_ID = '"
 							+ erreurCaisseId + "'");
-			if (result.next())
-			{
-//				System.out.println(result.getInt("ERREUR_CAISSE_ID"));
+			if (result.next()) {
+				// System.out.println(result.getInt("ERREUR_CAISSE_ID"));
 				return (new ErreurCaisse(result.getInt("ERREUR_CAISSE_ID"),
-						result.getString("CODE_AGENT"), 
-						result.getString("CODE_TYPE_ERREUR"), 
-						result.getString("CODE_AGENCE"), 
+						result.getString("CODE_AGENT"),
+						result.getString("CODE_TYPE_ERREUR"),
+						result.getString("CODE_AGENCE"),
 						result.getInt("CODE_STATUT_REGULARISATION"),
 						result.getDate("DATE_VACATION"),
 						result.getFloat("MONTANT")));
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	public static void empty() throws SQLException {
 		Statement insert = null;
 		try {
@@ -349,5 +397,5 @@ public class ErreurCaisseDAO {
 		}
 		return results;
 	}
-	
+
 }

@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class LoginPageServlet
  */
-public class LoginPageServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public LoginPageServlet() {
+	public LoginServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -40,7 +40,7 @@ public class LoginPageServlet extends HttpServlet {
 		// s'afficher après OK !
 		String message = "Transmission de variables : OK !<br>paramAuteur : " + paramAuteur;
 		request.setAttribute("test", message);
-		this.getServletContext().getRequestDispatcher("/WEB-INF/login_page.jsp")
+		this.getServletContext().getRequestDispatcher("/WEB-INF/login.jsp")
 				.forward(request, response);
 	}
 

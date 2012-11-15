@@ -22,7 +22,8 @@
 <title>Identification</title>
 </head>
 <body>
-
+	<%@ include file="header.jsp"%>
+	
 	<p>Ceci est une page générée depuis une JSP.</p>
 
 	<!-- Récupération d'un attribut setté dans le servlet -->
