@@ -25,7 +25,7 @@ import bdd.TypeErreurDAO;
 public class AccueilAgentGuichetServlet extends HttpServlet {
     private static final long               serialVersionUID = 1L;
     private ArrayList<ErreurCaisse>         erreurs;
-    private ArrayList<TypeErreur>           typesErreur;
+    private ArrayList<TypeErreur>           typesErreurs;
     private ArrayList<StatusRegularisation> statusRegularisation;
 
     private Date                            dateDebut;
@@ -39,8 +39,8 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
     public AccueilAgentGuichetServlet() {
         super();
         erreurs = null;
-        typesErreur = null;
-        statusRegularisation = null;
+        setTypesErreurs( null );
+        setStatusRegularisation( null );
         dateDebut = null;
         dateFin = null;
         codeStatusRegularisationRecherche = -1;
@@ -62,13 +62,13 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
             erreurs = ErreurCaisseDAO.selectErreursCaisseByAgent( codeAgent, dateDebut, dateFin,
                     codeTypeErreurRecherche,
                     codeStatusRegularisationRecherche );
-            this.getServletContext().setAttribute( "erreurs", erreurs );
+            if ( !erreurs.isEmpty() )
+                ErreurCaisseDAO.selectAll();
 
-            typesErreur = TypeErreurDAO.selectAll();
-            this.getServletContext().setAttribute( "typesErreur", typesErreur );
+            setTypesErreurs( TypeErreurDAO.selectAll() );
+            this.getServletContext().setAttribute( "this", this );
 
-            statusRegularisation = StatusRegularisationDAO.selectAll();
-            this.getServletContext().setAttribute( "statusRegularisation", statusRegularisation );
+            setStatusRegularisation( StatusRegularisationDAO.selectAll() );
         } catch ( SQLException e ) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -113,5 +113,63 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+    }
+
+    /**
+     * @return the erreurs
+     */
+    public ArrayList<ErreurCaisse> getErreurs() {
+        return erreurs;
+    }
+
+    /**
+     * @param erreurs the erreurs to set
+     */
+    public void setErreurs( ArrayList<ErreurCaisse> erreurs ) {
+        this.erreurs = erreurs;
+    }
+
+    /**
+     * @return the codeStatusRegularisationRecherche
+     */
+    public int getCodeStatusRegularisationRecherche() {
+        return codeStatusRegularisationRecherche;
+    }
+
+    /**
+     * @param codeStatusRegularisationRecherche the codeStatusRegularisationRecherche to set
+     */
+    public void setCodeStatusRegularisationRecherche( int codeStatusRegularisationRecherche ) {
+        this.codeStatusRegularisationRecherche = codeStatusRegularisationRecherche;
+    }
+
+    /**
+     * @return the codeTypeErreurRecherche
+     */
+    public String getCodeTypeErreurRecherche() {
+        return codeTypeErreurRecherche;
+    }
+
+    /**
+     * @param codeTypeErreurRecherche the codeTypeErreurRecherche to set
+     */
+    public void setCodeTypeErreurRecherche( String codeTypeErreurRecherche ) {
+        this.codeTypeErreurRecherche = codeTypeErreurRecherche;
+    }
+
+    public ArrayList<StatusRegularisation> getStatusRegularisation() {
+        return statusRegularisation;
+    }
+
+    public void setStatusRegularisation( ArrayList<StatusRegularisation> statusRegularisation ) {
+        this.statusRegularisation = statusRegularisation;
+    }
+
+    public ArrayList<TypeErreur> getTypesErreurs() {
+        return typesErreurs;
+    }
+
+    public void setTypesErreurs( ArrayList<TypeErreur> typesErreurs ) {
+        this.typesErreurs = typesErreurs;
     }
 }

@@ -33,7 +33,7 @@ public class RegulariserServlet extends HttpServlet {
 
         if ( ErreurCaisseDAO.selectById( erreurCaisseId ) != null )
             // TODO: Verifier les autres champs puis regulariser
-            this.getServletContext().setAttribute( "erreurCaisseId", erreurCaisseId );
+            this.getServletContext().setAttribute( "this", this );
         this.getServletContext().getRequestDispatcher( "/WEB-INF/regularisation/regulariser.jsp" )
                 .forward( request, response );
     }
@@ -52,6 +52,21 @@ public class RegulariserServlet extends HttpServlet {
         if ( request.getParameter( "erreurCaisseId" ) != null && !request.getParameter( "erreurCaisseId" ).equals( "" ) )
             erreurCaisseId = Integer.parseInt( request.getParameter( "erreurCaisseId" ) );
 
+    }
+
+    /**
+     * @return the erreurCaisseId
+     */
+    public int getErreurCaisseId() {
+        return erreurCaisseId;
+    }
+
+    /**
+     * @param erreurCaisseId
+     *            the erreurCaisseId to set
+     */
+    public void setErreurCaisseId( int erreurCaisseId ) {
+        this.erreurCaisseId = erreurCaisseId;
     }
 
 }

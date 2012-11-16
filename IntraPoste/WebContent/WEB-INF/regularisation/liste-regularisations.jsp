@@ -5,12 +5,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Liste des regularisations de l'erreur n°<c:out
-		value="${erreurCaisseId}" /></title>
+		value="${this.erreurCaisseId}" /></title>
 </head>
 <body>
 	<h1>
 		Liste des regularisations de l'erreur n°
-		<c:out value="${erreurCaisseId}" />
+		<c:out value="${this.erreurCaisseId}" />
 		<c:choose>
 			<c:when test="${codeStatusRegularisation == 1}">
 				<span>Partiellement régularisée</span>
@@ -32,12 +32,12 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="regularisation" items="${regularisations}">
+			<c:forEach var="regularisation" items="${this.regularisations}">
 				<tr>
 					<td><c:out
 							value="${regularisation.agentRegularisateur.codeAgent}" /></td>
-					<td><c:set var="date" value="${regularisation.timestamp}" />
-						<fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${date}" /></td>
+					<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm"
+							value="${regularisation.timestamp}" /></td>
 					<td><c:out
 							value="${regularisation.motifRegularisation.nomMotifRegularisation}" /></td>
 					<td><c:out
@@ -48,10 +48,10 @@
 		</tbody>
 	</table>
 
-	<c:if test="${codeStatusRegularisation == 1}">
+	<c:if test="${this.codeStatusRegularisation == 1}">
 		<a
 			href="<c:url value="RegulariserServlet"> 
-					<c:param name="erreurCaisseId" value="${erreur.erreurCaisseId}" />
+					<c:param name="erreurCaisseId" value="${this.erreurCaisseId}" />
 				</c:url>">
 			Regulariser l'erreur </a>
 	</c:if>

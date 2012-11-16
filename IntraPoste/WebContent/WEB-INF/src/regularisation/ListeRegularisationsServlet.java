@@ -17,11 +17,11 @@ import bdd.ErreurCaisseRegularisationDAO;
  * Servlet implementation class ListeRegularisationServlet
  */
 public class ListeRegularisationsServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    private int               erreurCaisseId;
-    private int               codeStatusRegularisation;
-    
-    private ArrayList<ErreursCaisseRegularisation>         regularisations;
+    private static final long                      serialVersionUID = 1L;
+    private int                                    erreurCaisseId;
+    private int                                    codeStatusRegularisation;
+
+    private ArrayList<ErreursCaisseRegularisation> regularisations;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -30,7 +30,7 @@ public class ListeRegularisationsServlet extends HttpServlet {
         super();
         erreurCaisseId = -1;
         codeStatusRegularisation = -1;
-        regularisations = null;
+        setRegularisations( null );
     }
 
     /**
@@ -43,19 +43,14 @@ public class ListeRegularisationsServlet extends HttpServlet {
 
         if ( ErreurCaisseDAO.selectById( erreurCaisseId ) != null )
         {
-            this.getServletContext().setAttribute( "erreurCaisseId", erreurCaisseId );
             try {
-                regularisations = ErreurCaisseRegularisationDAO.selectByErreurCaisse( erreurCaisseId );
-                this.getServletContext().setAttribute( "regularisations", regularisations );
+                setRegularisations( ErreurCaisseRegularisationDAO.selectByErreurCaisse( erreurCaisseId ) );
+                this.getServletContext().setAttribute( "this", this );
             } catch ( SQLException e ) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
-
-        this.getServletContext().setAttribute( "codeStatusRegularisation", codeStatusRegularisation );
-        
-        
 
         this.getServletContext().getRequestDispatcher( "/WEB-INF/regularisation/liste-regularisations.jsp" )
                 .forward( request, response );
@@ -79,6 +74,44 @@ public class ListeRegularisationsServlet extends HttpServlet {
                 && !request.getParameter( "codeStatusRegularisation" ).equals( "" ) )
             codeStatusRegularisation = Integer.parseInt( request.getParameter( "codeStatusRegularisation" ) );
 
+    }
+
+    public ArrayList<ErreursCaisseRegularisation> getRegularisations() {
+        return regularisations;
+    }
+
+    public void setRegularisations( ArrayList<ErreursCaisseRegularisation> regularisations ) {
+        this.regularisations = regularisations;
+    }
+
+    /**
+     * @return the erreurCaisseId
+     */
+    public int getErreurCaisseId() {
+        return erreurCaisseId;
+    }
+
+    /**
+     * @param erreurCaisseId
+     *            the erreurCaisseId to set
+     */
+    public void setErreurCaisseId( int erreurCaisseId ) {
+        this.erreurCaisseId = erreurCaisseId;
+    }
+
+    /**
+     * @return the codeStatusRegularisation
+     */
+    public int getCodeStatusRegularisation() {
+        return codeStatusRegularisation;
+    }
+
+    /**
+     * @param codeStatusRegularisation
+     *            the codeStatusRegularisation to set
+     */
+    public void setCodeStatusRegularisation( int codeStatusRegularisation ) {
+        this.codeStatusRegularisation = codeStatusRegularisation;
     }
 
 }
