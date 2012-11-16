@@ -75,7 +75,7 @@ public class TypeErreurDAO {
 				insert = Connexion.getInstance().getConnection()
 						.createStatement();
 				insert.executeQuery("UPDATE TYPE_ERREUR SET NOM_TYPE_ERREUR = '"
-						+ nomTypeErreur
+						+ nomTypeErreur.toUpperCase()
 						+ "' WHERE CODE_TYPE_ERREUR = "
 						+ codeTypeErreur);
 				return true;
@@ -96,7 +96,7 @@ public class TypeErreurDAO {
 			if (selectByCode(codeTypeErreur) == null) {
 				Statement insert = Connexion.getInstance().getConnection().createStatement();
 				insert.executeQuery("INSERT INTO TYPE_ERREUR VALUES ('"
-						+ codeTypeErreur + "', '" + nomTypeErreur + "')");
+						+ codeTypeErreur + "', '" + nomTypeErreur.toUpperCase() + "')");
 				return true;
 			}
 		} catch (SQLException e) {

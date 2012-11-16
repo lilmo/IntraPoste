@@ -42,7 +42,7 @@ public class StatusRegularisationDAO {
 				insert = Connexion.getInstance().getConnection()
 						.createStatement();
 				insert.executeQuery("UPDATE STATUS_REGULARISATION SET NOM_STATUS_REGULARISATION = '"
-						+ nomStatusRegularisation
+						+ nomStatusRegularisation.toUpperCase()
 						+ "' WHERE CODE_STATUS_REGULARISATION = "
 						+ codeStatusRegularisation);
 				return true;
@@ -105,7 +105,7 @@ public class StatusRegularisationDAO {
 					insert.executeQuery("INSERT INTO STATUS_REGULARISATION VALUES ("
 							+ codeStatusRegularisation
 							+ ", '"
-							+ nomStatusRegularisation + "')");
+							+ nomStatusRegularisation.toUpperCase() + "')");
 					return true;
 				}
 			}

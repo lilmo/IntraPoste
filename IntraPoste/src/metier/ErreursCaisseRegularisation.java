@@ -6,116 +6,132 @@
 
 package metier;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import bdd.AgentDAO;
+import bdd.MotifRegularisationDAO;
+import bdd.TypeRegularisationDAO;
+
 public class ErreursCaisseRegularisation {
-	private java.sql.Timestamp timestamp;
-	private Agent agentRegularisateur;
-	private MotifRegularisation motifRegularisation;
-	private int erreurCaisseId;
-	private TypeRegularisation typeRegularisation;
-	private float montantRegularisation;
+    private java.sql.Timestamp  timestamp;
+    private Agent               agentRegularisateur;
+    private MotifRegularisation motifRegularisation;
+    private int                 erreurCaisseId;
+    private TypeRegularisation  typeRegularisation;
+    private float               montantRegularisation;
 
-	public ErreursCaisseRegularisation(Timestamp timestamp,
-			Agent agentRegularisateur, MotifRegularisation motifRegularisation,
-			int erreurCaisseId, TypeRegularisation typeRegularisation,
-			float montantRegularisation) {
-		this.timestamp = timestamp;
-		this.agentRegularisateur = agentRegularisateur;
-		this.motifRegularisation = motifRegularisation;
-		this.erreurCaisseId = erreurCaisseId;
-		this.typeRegularisation = typeRegularisation;
-		this.montantRegularisation = montantRegularisation;
-	}
+    public ErreursCaisseRegularisation( Timestamp timestamp,
+            Agent agentRegularisateur, MotifRegularisation motifRegularisation,
+            int erreurCaisseId, TypeRegularisation typeRegularisation,
+            float montantRegularisation ) {
+        this.timestamp = timestamp;
+        this.agentRegularisateur = agentRegularisateur;
+        this.motifRegularisation = motifRegularisation;
+        this.erreurCaisseId = erreurCaisseId;
+        this.typeRegularisation = typeRegularisation;
+        this.montantRegularisation = montantRegularisation;
+    }
 
-	/**
-	 * @return the timestamp
-	 */
-	public java.sql.Timestamp getTimestamp() {
-		return timestamp;
-	}
+    public ErreursCaisseRegularisation( Timestamp timestamp, String codeAgentRegularisateur, int codeMotifRegularisation, int erreurCaisseId, int codeTypeRegularisation,
+            float montantRegularisation ) throws SQLException {
+        // TODO Auto-generated constructor stub
+        this.timestamp = timestamp;
+        this.agentRegularisateur = AgentDAO.selectByCode( codeAgentRegularisateur );
+        this.motifRegularisation = MotifRegularisationDAO.selectByCode( codeMotifRegularisation );
+        this.erreurCaisseId = erreurCaisseId;
+        this.typeRegularisation = TypeRegularisationDAO.selectByCode( codeTypeRegularisation );
+        this.montantRegularisation = montantRegularisation;
+    }
 
-	/**
-	 * @param timestamp
-	 *            the timestamp to set
-	 */
-	public void setTimestamp(java.sql.Timestamp timestamp) {
-		this.timestamp = timestamp;
-	}
+    /**
+     * @return the timestamp
+     */
+    public java.sql.Timestamp getTimestamp() {
+        return timestamp;
+    }
 
-	/**
-	 * @return the agentRegularisateur
-	 */
-	public Agent getAgentRegularisateur() {
-		return agentRegularisateur;
-	}
+    /**
+     * @param timestamp
+     *            the timestamp to set
+     */
+    public void setTimestamp( java.sql.Timestamp timestamp ) {
+        this.timestamp = timestamp;
+    }
 
-	/**
-	 * @param agentRegularisateur
-	 *            the agentRegularisateur to set
-	 */
-	public void setAgentRegularisateur(Agent agentRegularisateur) {
-		this.agentRegularisateur = agentRegularisateur;
-	}
+    /**
+     * @return the agentRegularisateur
+     */
+    public Agent getAgentRegularisateur() {
+        return agentRegularisateur;
+    }
 
-	/**
-	 * @return the motifRegularisation
-	 */
-	public MotifRegularisation getMotifRegularisation() {
-		return motifRegularisation;
-	}
+    /**
+     * @param agentRegularisateur
+     *            the agentRegularisateur to set
+     */
+    public void setAgentRegularisateur( Agent agentRegularisateur ) {
+        this.agentRegularisateur = agentRegularisateur;
+    }
 
-	/**
-	 * @param motifRegularisation
-	 *            the motifRegularisation to set
-	 */
-	public void setMotifRegularisation(MotifRegularisation motifRegularisation) {
-		this.motifRegularisation = motifRegularisation;
-	}
+    /**
+     * @return the motifRegularisation
+     */
+    public MotifRegularisation getMotifRegularisation() {
+        return motifRegularisation;
+    }
 
-	/**
-	 * @return the erreurCaisseId
-	 */
-	public int getErreurCaisseId() {
-		return erreurCaisseId;
-	}
+    /**
+     * @param motifRegularisation
+     *            the motifRegularisation to set
+     */
+    public void setMotifRegularisation( MotifRegularisation motifRegularisation ) {
+        this.motifRegularisation = motifRegularisation;
+    }
 
-	/**
-	 * @param erreurCaisseId
-	 *            the erreurCaisseId to set
-	 */
-	public void setErreurCaisseId(int erreurCaisseId) {
-		this.erreurCaisseId = erreurCaisseId;
-	}
+    /**
+     * @return the erreurCaisseId
+     */
+    public int getErreurCaisseId() {
+        return erreurCaisseId;
+    }
 
-	/**
-	 * @return the typeRegularisation
-	 */
-	public TypeRegularisation getTypeRegularisation() {
-		return typeRegularisation;
-	}
+    /**
+     * @param erreurCaisseId
+     *            the erreurCaisseId to set
+     */
+    public void setErreurCaisseId( int erreurCaisseId ) {
+        this.erreurCaisseId = erreurCaisseId;
+    }
 
-	/**
-	 * @param typeRegularisation
-	 *            the typeRegularisation to set
-	 */
-	public void setTypeRegularisation(TypeRegularisation typeRegularisation) {
-		this.typeRegularisation = typeRegularisation;
-	}
+    /**
+     * @return the typeRegularisation
+     */
+    public TypeRegularisation getTypeRegularisation() {
+        return typeRegularisation;
+    }
 
-	/**
-	 * @return the montantRegularisation
-	 */
-	public float getMontantRegularisation() {
-		return montantRegularisation;
-	}
+    /**
+     * @param typeRegularisation
+     *            the typeRegularisation to set
+     */
+    public void setTypeRegularisation( TypeRegularisation typeRegularisation ) {
+        this.typeRegularisation = typeRegularisation;
+    }
 
-	/**
-	 * @param montantRegularisation
-	 *            the montantRegularisation to set
-	 */
-	public void setMontantRegularisation(float montantRegularisation) {
-		this.montantRegularisation = montantRegularisation;
-	}
+    /**
+     * @return the montantRegularisation
+     */
+    public float getMontantRegularisation() {
+        return montantRegularisation;
+    }
+
+    /**
+     * @param montantRegularisation
+     *            the montantRegularisation to set
+     */
+    public void setMontantRegularisation( float montantRegularisation ) {
+        this.montantRegularisation = montantRegularisation;
+    }
 
 }

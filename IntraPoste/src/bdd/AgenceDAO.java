@@ -82,8 +82,8 @@ public class AgenceDAO {
 			if (selectByCode(codeAgence) == null) {
 				Statement insert = Connexion.getInstance().getConnection()
 						.createStatement();
-				insert.executeQuery("INSERT INTO AGENCE VALUES ('" + codeAgence
-						+ "', '" + nomAgence + "')");
+				insert.executeQuery("INSERT INTO AGENCE VALUES ('" + codeAgence.toUpperCase()
+						+ "', '" + nomAgence.toUpperCase() + "')");
 				return true;
 			}
 		} catch (SQLException e) {
@@ -100,7 +100,7 @@ public class AgenceDAO {
 				Statement insert = Connexion.getInstance().getConnection()
 						.createStatement();
 				insert.executeQuery("UPDATE AGENCE SET NOM_AGENCE = '"
-						+ nomAgence + "' WHERE CODE_AGENCE = '" + codeAgence
+						+ nomAgence.toUpperCase() + "' WHERE CODE_AGENCE = '" + codeAgence.toUpperCase()
 						+ "'");
 				return true;
 			}

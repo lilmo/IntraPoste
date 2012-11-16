@@ -6,44 +6,46 @@
 
 package metier;
 
+import tools.Casse;
+
 public class TypeAgent {
-	private int codeTypeAgent;
-	private String nomTypeAgent;
+    private int    codeTypeAgent;
+    private String nomTypeAgent;
 
-	public TypeAgent(int codeTypeAgent, String nomTypeAgent) {
-		super();
-		this.codeTypeAgent = codeTypeAgent;
-		this.nomTypeAgent = nomTypeAgent;
-	}
+    public TypeAgent( int codeTypeAgent, String nomTypeAgent ) {
+        super();
+        this.codeTypeAgent = codeTypeAgent;
+        this.nomTypeAgent = Casse.toTitleCase( nomTypeAgent );
+    }
 
-	/**
-	 * @return the codeTypeAgent
-	 */
-	public int getCodeTypeAgent() {
-		return codeTypeAgent;
-	}
+    /**
+     * @return the codeTypeAgent
+     */
+    public int getCodeTypeAgent() {
+        return codeTypeAgent;
+    }
 
-	/**
-	 * @param codeTypeAgent
-	 *            the codeTypeAgent to set
-	 */
-	public void setCodeTypeAgent(int codeTypeAgent) {
-		this.codeTypeAgent = codeTypeAgent;
-	}
+    /**
+     * @param codeTypeAgent
+     *            the codeTypeAgent to set
+     */
+    public void setCodeTypeAgent( int codeTypeAgent ) {
+        this.codeTypeAgent = codeTypeAgent;
+    }
 
-	/**
-	 * @return the nomTypeAgent
-	 */
-	public String getNomTypeAgent() {
-		return nomTypeAgent;
-	}
+    /**
+     * @return the nomTypeAgent
+     */
+    public String getNomTypeAgent() {
+        return nomTypeAgent;
+    }
 
-	/**
-	 * @param nomTypeAgent
-	 *            the nomTypeAgent to set
-	 */
-	public void setNomTypeAgent(String nomTypeAgent) {
-		this.nomTypeAgent = nomTypeAgent;
-	}
+    /**
+     * @param nomTypeAgent
+     *            the nomTypeAgent to set
+     */
+    public void setNomTypeAgent( String nomTypeAgent ) {
+        this.nomTypeAgent = nomTypeAgent;
+    }
 
 }

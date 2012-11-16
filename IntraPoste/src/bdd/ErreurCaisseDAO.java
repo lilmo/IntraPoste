@@ -306,11 +306,11 @@ public class ErreurCaisseDAO {
             insert = Connexion.getInstance().getConnection()
                     .createStatement();
             insert.executeQuery( "INSERT INTO ERREUR_CAISSE VALUES ('', '"
-                    + codeAgent
+                    + codeAgent.toUpperCase()
                     + "', '"
-                    + typeErreur
+                    + typeErreur.toUpperCase()
                     + "', '"
-                    + codeAgence
+                    + codeAgence.toUpperCase()
                     + "', 0 , to_date('"
                     + new SimpleDateFormat( "yyyy/MM/dd HH:mm:ss" )
                             .format( dateVacation )

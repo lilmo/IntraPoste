@@ -77,7 +77,7 @@ public class TypeRegularisationDAO {
 				Statement insert = Connexion.getInstance().getConnection().createStatement();
 				insert.executeQuery("INSERT INTO TYPE_REGULARISATION VALUES ("
 						+ codeTypeRegularisation + ", '"
-						+ nomTypeRegularisation + "')");
+						+ nomTypeRegularisation.toUpperCase() + "')");
 				return true;
 			}
 		} catch (SQLException e) {
@@ -95,7 +95,7 @@ public class TypeRegularisationDAO {
 				insert = Connexion.getInstance().getConnection()
 						.createStatement();
 				insert.executeQuery("UPDATE TYPE_REGULARISATION SET NOM_TYPE_REGULARISATION = '"
-						+ nomTypeRegul
+						+ nomTypeRegul.toUpperCase()
 						+ "' WHERE CODE_TYPE_REGULARISATION = "
 						+ codeTypeRegul);
 				return true;

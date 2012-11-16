@@ -41,7 +41,7 @@ public class TypeAgentDAO {
 				insert = Connexion.getInstance().getConnection()
 						.createStatement();
 				insert.executeQuery("UPDATE TYPE_AGENT SET NOM_TYPE_AGENT = '"
-						+ nomTypeAgent
+						+ nomTypeAgent.toUpperCase()
 						+ "' WHERE CODE_TYPE_AGENT = "
 						+ codeTypeAgent);
 				return true;
@@ -96,7 +96,7 @@ public class TypeAgentDAO {
 			if (selectByCode(codeTypeAgent) == null) {
 				Statement insert = Connexion.getInstance().getConnection().createStatement();
 				insert.executeQuery("INSERT INTO TYPE_AGENT VALUES (" + codeTypeAgent
-						+ ", '" + nomTypeAgent + "')");
+						+ ", '" + nomTypeAgent.toUpperCase() + "')");
 				return true;
 			}
 		} catch (SQLException e) {

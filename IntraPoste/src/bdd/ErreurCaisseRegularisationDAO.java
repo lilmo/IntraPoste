@@ -1,5 +1,6 @@
 package bdd;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
@@ -39,6 +40,34 @@ public class ErreurCaisseRegularisationDAO {
 
     }
 
+    public static ArrayList<ErreursCaisseRegularisation> selectAll() throws SQLException
+    {
+        Statement select = null;
+        ArrayList<ErreursCaisseRegularisation> results = new ArrayList<ErreursCaisseRegularisation>();
+        try {
+            select = Connexion.getInstance().getConnection().createStatement();
+            String query = "SELECT * FROM ERREURS_CAISSES_REGUL";
+
+            ResultSet result = select.executeQuery( query );
+
+            while ( result.next() ) {
+                results.add( new ErreursCaisseRegularisation( result.getTimestamp( "DTIME_REGULARISATION"),
+                        result.getString( "CODE_AGENT" ), result
+                                .getInt( "CODE_MOTIF_REGULARISATION" ), result
+                                .getInt( "ERREUR_CAISSE_ID" ), result
+                                .getInt( "CODE_TYPE_REGULARISATION" ), result
+                                .getFloat( "MONTANT_REGULARISATION" ) ) );
+            }
+        } catch ( SQLException e ) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            if ( select != null )
+                select.close();
+        }
+        return results;
+    }
+    
     public static void insert( Timestamp timestamp,
             String codeAgentRegularisateur,
             int motifRegularisation,
@@ -51,7 +80,7 @@ public class ErreurCaisseRegularisationDAO {
                     .createStatement();
             insert.executeQuery( "INSERT INTO ERREURS_CAISSES_REGUL VALUES (to_timestamp ('" + timestamp.toString()
                     + "', 'YYYY-MM-DD HH24:MI:SS.FF3'), '"
-                    + codeAgentRegularisateur + "', " + motifRegularisation + ", " + erreurCaisseId +
+                    + codeAgentRegularisateur.toUpperCase() + "', " + motifRegularisation + ", " + erreurCaisseId +
                     ", " + codeTypeRegularisation + ", " + montantRegularisation + ")" );
         } catch ( SQLException e ) {
             // TODO Auto-generated catch block
@@ -63,9 +92,31 @@ public class ErreurCaisseRegularisationDAO {
     }
 
     public static ArrayList<ErreursCaisseRegularisation> selectByErreurCaisse(
-            int erreurCaisseId ) {
-        // TODO Auto-generated method stub
-        return null;
+            int erreurCaisseId ) throws SQLException {
+        Statement select = null;
+        ArrayList<ErreursCaisseRegularisation> results = new ArrayList<ErreursCaisseRegularisation>();
+        try {
+            select = Connexion.getInstance().getConnection().createStatement();
+            String query = "SELECT * FROM ERREURS_CAISSES_REGUL WHERE ERREUR_CAISSE_ID = " + erreurCaisseId;
+
+            ResultSet result = select.executeQuery( query );
+
+            while ( result.next() ) {
+                results.add( new ErreursCaisseRegularisation( result.getTimestamp( "DTIME_REGULARISATION"),
+                        result.getString( "CODE_AGENT" ), result
+                                .getInt( "CODE_MOTIF_REGULARISATION" ), result
+                                .getInt( "ERREUR_CAISSE_ID" ), result
+                                .getInt( "CODE_TYPE_REGULARISATION" ), result
+                                .getFloat( "MONTANT_REGULARISATION" ) ) );
+            }
+        } catch ( SQLException e ) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            if ( select != null )
+                select.close();
+        }
+        return results;
     }
 
     public static void empty() throws SQLException {

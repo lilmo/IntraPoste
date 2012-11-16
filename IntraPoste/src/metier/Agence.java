@@ -6,13 +6,15 @@
 
 package metier;
 
+import tools.Casse;
+
 public class Agence {
 	private String codeAgence;
 	private String nomAgence;
 
 	public Agence(String codeAgence, String nomAgence) {
-		this.codeAgence = codeAgence;
-		this.nomAgence = nomAgence;
+		this.codeAgence = codeAgence.toLowerCase();
+		this.nomAgence = Casse.toTitleCase( nomAgence);
 	}
 
 	/**

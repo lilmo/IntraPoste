@@ -115,7 +115,7 @@ public class MotifRegularisationDAO {
 				insert = Connexion.getInstance().getConnection()
 						.createStatement();
 				insert.executeQuery("UPDATE MOTIF_REGULARISATION SET DESCRIPTION_MOTIF_REGUL = '"
-						+ nomMotifRegularisation
+						+ nomMotifRegularisation.toUpperCase()
 						+ "' WHERE CODE_MOTIF_REGULARISATION = "
 						+ codeMotifRegularisation);
 				return true;

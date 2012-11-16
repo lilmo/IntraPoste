@@ -60,10 +60,11 @@ public class ErreurCaisse {
 	 * @param montantRegulation
 	 * @param codeAgentRegulateur
 	 * @param motifRegulation
+	 * @throws SQLException 
 	 */
 	public int regulariserErreurCaisseComptable(float montantRegularisation,
 			String codeAgentRegularisateur,
-			MotifRegularisation motifRegularisation) {
+			MotifRegularisation motifRegularisation) throws SQLException {
 		// TODO: implement
 		// TODO: mettre des enums au lieu des chiffres
 		if (this.statusRegularisation.getCodeStatusRegularisation() != 2) // totalement
@@ -134,7 +135,7 @@ public class ErreurCaisse {
 		}
 	}
 
-	private int resteARegulariser() {
+	private int resteARegulariser() throws SQLException {
 		ArrayList<ErreursCaisseRegularisation> reguls = ErreurCaisseRegularisationDAO
 				.selectByErreurCaisse(this.erreurCaisseId);
 		int dejaRegularise = 0;
