@@ -326,9 +326,9 @@ public class ErreurCaisseDAO {
 
     public static ErreurCaisse updateStatus( int erreurCaisseId,
             int nouveauCodeStatusRegularisation ) throws SQLException {
-        String query = "UPDATE TABLE ERREUR_CAISSE SET CODE_STATUS_REGULARISATION = "
+        String query = "UPDATE ERREUR_CAISSE SET CODE_STATUT_REGULARISATION = "
                 + nouveauCodeStatusRegularisation
-                + "WHERE ERREUR_CAISSE_ID = "
+                + " WHERE ERREUR_CAISSE_ID = "
                 + erreurCaisseId;
         Statement select = null;
         try {

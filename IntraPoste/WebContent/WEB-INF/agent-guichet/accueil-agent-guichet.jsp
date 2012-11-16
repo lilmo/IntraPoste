@@ -12,8 +12,12 @@
 <link rel="stylesheet" href="/resources/demos/style.css" />
 <script>
 	$(function() {
-		$("#dateDebut").datepicker({ dateFormat: "dd/mm/yy" });
-		$("#dateFin").datepicker({ dateFormat: "dd/mm/yy" });
+		$("#dateDebut").datepicker({
+			dateFormat : "dd/mm/yy"
+		});
+		$("#dateFin").datepicker({
+			dateFormat : "dd/mm/yy"
+		});
 	});
 </script>
 </head>
@@ -57,7 +61,22 @@
 		<tbody>
 			<c:forEach var="erreur" items="${erreurs}">
 				<tr>
-					<td><c:out value="${erreur.erreurCaisseId}" /></td>
+					<td>
+						<c:choose>
+							<c:when
+								test="${erreur.statusRegularisation.codeStatusRegularisation == 0}">
+								<c:set var="url" value="RegulariserServlet" />
+							</c:when>
+							<c:otherwise>
+								<c:set var="url" value="ListeRegularisationsServlet" />
+							</c:otherwise>
+						</c:choose><a
+						href="<c:url
+								value="${ url }">
+								<c:param name="erreurCaisseId" value="${erreur.erreurCaisseId}" />
+							</c:url>">
+							<c:out value="${erreur.erreurCaisseId}" />
+					</a></td>
 					<td><c:out value="${erreur.typeErreur.nomTypeErreur}" /></td>
 					<td><c:out
 							value="${erreur.statusRegularisation.nomStatusRegularisation}" /></td>

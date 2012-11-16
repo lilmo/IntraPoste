@@ -23,22 +23,28 @@ import bdd.TypeErreurDAO;
  * Servlet implementation class AccueilAgentGuichetServlet
  */
 public class AccueilAgentGuichetServlet extends HttpServlet {
-    private static final long               serialVersionUID                  = 1L;
-    private ArrayList<ErreurCaisse>         erreurs                           = null;
-    private ArrayList<TypeErreur>           typesErreur                       = null;
-    private ArrayList<StatusRegularisation> statusRegularisation              = null;
+    private static final long               serialVersionUID = 1L;
+    private ArrayList<ErreurCaisse>         erreurs;
+    private ArrayList<TypeErreur>           typesErreur;
+    private ArrayList<StatusRegularisation> statusRegularisation;
 
-    private Date                            dateDebut                         = null;
-    private Date                            dateFin                           = null;
-    private int                             codeStatusRegularisationRecherche = -1;
-    private String                          codeTypeErreurRecherche           = null;
+    private Date                            dateDebut;
+    private Date                            dateFin;
+    private int                             codeStatusRegularisationRecherche;
+    private String                          codeTypeErreurRecherche;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
     public AccueilAgentGuichetServlet() {
         super();
-        // TODO Auto-generated constructor stub
+        erreurs = null;
+        typesErreur = null;
+        statusRegularisation = null;
+        dateDebut = null;
+        dateFin = null;
+        codeStatusRegularisationRecherche = -1;
+        codeTypeErreurRecherche = null;
     }
 
     /**
@@ -88,7 +94,7 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
         dateDebut = null;
         dateFin = null;
         if ( request.getParameter( "typeErreur" ) != null && !request.getParameter( "typeErreur" ).equals( "" ) )
-            codeTypeErreurRecherche = (String) request.getParameter( "typeErreur" ).toString();
+            codeTypeErreurRecherche = (String) request.getParameter( "typeErreur" );
         if ( request.getParameter( "statusRegularisationRecherche" ) != null
                 && !request.getParameter( "statusRegularisationRecherche" ).equals( "" ) )
             codeStatusRegularisationRecherche = Integer.parseInt( request
