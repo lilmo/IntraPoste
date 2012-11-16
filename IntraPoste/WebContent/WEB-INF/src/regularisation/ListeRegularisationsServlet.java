@@ -21,6 +21,8 @@ public class ListeRegularisationsServlet extends HttpServlet {
     private int                                    erreurCaisseId;
     private int                                    codeStatusRegularisation;
 
+    private String                                 erreur;
+
     private ArrayList<ErreursCaisseRegularisation> regularisations;
 
     /**
@@ -31,6 +33,7 @@ public class ListeRegularisationsServlet extends HttpServlet {
         erreurCaisseId = -1;
         codeStatusRegularisation = -1;
         setRegularisations( null );
+        setErreur( null );
     }
 
     /**
@@ -49,6 +52,7 @@ public class ListeRegularisationsServlet extends HttpServlet {
             } catch ( SQLException e ) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
+                setErreur( "La base de donnee a rencontre un probleme. Recherche abandonee." );
             }
         }
 
@@ -68,12 +72,22 @@ public class ListeRegularisationsServlet extends HttpServlet {
     private void getParameters( HttpServletRequest request ) {
         erreurCaisseId = -1;
         codeStatusRegularisation = -1;
+        setErreur( null );
         if ( request.getParameter( "erreurCaisseId" ) != null && !request.getParameter( "erreurCaisseId" ).equals( "" ) )
-            erreurCaisseId = Integer.parseInt( request.getParameter( "erreurCaisseId" ) );
+            try
+            {
+                erreurCaisseId = Integer.parseInt( request.getParameter( "erreurCaisseId" ) );
+            } catch ( NumberFormatException e ) {
+                setErreur( "Le numero d'erreur n'existe pas." );
+            }
         if ( request.getParameter( "codeStatusRegularisation" ) != null
                 && !request.getParameter( "codeStatusRegularisation" ).equals( "" ) )
-            codeStatusRegularisation = Integer.parseInt( request.getParameter( "codeStatusRegularisation" ) );
-
+            try {
+                codeStatusRegularisation = Integer.parseInt( request.getParameter( "codeStatusRegularisation" ) );
+                setErreur( "Le statut de regularisation n'existe pas." );
+            } catch ( NumberFormatException e ) {
+                // TODO: handle exception
+            }
     }
 
     public ArrayList<ErreursCaisseRegularisation> getRegularisations() {
@@ -112,6 +126,14 @@ public class ListeRegularisationsServlet extends HttpServlet {
      */
     public void setCodeStatusRegularisation( int codeStatusRegularisation ) {
         this.codeStatusRegularisation = codeStatusRegularisation;
+    }
+
+    public String getErreur() {
+        return erreur;
+    }
+
+    public void setErreur( String erreur ) {
+        this.erreur = erreur;
     }
 
 }

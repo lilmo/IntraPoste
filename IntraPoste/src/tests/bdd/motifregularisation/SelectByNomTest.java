@@ -29,7 +29,6 @@ public class SelectByNomTest {
 
 	@Test
 	public void test() throws SQLException {
-		assertTrue(MotifRegularisationDAO.selectByNom(nomMotif).size() == 1);
-		assertTrue(MotifRegularisationDAO.selectByNom("B").isEmpty());
+		assertTrue(MotifRegularisationDAO.selectByNom("B") == null);
 	}
 }

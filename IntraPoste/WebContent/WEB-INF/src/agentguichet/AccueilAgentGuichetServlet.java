@@ -24,7 +24,7 @@ import bdd.TypeErreurDAO;
  */
 public class AccueilAgentGuichetServlet extends HttpServlet {
     private static final long               serialVersionUID = 1L;
-    private ArrayList<ErreurCaisse>         erreurs;
+    private ArrayList<ErreurCaisse>         erreursCaisse;
     private ArrayList<TypeErreur>           typesErreurs;
     private ArrayList<StatusRegularisation> statusRegularisation;
 
@@ -33,18 +33,21 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
     private int                             codeStatusRegularisationRecherche;
     private String                          codeTypeErreurRecherche;
 
+    private String                          erreur;
+
     /**
      * @see HttpServlet#HttpServlet()
      */
     public AccueilAgentGuichetServlet() {
         super();
-        erreurs = null;
+        setErreursCaisse( null );
         setTypesErreurs( null );
         setStatusRegularisation( null );
         dateDebut = null;
         dateFin = null;
         codeStatusRegularisationRecherche = -1;
         codeTypeErreurRecherche = null;
+        setErreur( null );
     }
 
     /**
@@ -57,21 +60,28 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
         String codeAgent = "TOTO_C";
         try {
 
-            getParameters( request );
-
-            erreurs = ErreurCaisseDAO.selectErreursCaisseByAgent( codeAgent, dateDebut, dateFin,
-                    codeTypeErreurRecherche,
-                    codeStatusRegularisationRecherche );
-            if ( !erreurs.isEmpty() )
-                ErreurCaisseDAO.selectAll();
+            if ( getParameters( request ) )
+            {
+                setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseByAgent( codeAgent, dateDebut, dateFin,
+                        codeTypeErreurRecherche,
+                        codeStatusRegularisationRecherche ) );
+                if ( erreursCaisse.isEmpty() )
+                {
+                    setErreursCaisse( ErreurCaisseDAO.selectAll() );
+                    setErreur( "Aucun resultat ne correspond a votre recherche." );
+                }
+            }
+            else
+                setErreursCaisse( ErreurCaisseDAO.selectAll() );
 
             setTypesErreurs( TypeErreurDAO.selectAll() );
-            this.getServletContext().setAttribute( "this", this );
-
             setStatusRegularisation( StatusRegularisationDAO.selectAll() );
+
+            this.getServletContext().setAttribute( "this", this );
         } catch ( SQLException e ) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            setErreur( "La base de donnee a rencontre un probleme. Recherche abandonee." );
         } finally {
             this.getServletContext().getRequestDispatcher( "/WEB-INF/agent-guichet/accueil-agent-guichet.jsp" )
                     .forward( request, response );
@@ -87,12 +97,13 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
         // TODO Auto-generated method stub
     }
 
-    private void getParameters( HttpServletRequest request )
+    private boolean getParameters( HttpServletRequest request )
     {
         codeStatusRegularisationRecherche = -1;
         codeTypeErreurRecherche = null;
         dateDebut = null;
         dateFin = null;
+        setErreur( null );
         if ( request.getParameter( "typeErreur" ) != null && !request.getParameter( "typeErreur" ).equals( "" ) )
             codeTypeErreurRecherche = (String) request.getParameter( "typeErreur" );
         if ( request.getParameter( "statusRegularisationRecherche" ) != null
@@ -105,28 +116,35 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
             } catch ( ParseException e ) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
+                setErreur( "La date de debut doit etre au format \"jj/mm/aaaa\"." );
             }
         if ( request.getParameter( "dateFin" ) != null && !request.getParameter( "dateFin" ).equals( "" ) )
             try {
                 dateFin = new SimpleDateFormat( "dd/MM/yyyy" ).parse( request.getParameter( "dateFin" ) );
             } catch ( ParseException e ) {
                 // TODO Auto-generated catch block
+                setErreur( "La date de fin doit etre au format \"jj/mm/aaaa\"." );
                 e.printStackTrace();
             }
+        if ( codeStatusRegularisationRecherche == -1 && codeTypeErreurRecherche == null && dateDebut == null
+                && dateFin == null )
+            return false;
+        return true;
     }
 
     /**
      * @return the erreurs
      */
-    public ArrayList<ErreurCaisse> getErreurs() {
-        return erreurs;
+    public ArrayList<ErreurCaisse> getErreursCaisse() {
+        return erreursCaisse;
     }
 
     /**
-     * @param erreurs the erreurs to set
+     * @param erreurs
+     *            the erreurs to set
      */
-    public void setErreurs( ArrayList<ErreurCaisse> erreurs ) {
-        this.erreurs = erreurs;
+    public void setErreursCaisse( ArrayList<ErreurCaisse> erreurs ) {
+        this.erreursCaisse = erreurs;
     }
 
     /**
@@ -137,7 +155,8 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
     }
 
     /**
-     * @param codeStatusRegularisationRecherche the codeStatusRegularisationRecherche to set
+     * @param codeStatusRegularisationRecherche
+     *            the codeStatusRegularisationRecherche to set
      */
     public void setCodeStatusRegularisationRecherche( int codeStatusRegularisationRecherche ) {
         this.codeStatusRegularisationRecherche = codeStatusRegularisationRecherche;
@@ -151,7 +170,8 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
     }
 
     /**
-     * @param codeTypeErreurRecherche the codeTypeErreurRecherche to set
+     * @param codeTypeErreurRecherche
+     *            the codeTypeErreurRecherche to set
      */
     public void setCodeTypeErreurRecherche( String codeTypeErreurRecherche ) {
         this.codeTypeErreurRecherche = codeTypeErreurRecherche;
@@ -171,5 +191,13 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
 
     public void setTypesErreurs( ArrayList<TypeErreur> typesErreurs ) {
         this.typesErreurs = typesErreurs;
+    }
+
+    public String getErreur() {
+        return erreur;
+    }
+
+    public void setErreur( String erreur ) {
+        this.erreur = erreur;
     }
 }

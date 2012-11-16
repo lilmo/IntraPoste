@@ -21,6 +21,8 @@
 		</c:choose>
 	</h1>
 
+	<c:out value="${this.erreur }"></c:out>
+
 	<table border="1">
 		<thead>
 			<tr>
@@ -48,6 +50,7 @@
 		</tbody>
 	</table>
 
+	<!-- TODO: Verifier le code agent en session -->
 	<c:if test="${this.codeStatusRegularisation == 1}">
 		<a
 			href="<c:url value="RegulariserServlet"> 
@@ -55,5 +58,6 @@
 				</c:url>">
 			Regulariser l'erreur </a>
 	</c:if>
+
 </body>
 </html>

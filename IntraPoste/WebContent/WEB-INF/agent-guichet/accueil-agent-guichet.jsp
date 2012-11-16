@@ -48,52 +48,57 @@
 		</form>
 	</fieldset>
 
-	<table border="1">
-		<thead>
-			<tr>
-				<td>N° Erreur</td>
-				<td>Type Erreur</td>
-				<td>Status Regularisation</td>
-				<td>Date</td>
-				<td>Montant</td>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="erreur" items="${this.erreurs}">
+	<c:out value="${this.erreur }"></c:out>
+
+	<c:if test="${!empty this.erreursCaisse }">
+		<table border="1">
+			<thead>
 				<tr>
-					<td><c:choose>
-							<c:when test="${erreur.typeErreur.codeTypeErreur == 'E'}">
-								<c:choose>
-									<c:when
-										test="${erreur.statusRegularisation.codeStatusRegularisation == 0}">
-										<c:set var="url" value="RegulariserServlet" />
-									</c:when>
-									<c:otherwise>
-										<c:set var="url" value="ListeRegularisationsServlet" />
-									</c:otherwise>
-								</c:choose>
-								<a
-									href="<c:url
+					<td>N° Erreur</td>
+					<td>Type Erreur</td>
+					<td>Status Regularisation</td>
+					<td>Date</td>
+					<td>Montant</td>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="erreur" items="${this.erreursCaisse}">
+					<tr>
+						<td><c:choose>
+								<c:when
+									test="${erreur.typeErreur.codeTypeErreur == 'E' && erreur.montant <= 5}">
+									<c:choose>
+										<c:when
+											test="${erreur.statusRegularisation.codeStatusRegularisation == 0}">
+											<c:set var="url" value="RegulariserServlet" />
+										</c:when>
+										<c:otherwise>
+											<c:set var="url" value="ListeRegularisationsServlet" />
+										</c:otherwise>
+									</c:choose>
+									<a
+										href="<c:url
 								value="${ url }">
 								<c:param name="erreurCaisseId" value="${erreur.erreurCaisseId}" />
 								<c:param name="codeStatusRegularisation" value="${erreur.statusRegularisation.codeStatusRegularisation}" />
 							</c:url>">
+										<c:out value="${erreur.erreurCaisseId}" />
+									</a>
+								</c:when>
+								<c:otherwise>
 									<c:out value="${erreur.erreurCaisseId}" />
-								</a>
-							</c:when>
-							<c:otherwise>
-								<c:out value="${erreur.erreurCaisseId}" />
-							</c:otherwise>
-						</c:choose></td>
-					<td><c:out value="${erreur.typeErreur.nomTypeErreur}" /></td>
-					<td><c:out
-							value="${erreur.statusRegularisation.nomStatusRegularisation}" /></td>
-					<td><fmt:formatDate pattern="dd/MM/yyyy"
-							value="${erreur.dateVacation}" /></td>
-					<td><c:out value="${erreur.montant}" /></td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
+								</c:otherwise>
+							</c:choose></td>
+						<td><c:out value="${erreur.typeErreur.nomTypeErreur}" /></td>
+						<td><c:out
+								value="${erreur.statusRegularisation.nomStatusRegularisation}" /></td>
+						<td><fmt:formatDate pattern="dd/MM/yyyy"
+								value="${erreur.dateVacation}" /></td>
+						<td><c:out value="${erreur.montant}" /></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</c:if>
 </body>
 </html>

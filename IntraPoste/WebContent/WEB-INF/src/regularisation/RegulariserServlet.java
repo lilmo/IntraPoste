@@ -9,11 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import metier.Agent;
 import metier.AgentGuichet;
 import metier.ErreurCaisse;
 import metier.MotifRegularisation;
-
 import bdd.AgentDAO;
 import bdd.ErreurCaisseDAO;
 import bdd.MotifRegularisationDAO;
@@ -25,7 +23,8 @@ public class RegulariserServlet extends HttpServlet {
     private static final long              serialVersionUID = 1L;
     private int                            erreurCaisseId;
     private ArrayList<MotifRegularisation> motifs;
-    private float                            reste;
+    private float                          reste;
+    private String                         erreur;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -35,24 +34,24 @@ public class RegulariserServlet extends HttpServlet {
         setErreurCaisseId( -1 );
         setMotifs( null );
         setReste( -1 );
+        setErreur( null );
     }
 
     /**
+     * @throws IOException
+     * @throws ServletException
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      *      response)
      */
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
             IOException {
         getParameters( request );
-        try {
-            setMotifs();
-        } catch ( SQLException e ) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        setMotifs();
 
-        if ( ErreurCaisseDAO.selectById( erreurCaisseId ) != null )
-            this.getServletContext().setAttribute( "this", this );
+        if ( ErreurCaisseDAO.selectById( erreurCaisseId ) == null )
+            setErreur( "Le numero d'erreur n'existe pas." );
+
+        this.getServletContext().setAttribute( "this", this );
         this.getServletContext().getRequestDispatcher( "/WEB-INF/regularisation/regulariser.jsp" )
                 .forward( request, response );
     }
@@ -63,44 +62,74 @@ public class RegulariserServlet extends HttpServlet {
      */
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
             IOException {
-        // TODO Auto-generated constructor stub
-        int montant = Integer.parseInt( request.getParameter( "montant" ) );
-        int motif = Integer.parseInt( request.getParameter( "motif" ) );
+
+        String pageRetour = "/WEB-INF/regularisation/regulariser.jsp";
+
+        setErreur( null );
+        int montant = -1;
+        int motif = -1;
+        try {
+            montant = Integer.parseInt( request.getParameter( "montant" ) );
+        } catch ( NumberFormatException e )
+        {
+            setErreur( "Le montant doit etre un chiffre." );
+        }
+        try {
+            motif = Integer.parseInt( request.getParameter( "motif" ) );
+        } catch ( NumberFormatException e )
+        {
+            setErreur( "Motif invalide" );
+        }
         String autreMotif = request.getParameter( "autreMotif" );
 
-        if ( checkFormParameters( montant, motif, autreMotif ) )
-        {
-            MotifRegularisation motifEnBase;
-            try {
-                motifEnBase = MotifRegularisationDAO.selectByCode( motif );
+        MotifRegularisation motifEnBase;
+        try {
+            motifEnBase = MotifRegularisationDAO.selectByCode( motif );
 
-                if ( motifEnBase == null )
-                {
-                    MotifRegularisationDAO.insert( autreMotif );
-                    motifEnBase = MotifRegularisationDAO.selectByNom( autreMotif );
-                }
-
-                // TODO: récupérer l'agent en session
-                AgentGuichet agentGuichet = (AgentGuichet) AgentDAO.selectByCode( "TOTO_C" );
-                int resultat = agentGuichet.regulariserErreur( erreurCaisseId, montant, agentGuichet.getCodeAgent(),
-                        motifEnBase );
-                // TODO: afficher un succes ou une erreur
-            } catch ( SQLException e ) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            if ( motifEnBase == null )
+            {
+                MotifRegularisationDAO.insert( autreMotif );
+                motifEnBase = MotifRegularisationDAO.selectByNom( autreMotif );
             }
-        }
-    }
 
-    private boolean checkFormParameters( int montant, int motif, String autreMotif ) {
-        // TODO A completer
-        return true;
+            // TODO: récupérer l'agent en session
+            AgentGuichet agentGuichet = (AgentGuichet) AgentDAO.selectByCode( "TOTO_C" );
+            int resultat = agentGuichet.regulariserErreur( erreurCaisseId, montant, agentGuichet.getCodeAgent(),
+                    motifEnBase );
+            switch ( resultat ) {
+            case 1:
+                setErreur( "Cette erreur a deja ete regularisee" );
+                break;
+            case 2:
+                setErreur( "Vous n'etes pas autorise a effectuer cette operation" );
+                break;
+            case 3:
+                setErreur( "La base de donnee a rencontre un probleme. Operation abandonee." );
+                break;
+            }
+        } catch ( SQLException e ) {
+            e.printStackTrace();
+            setErreur( "La base de donnee a rencontre un probleme. Operation abandonee." );
+        }
+
+        if ( erreur.isEmpty() )
+            pageRetour = "/WEB-INF/agent-guichet/accueil-agent-guichet.jsp";
+
+        this.getServletContext().getRequestDispatcher( pageRetour )
+                .forward( request, response );
     }
 
     private void getParameters( HttpServletRequest request ) {
+        setErreur( null );
         setErreurCaisseId( -1 );
         if ( request.getParameter( "erreurCaisseId" ) != null && !request.getParameter( "erreurCaisseId" ).equals( "" ) )
-            erreurCaisseId = Integer.parseInt( request.getParameter( "erreurCaisseId" ) );
+            try {
+                erreurCaisseId = Integer.parseInt( request.getParameter( "erreurCaisseId" ) );
+            } catch ( NumberFormatException e )
+            {
+                setErreur( "Le numero d'erreur n'existe pas." );
+            }
+
     }
 
     /**
@@ -126,22 +155,40 @@ public class RegulariserServlet extends HttpServlet {
         this.motifs = motifs;
     }
 
-    public void setMotifs() throws SQLException {
+    public void setMotifs() {
         this.motifs = new ArrayList<>();
-        motifs.add( MotifRegularisationDAO.selectByNom( "PRISE EN RECETTE" ) );
-        motifs.add( MotifRegularisationDAO.selectByNom( "REMBOURSEE A L UTILISATEUR" ) );
-        motifs.add( MotifRegularisationDAO.selectByNom( "ERREUR DE COMPTABILITE RETROUVEE" ) );
-        motifs.add( MotifRegularisationDAO.selectByNom( "REJET REGULARISE" ) );
+        try {
+            motifs.add( MotifRegularisationDAO.selectByNom( "REJET REGULARISE" ) );
+            motifs.add( MotifRegularisationDAO.selectByNom( "PRISE EN RECETTE" ) );
+            motifs.add( MotifRegularisationDAO.selectByNom( "REMBOURSEE A L UTILISATEUR" ) );
+            motifs.add( MotifRegularisationDAO.selectByNom( "ERREUR DE COMPTABILITE RETROUVEE" ) );
+        } catch ( SQLException e ) {
+            e.printStackTrace();
+            setErreur( "La base de donnee a rencontre un probleme. Operation abandonee." );
+        }
     }
 
-    public float getReste() throws SQLException {
+    public float getReste() {
         ErreurCaisse erreur = ErreurCaisseDAO.selectById( erreurCaisseId );
         if ( erreur != null )
-            setReste( erreur.resteARegulariser() );
+            try {
+                setReste( erreur.resteARegulariser() );
+            } catch ( SQLException e ) {
+                e.printStackTrace();
+                setErreur( "La base de donnee a rencontre un probleme. Operation abandonee." );
+            }
         return reste;
     }
 
     public void setReste( float reste ) {
         this.reste = reste;
+    }
+
+    public String getErreur() {
+        return erreur;
+    }
+
+    public void setErreur( String erreur ) {
+        this.erreur = erreur;
     }
 }
