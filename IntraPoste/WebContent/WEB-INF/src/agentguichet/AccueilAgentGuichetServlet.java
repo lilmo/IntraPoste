@@ -11,7 +11,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import metier.AgentGuichet;
 import metier.ErreurCaisse;
 import metier.StatusRegularisation;
 import metier.TypeErreur;
@@ -56,13 +58,14 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
      */
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
             IOException {
-        // TODO: recuperer le code agent en session
-        String codeAgent = "TOTO_C";
         try {
 
             if ( getParameters( request ) )
             {
-                setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseByAgent( codeAgent, dateDebut, dateFin,
+                HttpSession session = request.getSession();
+                /* Récupération de l'objet depuis la session */
+                AgentGuichet agent = (AgentGuichet) session.getAttribute( "agent" );
+                setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseByAgent( agent.getCodeAgent(), dateDebut, dateFin,
                         codeTypeErreurRecherche,
                         codeStatusRegularisationRecherche ) );
                 if ( erreursCaisse.isEmpty() )
@@ -94,7 +97,37 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
      */
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
             IOException {
-        // TODO Auto-generated method stub
+        try {
+
+            if ( getParameters( request ) )
+            {
+                HttpSession session = request.getSession();
+                /* Récupération de l'objet depuis la session */
+                AgentGuichet agent = (AgentGuichet) session.getAttribute( "agent" );
+                setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseByAgent( agent.getCodeAgent(), dateDebut, dateFin,
+                        codeTypeErreurRecherche,
+                        codeStatusRegularisationRecherche ) );
+                if ( erreursCaisse.isEmpty() )
+                {
+                    setErreursCaisse( ErreurCaisseDAO.selectAll() );
+                    setErreur( "Aucun resultat ne correspond a votre recherche." );
+                }
+            }
+            else
+                setErreursCaisse( ErreurCaisseDAO.selectAll() );
+
+            setTypesErreurs( TypeErreurDAO.selectAll() );
+            setStatusRegularisation( StatusRegularisationDAO.selectAll() );
+
+            this.getServletContext().setAttribute( "this", this );
+        } catch ( SQLException e ) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            setErreur( "La base de donnee a rencontre un probleme. Recherche abandonee." );
+        } finally {
+            this.getServletContext().getRequestDispatcher( "/WEB-INF/agent-guichet/accueil-agent-guichet.jsp" )
+                    .forward( request, response );
+        }
     }
 
     private boolean getParameters( HttpServletRequest request )

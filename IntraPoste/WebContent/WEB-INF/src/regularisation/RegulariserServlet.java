@@ -52,7 +52,7 @@ public class RegulariserServlet extends HttpServlet {
             setErreur( "Le numero d'erreur n'existe pas." );
 
         this.getServletContext().setAttribute( "this", this );
-        this.getServletContext().getRequestDispatcher( "/WEB-INF/regularisation/regulariser.jsp" )
+        this.getServletContext().getRequestDispatcher( "RegulariserServlet" )
                 .forward( request, response );
     }
 
@@ -63,7 +63,7 @@ public class RegulariserServlet extends HttpServlet {
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
             IOException {
 
-        String pageRetour = "/WEB-INF/regularisation/regulariser.jsp";
+        String pageRetour = "/RegulariserServlet";
 
         setErreur( null );
         int montant = -1;
@@ -113,7 +113,7 @@ public class RegulariserServlet extends HttpServlet {
         }
 
         if ( erreur.isEmpty() )
-            pageRetour = "/WEB-INF/agent-guichet/accueil-agent-guichet.jsp";
+            pageRetour = "/AccueilAgentGuichetServlet";
 
         this.getServletContext().getRequestDispatcher( pageRetour )
                 .forward( request, response );

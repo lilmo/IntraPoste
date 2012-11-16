@@ -8,7 +8,7 @@
 		value="${this.erreurCaisseId}" /></title>
 </head>
 <body>
-
+	<c:import url="/HeaderServlet" />
 	<fieldset>
 		<legend>
 			Regulariser erreur n°

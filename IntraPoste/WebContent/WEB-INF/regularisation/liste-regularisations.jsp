@@ -8,6 +8,7 @@
 		value="${this.erreurCaisseId}" /></title>
 </head>
 <body>
+	<c:import url="/HeaderServlet" />
 	<h1>
 		Liste des regularisations de l'erreur n°
 		<c:out value="${this.erreurCaisseId}" />

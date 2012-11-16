@@ -22,7 +22,7 @@
 </script>
 </head>
 <body>
-
+	<c:import url="/HeaderServlet" />
 	<fieldset>
 		<legend>Rechercher une erreur</legend>
 		<form method="get" action="#">

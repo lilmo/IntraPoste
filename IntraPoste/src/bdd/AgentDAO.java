@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import tools.MD5;
+
 import metier.Agent;
 import metier.AgentComptable;
 import metier.AgentGuichet;
@@ -48,7 +50,7 @@ public class AgentDAO {
                         .createStatement();
                 insert.executeQuery( "INSERT INTO AGENT VALUES ('" + codeAgent.toUpperCase() + "', '"
                         + codeAgence.toUpperCase() + "', " + codeTypeAgent + ", '" + mail.toLowerCase() + "', '"
-                        + motDePasse + "', '" + nom.toUpperCase() + "', '" + prenom.toUpperCase() + "')" );
+                        + MD5.encode( motDePasse ) + "', '" + nom.toUpperCase() + "', '" + prenom.toUpperCase() + "')" );
                 return true;
             }
         } catch ( SQLException e ) {
