@@ -61,8 +61,7 @@
 		<tbody>
 			<c:forEach var="erreur" items="${erreurs}">
 				<tr>
-					<td>
-						<c:choose>
+					<td><c:choose>
 							<c:when
 								test="${erreur.statusRegularisation.codeStatusRegularisation == 0}">
 								<c:set var="url" value="RegulariserServlet" />
@@ -74,6 +73,7 @@
 						href="<c:url
 								value="${ url }">
 								<c:param name="erreurCaisseId" value="${erreur.erreurCaisseId}" />
+								<c:param name="codeStatusRegularisation" value="${erreur.statusRegularisation.codeStatusRegularisation}" />
 							</c:url>">
 							<c:out value="${erreur.erreurCaisseId}" />
 					</a></td>
