@@ -63,19 +63,18 @@ public class MotifRegularisationDAO {
         return null;
     }
 
-    public static ArrayList<MotifRegularisation> selectByNom(
+    public static MotifRegularisation selectByNom(
             String nomMotifRegularisation ) throws SQLException {
-        ArrayList<MotifRegularisation> results = new ArrayList<>();
         Statement select = null;
         try {
             select = Connexion.getInstance().getConnection().createStatement();
             ResultSet result = select
                     .executeQuery( "SELECT CODE_MOTIF_REGULARISATION, DESCRIPTION_MOTIF_REGUL FROM MOTIF_REGULARISATION WHERE DESCRIPTION_MOTIF_REGUL LIKE '"
-                            + nomMotifRegularisation + "'" );
+                            + nomMotifRegularisation.toUpperCase() + "'" );
             while ( result.next() )
-                results.add( new MotifRegularisation( result
+                return new MotifRegularisation( result
                         .getInt( "CODE_MOTIF_REGULARISATION" ), result
-                        .getString( "DESCRIPTION_MOTIF_REGUL" ) ) );
+                        .getString( "DESCRIPTION_MOTIF_REGUL" ) );
         } catch ( SQLException e ) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -83,14 +82,14 @@ public class MotifRegularisationDAO {
             if ( select != null )
                 select.close();
         }
-        return results;
+        return null;
     }
 
     public static boolean insert( String nomMotifRegularisation )
             throws SQLException {
         Statement insert = null;
         try {
-            if ( !selectByNom( nomMotifRegularisation ).isEmpty() ) {
+            if ( selectByNom( nomMotifRegularisation ) == null ) {
                 insert = Connexion.getInstance().getConnection()
                         .createStatement();
                 insert.executeQuery( "INSERT INTO MOTIF_REGULARISATION VALUES ('', '"

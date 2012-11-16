@@ -78,5 +78,4 @@ public class AgentSuperieur extends Agent {
 					somme += e.getMontant();
 		return somme;
 	}
-
 }

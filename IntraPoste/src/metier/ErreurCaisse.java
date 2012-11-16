@@ -135,13 +135,13 @@ public class ErreurCaisse {
 		}
 	}
 
-	private int resteARegulariser() throws SQLException {
+	public float resteARegulariser() throws SQLException {
 		ArrayList<ErreursCaisseRegularisation> reguls = ErreurCaisseRegularisationDAO
 				.selectByErreurCaisse(this.erreurCaisseId);
 		int dejaRegularise = 0;
 		for (ErreursCaisseRegularisation e : reguls)
 			dejaRegularise += e.getMontantRegularisation();
-		return dejaRegularise;
+		return montant - dejaRegularise;
 	}
 
 	/**

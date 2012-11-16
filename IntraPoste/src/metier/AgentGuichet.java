@@ -13,17 +13,27 @@ import bdd.ErreurCaisseDAO;
 
 public class AgentGuichet extends Agent {
 
-	public AgentGuichet(String codeAgent, TypeAgent typeAgent, String mail,
-			String nom, String prenom, String motDePasse, Agence agence) {
-		super(codeAgent, agence, typeAgent, mail, nom, prenom, motDePasse);
-	}
+    public AgentGuichet( String codeAgent, TypeAgent typeAgent, String mail,
+            String nom, String prenom, String motDePasse, Agence agence ) {
+        super( codeAgent, agence, typeAgent, mail, nom, prenom, motDePasse );
+    }
 
-	public ArrayList<ErreurCaisse> consulterErreursCaisseAgent(
-			String codeAgent, String codeTypeErreur,
-			int codeStatusRegularisation, java.util.Date dateDebut,
-			java.util.Date dateFin) throws SQLException {
-		return (ErreurCaisseDAO.selectErreursCaisseByAgent(codeAgent,
-				dateDebut, dateFin, codeTypeErreur, codeStatusRegularisation));
-	}
+    public ArrayList<ErreurCaisse> consulterErreursCaisseAgent(
+            String codeAgent, String codeTypeErreur,
+            int codeStatusRegularisation, java.util.Date dateDebut,
+            java.util.Date dateFin ) throws SQLException {
+        return ( ErreurCaisseDAO.selectErreursCaisseByAgent( codeAgent,
+                dateDebut, dateFin, codeTypeErreur, codeStatusRegularisation ) );
+    }
+
+    public int regulariserErreur( int idErreur, float montantRegularisation, String codeAgentRegularisateur,
+            MotifRegularisation motifRegularisation ) throws SQLException
+    {
+        ErreurCaisse erreur = ErreurCaisseDAO.selectById( idErreur );
+        if ( erreur != null )
+            return erreur.regulariserErreurCaisseGuichet( montantRegularisation, codeAgentRegularisateur,
+                    motifRegularisation );
+        return 3;
+    }
 
 }
