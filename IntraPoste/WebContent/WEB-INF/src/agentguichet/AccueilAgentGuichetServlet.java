@@ -2,6 +2,8 @@ package agentguichet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -10,13 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bdd.ErreurCaisseDAO;
-import bdd.StatusRegularisationDAO;
-import bdd.TypeErreurDAO;
-
 import metier.ErreurCaisse;
 import metier.StatusRegularisation;
 import metier.TypeErreur;
+import bdd.ErreurCaisseDAO;
+import bdd.StatusRegularisationDAO;
+import bdd.TypeErreurDAO;
 
 /**
  * Servlet implementation class AccueilAgentGuichetServlet
@@ -82,10 +83,29 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
 
     private void getParameters( HttpServletRequest request )
     {
-        if ( request.getParameter( "typeErreur" ) != null )
+        codeStatusRegularisationRecherche = -1;
+        codeTypeErreurRecherche = null;
+        dateDebut = null;
+        dateFin = null;
+        if ( request.getParameter( "typeErreur" ) != null && !request.getParameter( "typeErreur" ).equals( "" ) )
             codeTypeErreurRecherche = (String) request.getParameter( "typeErreur" ).toString();
-        if ( request.getParameter( "statusRegularisationRecherche" ) != null )
+        if ( request.getParameter( "statusRegularisationRecherche" ) != null
+                && !request.getParameter( "statusRegularisationRecherche" ).equals( "" ) )
             codeStatusRegularisationRecherche = Integer.parseInt( request
                     .getParameter( "statusRegularisationRecherche" ) );
+        if ( request.getParameter( "dateDebut" ) != null && !request.getParameter( "dateDebut" ).equals( "" ) )
+            try {
+                dateDebut = new SimpleDateFormat( "dd/MM/yyyy" ).parse( request.getParameter( "dateDebut" ) );
+            } catch ( ParseException e ) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        if ( request.getParameter( "dateFin" ) != null && !request.getParameter( "dateFin" ).equals( "" ) )
+            try {
+                dateFin = new SimpleDateFormat( "dd/MM/yyyy" ).parse( request.getParameter( "dateFin" ) );
+            } catch ( ParseException e ) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
     }
 }

@@ -5,35 +5,42 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Accueil Agent Guichet</title>
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css" />
+<script>
+	$(function() {
+		$("#dateDebut").datepicker({ dateFormat: "dd/mm/yy" });
+		$("#dateFin").datepicker({ dateFormat: "dd/mm/yy" });
+	});
+</script>
 </head>
 <body>
 
 	<fieldset>
 		<legend>Rechercher une erreur</legend>
 		<form method="get" action="#">
-			
-			<label for="dateDebut">Date de début :</label> 
-			<input type="text" name="dateDebut" id="dateDebut" tabindex="10" />
-			 
-			<label for="dateFin">Date de fin :</label> 
-			<input type="text" name="dateFin" id="dateFin" tabindex="20" /> 
-			
-			<label for="typeErreur">Type d'erreur :</label>
-			<select name="typeErreur" id="typeErreur" tabindex="30">
+
+			<label for="dateDebut">Date de début :</label> <input type="text"
+				name="dateDebut" id="dateDebut" tabindex="10" /> <label
+				for="dateFin">Date de fin :</label> <input type="text"
+				name="dateFin" id="dateFin" tabindex="20" /> <label
+				for="typeErreur">Type d'erreur :</label> <select name="typeErreur"
+				id="typeErreur" tabindex="30">
 				<option value=""></option>
 				<c:forEach var="typeEnCours" items="${typesErreur}">
 					<option value="${typeEnCours.codeTypeErreur}">${typeEnCours.nomTypeErreur}</option>
 				</c:forEach>
-			</select>
-			
-			<label for="statusRegularisationRecherche">Statut :</label>
-			<select name="statusRegularisationRecherche" id="statusRegularisationRecherche" tabindex="40">
+			</select> <label for="statusRegularisationRecherche">Statut :</label> <select
+				name="statusRegularisationRecherche"
+				id="statusRegularisationRecherche" tabindex="40">
 				<option value=""></option>
 				<c:forEach var="statusEnCours" items="${statusRegularisation}">
 					<option value="${statusEnCours.codeStatusRegularisation}">${statusEnCours.nomStatusRegularisation}</option>
 				</c:forEach>
-			</select>
-			<input type="submit" value="Rechercher" />
+			</select> <input type="submit" value="Rechercher" />
 		</form>
 	</fieldset>
 
