@@ -36,6 +36,7 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
     private ArrayList<StatusRegularisation> statusRegularisation;
 
     private RechercheForm                   recherche;
+    private Map<String, String>             erreurs;
 
     public AccueilAgentGuichetServlet() {
         super();
@@ -123,6 +124,14 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
         this.recherche = recherche;
     }
 
+    public Map<String, String> getErreurs() {
+        return erreurs;
+    }
+
+    public void setErreurs( Map<String, String> erreurs ) {
+        this.erreurs = erreurs;
+    }
+
     private class RechercheForm
     {
         private static final String CHAMP_DEBUT                 = "dateDebut";
@@ -135,11 +144,11 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
         private int                 codeStatusRegularisation;
         private String              codeTypeErreur;
 
-        private Map<String, String> erreurs                     = new HashMap<String, String>();
         private int                 resultat;
 
         public RechercheForm recupererEtVerifierFormulaire( HttpServletRequest request ) {
 
+            erreurs = new HashMap<String, String>();
             String dateDebutString = getValeurChamp( request, CHAMP_DEBUT );
             String dateFinString = getValeurChamp( request, CHAMP_FIN );
             String codeStatusRegularisationString = getValeurChamp( request, CHAMP_STATUS_REGULARISATION );
@@ -270,6 +279,5 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
         public void setResultat( int resultat ) {
             this.resultat = resultat;
         }
-
     }
 }

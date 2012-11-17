@@ -29,16 +29,16 @@
 
 			<label for="dateDebut">Date de début :</label> <input type="text"
 				name="dateDebut" id="dateDebut" tabindex="10" /> <span
-				class="erreur">${this.recherche.erreurs['dateDebut'] }</span> <label
+				class="erreur">${this.erreurs['dateDebut'] }</span> <label
 				for="dateFin">Date de fin :</label> <input type="text"
-				name="dateFin" id="dateFin" tabindex="20" /> <span class="erreur">${this.recherche.erreurs['dateFin']
+				name="dateFin" id="dateFin" tabindex="20" /> <span class="erreur">${this.erreurs['dateFin']
 				}</span> <label for="typeErreur">Type d'erreur :</label> <select
 				name="typeErreur" id="typeErreur" tabindex="30">
 				<option value=""></option>
 				<c:forEach var="typeEnCours" items="${this.typesErreurs}">
 					<option value="${typeEnCours.codeTypeErreur}">${typeEnCours.nomTypeErreur}</option>
 				</c:forEach>
-			</select> <span class="erreur">${this.recherche.erreurs['typeErreur'] }</span>
+			</select> <span class="erreur">${this.erreurs['typeErreur'] }</span>
 
 			<label for="statusRegularisationRecherche">Statut :</label> <select
 				name="statusRegularisationRecherche"
@@ -47,9 +47,9 @@
 				<c:forEach var="statusEnCours" items="${this.statusRegularisation}">
 					<option value="${statusEnCours.codeStatusRegularisation}">${statusEnCours.nomStatusRegularisation}</option>
 				</c:forEach>
-			</select> <span class="erreur">${this.recherche.erreurs['statusRegularisationRecherche']
-				}</span> <input type="submit" value="Rechercher" /> <span class="erreur">${this.recherche.erreurs['noResult']
-				}</span> <span class="erreur">${this.recherche.erreurs['bdd'] }</span>
+			</select> <span class="erreur">${this.erreurs['statusRegularisationRecherche']
+				}</span> <input type="submit" value="Rechercher" /> <span class="erreur">${this.erreurs['noResult']
+				}</span> <span class="erreur">${this.erreurs['bdd'] }</span>
 
 		</form>
 	</fieldset>

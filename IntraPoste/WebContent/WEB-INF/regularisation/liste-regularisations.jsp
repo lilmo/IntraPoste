@@ -22,39 +22,44 @@
 		</c:choose>
 	</h1>
 
-	<c:out value="${this.erreur }"></c:out>
 
-	<table border="1">
-		<thead>
-			<tr>
-				<td>N° Agent Régularisateur</td>
-				<td>Date</td>
-				<td>Motif</td>
-				<td>Type Regularisation</td>
-				<td>Montant</td>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="regularisation" items="${this.regularisations}">
+	<c:forEach var="erreurEnCours" items="${this.erreurs}">
+		<span class="erreur">${erreurEnCours}</span>
+	</c:forEach>
+
+	<c:if test="${!empty this.regularisations}">
+		<table border="1">
+			<thead>
 				<tr>
-					<td><c:out
-							value="${regularisation.agentRegularisateur.codeAgent}" /></td>
-					<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm"
-							value="${regularisation.timestamp}" /></td>
-					<td><c:out
-							value="${regularisation.motifRegularisation.nomMotifRegularisation}" /></td>
-					<td><c:out
-							value="${regularisation.typeRegularisation.nomTypeRegularisation}" /></td>
-					<td><c:out value="${regularisation.montantRegularisation}" /></td>
+					<td>N° Agent Régularisateur</td>
+					<td>Date</td>
+					<td>Motif</td>
+					<td>Type Regularisation</td>
+					<td>Montant</td>
 				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				<c:forEach var="regularisation" items="${this.regularisations}">
+					<tr>
+						<td><c:out
+								value="${regularisation.agentRegularisateur.codeAgent}" /></td>
+						<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm"
+								value="${regularisation.timestamp}" /></td>
+						<td><c:out
+								value="${regularisation.motifRegularisation.nomMotifRegularisation}" /></td>
+						<td><c:out
+								value="${regularisation.typeRegularisation.nomTypeRegularisation}" /></td>
+						<td><c:out value="${regularisation.montantRegularisation}" /></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</c:if>
 
 	<!-- TODO: Verifier le code agent en session -->
 	<c:if test="${this.codeStatusRegularisation == 1}">
 		<a
-			href="<c:url value="RegulariserServlet"> 
+			href="<c:url value="/RegulariserServlet"> 
 					<c:param name="erreurCaisseId" value="${this.erreurCaisseId}" />
 				</c:url>">
 			Regulariser l'erreur </a>

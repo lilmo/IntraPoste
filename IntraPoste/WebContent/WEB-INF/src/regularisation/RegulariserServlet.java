@@ -52,7 +52,7 @@ public class RegulariserServlet extends HttpServlet {
             setErreur( "Le numero d'erreur n'existe pas." );
 
         this.getServletContext().setAttribute( "this", this );
-        this.getServletContext().getRequestDispatcher( "RegulariserServlet" )
+        this.getServletContext().getRequestDispatcher( "/WEB-INF/regularisation/regulariser.jsp" )
                 .forward( request, response );
     }
 
