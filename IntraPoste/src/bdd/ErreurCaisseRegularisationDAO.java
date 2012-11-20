@@ -7,37 +7,76 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import metier.ErreurCaisse;
 import metier.ErreursCaisseRegularisation;
 
 public class ErreurCaisseRegularisationDAO {
 
-    public static void init() throws SQLException {
+    public static void init() throws SQLException, InterruptedException {
 
         // TODO init ErreurCaisse
         empty();
-        ErreurCaisseDAO.updateStatus( ErreurCaisseDAO.selectAll().get( 0 ).getErreurCaisseId(), 1 );
-        insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() ), "TOTO_C", MotifRegularisationDAO
-                .selectAll().get( 0 ).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get( 0 )
-                .getErreurCaisseId(), 0.0f );
-        insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() ), "TOTO_T", MotifRegularisationDAO
-                .selectAll().get( 0 ).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get( 0 )
-                .getErreurCaisseId(), 0.0f );
-        insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() ), "TOTO_C", MotifRegularisationDAO
-                .selectAll().get( 0 ).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get( 0 )
-                .getErreurCaisseId(), 0.0f );
-        insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() ), "TOTO_B", MotifRegularisationDAO
-                .selectAll().get( 0 ).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get( 0 )
-                .getErreurCaisseId(), 0.0f );
-        insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() ), "TOTO_P", MotifRegularisationDAO
-                .selectAll().get( 0 ).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get( 0 )
-                .getErreurCaisseId(), 0.0f );
-        insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() ), "TOTO_C", MotifRegularisationDAO
-                .selectAll().get( 0 ).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get( 0 )
-                .getErreurCaisseId(), 0.0f );
-        insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() ), "TOTO_B", MotifRegularisationDAO
-                .selectAll().get( 0 ).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get( 0 )
-                .getErreurCaisseId(), 0.0f );
 
+        // On choisi au hasard l'une des 5 erreurs de caisse
+        ErreurCaisse erreur = ErreurCaisseDAO.selectAll().get( (int) Math.round( Math.random() * 4 ) );
+
+        // On met à jour le status de cette erreur de caisse (elle n'est pas
+        // juste déclarée
+        ErreurCaisseDAO.updateStatus( erreur.getErreurCaisseId(), 1 );
+
+        Thread.sleep( 5000 );
+
+        // On insère une regularisation correspondant à l'erreur précedemment
+        // choisie
+        insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() - Math.round( Math.random() * 10 ) ),
+                "LOPVET_M", MotifRegularisationDAO
+                        .selectAll().get( (int) Math.round( Math.random() * 5 ) ).getCodeMotifRegularisation(), 0,
+                erreur.getErreurCaisseId(), (float) ( Math.random() * erreur.resteARegulariser() ) );
+
+        Thread.sleep( 5000 );
+
+        erreur = ErreurCaisseDAO.selectAll().get( (int) Math.round( Math.random() * 4 ) );
+        ErreurCaisseDAO.updateStatus( erreur.getErreurCaisseId(), 1 );
+        insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() - Math.round( Math.random() * 10 ) ),
+                "LOPVET_M", MotifRegularisationDAO
+                        .selectAll().get( (int) Math.round( Math.random() * 5 ) ).getCodeMotifRegularisation(), 0,
+                erreur.getErreurCaisseId(), (float) ( Math.random() * erreur.resteARegulariser() ) );
+
+        Thread.sleep( 5000 );
+
+        erreur = ErreurCaisseDAO.selectAll().get( (int) Math.round( Math.random() * 4 ) );
+        ErreurCaisseDAO.updateStatus( erreur.getErreurCaisseId(), 1 );
+        insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() - Math.round( Math.random() * 10 ) ),
+                "GUYONN_a", MotifRegularisationDAO
+                        .selectAll().get( (int) Math.round( Math.random() * 4 ) ).getCodeMotifRegularisation(), 0,
+                erreur.getErreurCaisseId(), (float) ( Math.random() * erreur.resteARegulariser() ) );
+
+        Thread.sleep( 5000 );
+
+        erreur = ErreurCaisseDAO.selectAll().get( (int) Math.round( Math.random() * 4 ) );
+        ErreurCaisseDAO.updateStatus( erreur.getErreurCaisseId(), 1 );
+        insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() - Math.round( Math.random() * 10 ) ),
+                "canard_p", MotifRegularisationDAO
+                        .selectAll().get( (int) Math.round( Math.random() * 4 ) ).getCodeMotifRegularisation(), 0,
+                erreur.getErreurCaisseId(), (float) ( Math.random() * erreur.resteARegulariser() ) );
+
+        Thread.sleep( 5000 );
+
+        erreur = ErreurCaisseDAO.selectAll().get( (int) Math.round( Math.random() * 4 ) );
+        ErreurCaisseDAO.updateStatus( erreur.getErreurCaisseId(), 1 );
+        insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() - Math.round( Math.random() * 10 ) ),
+                "bonnin_e", MotifRegularisationDAO
+                        .selectAll().get( (int) Math.round( Math.random() * 4 ) ).getCodeMotifRegularisation(), 0,
+                erreur.getErreurCaisseId(), (float) ( Math.random() * erreur.resteARegulariser() ) );
+
+        Thread.sleep( 5000 );
+
+        erreur = ErreurCaisseDAO.selectAll().get( (int) Math.round( Math.random() * 4 ) );
+        ErreurCaisseDAO.updateStatus( erreur.getErreurCaisseId(), 1 );
+        insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() - Math.round( Math.random() * 10 ) ),
+                "bonnin_e", MotifRegularisationDAO
+                        .selectAll().get( (int) Math.round( Math.random() * 4 ) ).getCodeMotifRegularisation(), 0,
+                erreur.getErreurCaisseId(), (float) ( Math.random() * erreur.resteARegulariser() ) );
     }
 
     public static ArrayList<ErreursCaisseRegularisation> selectAll() throws SQLException
@@ -51,7 +90,7 @@ public class ErreurCaisseRegularisationDAO {
             ResultSet result = select.executeQuery( query );
 
             while ( result.next() ) {
-                results.add( new ErreursCaisseRegularisation( result.getTimestamp( "DTIME_REGULARISATION"),
+                results.add( new ErreursCaisseRegularisation( result.getTimestamp( "DTIME_REGULARISATION" ),
                         result.getString( "CODE_AGENT" ), result
                                 .getInt( "CODE_MOTIF_REGULARISATION" ), result
                                 .getInt( "ERREUR_CAISSE_ID" ), result
@@ -67,7 +106,7 @@ public class ErreurCaisseRegularisationDAO {
         }
         return results;
     }
-    
+
     public static void insert( Timestamp timestamp,
             String codeAgentRegularisateur,
             int motifRegularisation,
@@ -102,7 +141,7 @@ public class ErreurCaisseRegularisationDAO {
             ResultSet result = select.executeQuery( query );
 
             while ( result.next() ) {
-                results.add( new ErreursCaisseRegularisation( result.getTimestamp( "DTIME_REGULARISATION"),
+                results.add( new ErreursCaisseRegularisation( result.getTimestamp( "DTIME_REGULARISATION" ),
                         result.getString( "CODE_AGENT" ), result
                                 .getInt( "CODE_MOTIF_REGULARISATION" ), result
                                 .getInt( "ERREUR_CAISSE_ID" ), result

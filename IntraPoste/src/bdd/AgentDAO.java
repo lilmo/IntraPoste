@@ -19,22 +19,22 @@ public class AgentDAO {
         // 2 agents dir, 1 agent comptable, 2 guichets
 
         // directrices Paris20
-        insert( "PAR201", 0, "MORGANE.LOPVET@LAPOSTE.FR", "toto", "LOPVET", "MORGANE" );
-        insert( "PAR201", 0, "AUDREY.GUYONNET@LAPOSTE.FR", "toto", "GUYONNET", "AUDREY" );
+        insert( "PAR201", 0, "MORGANE.LOPVET@LAPOSTE.FR", "LOPVET", "MORGANE", "toto" );
+        insert( "PAR201", 0, "AUDREY.GUYONNET@LAPOSTE.FR", "GUYONNET", "AUDREY", "toto" );
         // comptable paris20
-        insert( "PAR201", 1, "PICSOU.CANARD@LAPOSTE.FR", "toto", "CANARD", "PICSOU" );
+        insert( "PAR201", 1, "PICSOU.CANARD@LAPOSTE.FR", "CANARD", "PICSOU", "toto" );
         // guichetiers paris20
-        insert( "PAR201", 2, "JEANNE.TARTINE@LAPOSTE.FR", "toto", "TARTINE", "JEANNE" );
-        insert( "PAR201", 2, "GERMAIN.POULET@LAPOSTE.FR", "toto", "POULET", "GERMAIN" );
+        insert( "PAR201", 2, "JEANNE.TARTINE@LAPOSTE.FR", "TARTINE", "JEANNE", "toto" );
+        insert( "PAR201", 2, "GERMAIN.POULET@LAPOSTE.FR", "POULET", "GERMAIN", "toto" );
 
         // directrices Antony
-        insert( "ANT001", 0, "EMILIE.BONNIN@LAPOSTE.FR", "toto", "BONNIN", "EMILIE" );
-        insert( "ANT001", 0, "PRINCE.CHARMANT@LAPOSTE.FR", "toto", "CHARMANT", "PRINCE" );
+        insert( "ANT001", 2, "EMILIE.BONNIN@LAPOSTE.FR", "BONNIN", "EMILIE", "toto" );
+        insert( "ANT001", 0, "PRINCE.CHARMANT@LAPOSTE.FR", "CHARMANT", "PRINCE", "toto" );
         // comptable Antony
-        insert( "ANT001", 1, "PICSETTE.CANARDE@LAPOSTE.FR", "toto", "CANARDE", "PICSETTE" );
+        insert( "ANT001", 1, "PICSETTE.CANARDE@LAPOSTE.FR", "CANARDE", "PICSETTE", "toto" );
         // guichetiers Antony
-        insert( "ANT001", 2, "PAULETTE.LADOUILLE@LAPOSTE.FR", "toto", "LADOUILLE", "PAULETTE" );
-        insert( "ANT001", 2, "PIERRE.CHOCAPIC@LAPOSTE.FR", "toto", "CHOCAPIC", "PIERRE" );
+        insert( "ANT001", 2, "PAULETTE.LADOUILLE@LAPOSTE.FR", "LADOUILLE", "PAULETTE", "toto" );
+        insert( "ANT001", 2, "PIERRE.CHOCAPIC@LAPOSTE.FR", "CHOCAPIC", "PIERRE", "toto" );
 
     }
 

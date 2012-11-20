@@ -49,6 +49,7 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
 
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
             IOException {
+        boolean rediriger = false;
         try {
             recherche.recupererEtVerifierFormulaire( request );
 
@@ -59,19 +60,23 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
 
                 AgentGuichet agent = (AgentGuichet) session.getAttribute( "agent" );
 
-                setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseByAgent( agent.getCodeAgent(),
-                        recherche.getDateDebut(), recherche.getDateFin(),
-                        recherche.getCodeTypeErreur(),
-                        recherche.getCodeStatusRegularisation() ) );
-
-                if ( erreursCaisse.isEmpty() )
+                if ( agent != null )
                 {
-                    setErreursCaisse( ErreurCaisseDAO.selectAll() );
-                    recherche.setErreur( "noResult", "Aucun resultat ne correspond a votre recherche." );
+                    setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseByAgent( agent.getCodeAgent(),
+                            recherche.getDateDebut(), recherche.getDateFin(),
+                            recherche.getCodeTypeErreur(),
+                            recherche.getCodeStatusRegularisation() ) );
+
+                    if ( erreursCaisse.isEmpty() )
+                    {
+                        setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseByAgent( agent.getCodeAgent(), null, null,
+                                null, -1 ) );
+                        recherche.setErreur( "noResult", "Aucun resultat ne correspond a votre recherche." );
+                    }
                 }
-            }
-            else
-                setErreursCaisse( ErreurCaisseDAO.selectAll() );
+                else
+                    rediriger = true;
+            } // Sinon les erreurs seront affichées via la jsp
 
             setTypesErreurs( TypeErreurDAO.selectAll() );
             setStatusRegularisation( StatusRegularisationDAO.selectAll() );
@@ -82,8 +87,11 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
             e.printStackTrace();
             recherche.setErreur( "", "La base de donnee a rencontre un probleme. Recherche abandonnee." );
         } finally {
-            this.getServletContext().getRequestDispatcher( "/WEB-INF/agent-guichet/accueil-agent-guichet.jsp" )
-                    .forward( request, response );
+            if ( rediriger )
+                response.sendRedirect( "LoginServlet" );
+            else
+                this.getServletContext().getRequestDispatcher( "/WEB-INF/agent-guichet/accueil-agent-guichet.jsp" )
+                        .forward( request, response );
         }
     }
 
@@ -139,10 +147,10 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
         private static final String CHAMP_TYPE_ERREUR           = "typeErreur";
         private static final String CHAMP_STATUS_REGULARISATION = "statusRegularisationRecherche";
 
-        private Date                dateDebut;
-        private Date                dateFin;
-        private int                 codeStatusRegularisation;
-        private String              codeTypeErreur;
+        private Date                dateDebut                   = null;
+        private Date                dateFin                     = null;
+        private int                 codeStatusRegularisation    = -1;
+        private String              codeTypeErreur              = null;
 
         private int                 resultat;
 
@@ -203,10 +211,13 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
         /* Validation des champs */
 
         private void validationTypeErreur( String codeTypeErreurString ) throws Exception {
-            if ( codeTypeErreurString.equals( "E" ) || codeTypeErreurString.equals( "D" ) )
-                setCodeTypeErreur( codeTypeErreurString );
-            else
-                throw new Exception( "Type d'erreur inconnu" );
+            if ( codeTypeErreurString != null )
+            {
+                if ( codeTypeErreurString.equals( "E" ) || codeTypeErreurString.equals( "D" ) )
+                    setCodeTypeErreur( codeTypeErreurString );
+                else
+                    throw new Exception( "Type d'erreur inconnu" );
+            }
         }
 
         private void validationCodeStatus( String codeStatusRegularisationString ) throws Exception {
@@ -216,6 +227,7 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
                     setCodeStatusRegularisation( Integer.parseInt( codeStatusRegularisationString ) );
                 } catch ( NumberFormatException e ) {
                     e.printStackTrace();
+                    setCodeStatusRegularisation( -1 );
                     throw new Exception( "Status de regularisation inconnu" );
                 }
                 if ( codeStatusRegularisation < 0 || codeStatusRegularisation > 2 )

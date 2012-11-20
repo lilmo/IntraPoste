@@ -16,8 +16,11 @@ public class ErreurCaisseDAO {
 
         // TODO init ErreurCaisse
         empty();
-        insert( "PAR201", "TOTO_C", new Date(), "E", 0 );
-        insert( "PAR201", "TOTO_C", new Date(), "E", 12 );
+        insert( "PAR201", "lopvet_m", new Date(), "E", Math.round( Math.random() * 10 ) );
+        insert( "ANT001", "bonnin_e", new Date(), "E", Math.round( Math.random() * 10 ) );
+        insert( "PAR201", "lopvet_m", new Date(), "D", Math.round( Math.random() * 10 ) );
+        insert( "ANT001", "bonnin_e", new Date(), "D", Math.round( Math.random() * 10 ) );
+        insert( "ANT001", "bonnin_e", new Date(), "E", Math.round( Math.random() * 10 ) );
     }
 
     public static ErreurCaisse selectById( int idErreurCaisse ) {
@@ -172,7 +175,7 @@ public class ErreurCaisseDAO {
         try {
             select = Connexion.getInstance().getConnection().createStatement();
             String query = "SELECT * FROM ERREUR_CAISSE WHERE CODE_AGENT = '"
-                    + codeAgent
+                    + codeAgent.toUpperCase()
                     + "'";
             if ( dateFin != null )
                 dateFin.setDate( dateFin.getDate() + 1 );
