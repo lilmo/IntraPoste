@@ -24,8 +24,6 @@ public class ErreurCaisseRegularisationDAO {
         // juste déclarée
         ErreurCaisseDAO.updateStatus( erreur.getErreurCaisseId(), 1 );
 
-        Thread.sleep( 5000 );
-
         // On insère une regularisation correspondant à l'erreur précedemment
         // choisie
         insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() - Math.round( Math.random() * 10 ) ),
@@ -34,7 +32,6 @@ public class ErreurCaisseRegularisationDAO {
                 erreur.getErreurCaisseId(), (float) ( Math.random() * erreur.resteARegulariser() ) );
         if ( erreur.resteARegulariser() == 0 )
             ErreurCaisseDAO.updateStatus( erreur.getErreurCaisseId(), 2 );
-        Thread.sleep( 5000 );
 
         erreur = ErreurCaisseDAO.selectAll().get( (int) Math.round( Math.random() * 4 ) );
         ErreurCaisseDAO.updateStatus( erreur.getErreurCaisseId(), 1 );
@@ -44,7 +41,6 @@ public class ErreurCaisseRegularisationDAO {
                 erreur.getErreurCaisseId(), (float) ( Math.random() * erreur.resteARegulariser() ) );
         if ( erreur.resteARegulariser() == 0 )
             ErreurCaisseDAO.updateStatus( erreur.getErreurCaisseId(), 2 );
-        Thread.sleep( 5000 );
 
         erreur = ErreurCaisseDAO.selectAll().get( (int) Math.round( Math.random() * 4 ) );
         ErreurCaisseDAO.updateStatus( erreur.getErreurCaisseId(), 1 );
@@ -54,7 +50,6 @@ public class ErreurCaisseRegularisationDAO {
                 erreur.getErreurCaisseId(), (float) ( Math.random() * erreur.resteARegulariser() ) );
         if ( erreur.resteARegulariser() == 0 )
             ErreurCaisseDAO.updateStatus( erreur.getErreurCaisseId(), 2 );
-        Thread.sleep( 5000 );
 
         erreur = ErreurCaisseDAO.selectAll().get( (int) Math.round( Math.random() * 4 ) );
         ErreurCaisseDAO.updateStatus( erreur.getErreurCaisseId(), 1 );
@@ -64,7 +59,6 @@ public class ErreurCaisseRegularisationDAO {
                 erreur.getErreurCaisseId(), (float) ( Math.random() * erreur.resteARegulariser() ) );
         if ( erreur.resteARegulariser() == 0 )
             ErreurCaisseDAO.updateStatus( erreur.getErreurCaisseId(), 2 );
-        Thread.sleep( 5000 );
 
         erreur = ErreurCaisseDAO.selectAll().get( (int) Math.round( Math.random() * 4 ) );
         ErreurCaisseDAO.updateStatus( erreur.getErreurCaisseId(), 1 );
@@ -74,13 +68,12 @@ public class ErreurCaisseRegularisationDAO {
                 erreur.getErreurCaisseId(), (float) ( Math.random() * erreur.resteARegulariser() ) );
         if ( erreur.resteARegulariser() == 0 )
             ErreurCaisseDAO.updateStatus( erreur.getErreurCaisseId(), 2 );
-        Thread.sleep( 5000 );
 
         erreur = ErreurCaisseDAO.selectAll().get( (int) Math.round( Math.random() * 4 ) );
         ErreurCaisseDAO.updateStatus( erreur.getErreurCaisseId(), 2 );
         insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() - Math.round( Math.random() * 10 ) ),
                 "bonnin_e", MotifRegularisationDAO
-                        .selectAll().get( (int) Math.round( Math.random() * 4 ) ).getCodeMotifRegularisation(), 0,
+                        .selectAll().get( (int) Math.round( Math.random() * 4 ) ).getCodeMotifRegularisation(), 1,
                 erreur.getErreurCaisseId(), erreur.resteARegulariser() );
     }
 
