@@ -108,7 +108,7 @@ public class ErreurCaisseDAO {
                     + new SimpleDateFormat( "yyyy/MM/dd" )
                             .format( dateVacation )
                     + "', 'yyyy/mm/dd')";
-            if ( ( codeTypeErreur.equals( "D" ) ) || ( codeTypeErreur.equals( "E" ) ) )
+            if ( codeTypeErreur != null && ( ( codeTypeErreur.equals( "D" ) ) || ( codeTypeErreur.equals( "E" ) ) ) )
                 query += "' AND CODE_TYPE_ERREUR = '" + codeTypeErreur + "'";
             if ( ( codeStatusRegularisation >= 0 )
                     && ( codeStatusRegularisation <= 2 ) )

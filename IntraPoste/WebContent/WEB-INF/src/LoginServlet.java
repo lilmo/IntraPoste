@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
 
                 break;
             case 1:
-
+                pageRetour = "/AccueilAgentComptableServlet";
                 break;
             case 2:
                 pageRetour = "/AccueilAgentGuichetServlet";
@@ -69,8 +69,7 @@ public class LoginServlet extends HttpServlet {
                 break;
             }
             this.getServletContext().setAttribute( "this", this );
-            this.getServletContext().getRequestDispatcher( pageRetour )
-                    .forward( request, response );
+            this.getServletContext().getRequestDispatcher( pageRetour ).forward( request, response );
         }
     }
 

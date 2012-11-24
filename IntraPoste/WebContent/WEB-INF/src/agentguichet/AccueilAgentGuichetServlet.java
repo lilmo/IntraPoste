@@ -58,8 +58,14 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 /* Récupération de l'objet depuis la session */
 
-                AgentGuichet agent = (AgentGuichet) session.getAttribute( "agent" );
-
+                AgentGuichet agent = null;
+                try {
+                    agent = (AgentGuichet) session.getAttribute( "agent" );
+                } catch ( ClassCastException e )
+                {
+                    e.printStackTrace();
+                    recherche.setErreur( "", "Vous n'êtes pas autorisé à effectuer cette opération" );
+                }
                 if ( agent != null )
                 {
                     setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseByAgent( agent.getCodeAgent(),
