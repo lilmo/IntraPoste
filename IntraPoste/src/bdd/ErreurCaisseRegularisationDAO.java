@@ -16,28 +16,38 @@ public class ErreurCaisseRegularisationDAO {
         // TODO init ErreurCaisse
         empty();
         ErreurCaisseDAO.updateStatus( ErreurCaisseDAO.selectAll().get( 0 ).getErreurCaisseId(), 1 );
+        //try {
         insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() ), "TOTO_C", MotifRegularisationDAO
                 .selectAll().get( 0 ).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get( 0 )
                 .getErreurCaisseId(), 0.0f );
+        //Thread.sleep(2000);
         insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() ), "TOTO_T", MotifRegularisationDAO
                 .selectAll().get( 0 ).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get( 0 )
                 .getErreurCaisseId(), 0.0f );
+        //Thread.sleep(2000);
         insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() ), "TOTO_C", MotifRegularisationDAO
                 .selectAll().get( 0 ).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get( 0 )
                 .getErreurCaisseId(), 0.0f );
+        //Thread.sleep(2000);
         insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() ), "TOTO_B", MotifRegularisationDAO
                 .selectAll().get( 0 ).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get( 0 )
                 .getErreurCaisseId(), 0.0f );
+        //Thread.sleep(2000);
         insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() ), "TOTO_P", MotifRegularisationDAO
                 .selectAll().get( 0 ).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get( 0 )
                 .getErreurCaisseId(), 0.0f );
+        //Thread.sleep(2000);
         insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() ), "TOTO_C", MotifRegularisationDAO
                 .selectAll().get( 0 ).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get( 0 )
                 .getErreurCaisseId(), 0.0f );
+		//Thread.sleep(2000);
         insert( new java.sql.Timestamp( Calendar.getInstance().getTime().getTime() ), "TOTO_B", MotifRegularisationDAO
                 .selectAll().get( 0 ).getCodeMotifRegularisation(), 0, ErreurCaisseDAO.selectAll().get( 0 )
                 .getErreurCaisseId(), 0.0f );
-
+	/*} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}*/
     }
 
     public static ArrayList<ErreursCaisseRegularisation> selectAll() throws SQLException

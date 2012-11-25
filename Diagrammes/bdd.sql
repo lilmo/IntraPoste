@@ -151,7 +151,7 @@ create index ETRE_FK on AGENT (
 /*==============================================================*/
 create table ERREURS_CAISSES_REGUL 
 (
-   DTIME_REGULARISATION DATE                 not null,
+   DTIME_REGULARISATION TIMESTAMP                 not null,
    CODE_AGENT           VARCHAR2(32)         not null
       constraint CKC_CODE_AGENT_ERREURS_ check (CODE_AGENT = upper(CODE_AGENT)),
    CODE_MOTIF_REGULARISATION INTEGER              not null
