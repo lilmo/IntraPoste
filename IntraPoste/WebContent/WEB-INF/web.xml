@@ -79,6 +79,16 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>DeclarerErreur</display-name>
+    <servlet-name>DeclarerErreur</servlet-name>
+    <servlet-class>agentcomptable.DeclarerErreur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeclarerErreur</servlet-name>
+    <url-pattern>/DeclarerErreur</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>AccueilAgentComptableServlet</display-name>
     <servlet-name>AccueilAgentComptableServlet</servlet-name>
     <servlet-class>agentcomptable.AccueilAgentComptableServlet</servlet-class>

@@ -14,13 +14,13 @@ import bdd.TypeRegularisationDAO;
 
 public class Main {
 
-	public static void main(String args[]) throws SQLException {
+	public static void main(String args[]) throws SQLException, InterruptedException {
 		emptyBase();
 		initialiserBase();
 		System.out.println("Done !");
 	}
 	
-	private static void initialiserBase() throws SQLException
+	private static void initialiserBase() throws SQLException, InterruptedException
 	{
 		MotifRegularisationDAO.init();
 		StatusRegularisationDAO.init();

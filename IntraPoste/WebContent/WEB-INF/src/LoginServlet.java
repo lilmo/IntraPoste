@@ -35,6 +35,7 @@ public class LoginServlet extends HttpServlet {
      */
     protected void doGet( HttpServletRequest request,
             HttpServletResponse response ) throws ServletException, IOException {
+        this.getServletContext().setAttribute( "this", this );
         this.getServletContext().getRequestDispatcher( "/WEB-INF/login.jsp" )
                 .forward( request, response );
     }
@@ -58,7 +59,7 @@ public class LoginServlet extends HttpServlet {
 
                 break;
             case 1:
-
+                pageRetour = "/AccueilAgentComptableServlet";
                 break;
             case 2:
                 pageRetour = "/AccueilAgentGuichetServlet";
@@ -67,8 +68,8 @@ public class LoginServlet extends HttpServlet {
                 pageRetour = "/LoginServlet";
                 break;
             }
-            this.getServletContext().getRequestDispatcher( pageRetour )
-                    .forward( request, response );
+            this.getServletContext().setAttribute( "this", this );
+            this.getServletContext().getRequestDispatcher( pageRetour ).forward( request, response );
         }
     }
 

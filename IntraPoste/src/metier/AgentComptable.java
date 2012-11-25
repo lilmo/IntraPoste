@@ -36,7 +36,7 @@ public class AgentComptable extends AgentSuperieur {
      * @param montant
      * @throws SQLException
      */
-    public int declarerErreurCaisse( String codeAgence, String codeAgent,
+    public void declarerErreurCaisse( String codeAgence, String codeAgent,
             java.util.Date dateVacation, String codeTypeErreur, float montant ) throws SQLException {
         ErreurCaisseDAO.insert( codeAgence, codeAgent, dateVacation,
                 codeTypeErreur, montant );
@@ -48,7 +48,6 @@ public class AgentComptable extends AgentSuperieur {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return 0;
     }
 
     /**
