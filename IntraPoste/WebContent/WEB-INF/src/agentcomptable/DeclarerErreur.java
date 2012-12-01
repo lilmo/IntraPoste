@@ -10,11 +10,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import metier.Agent;
 import metier.AgentComptable;
 import metier.TypeErreur;
+import tools.Check;
 import bdd.AgentDAO;
 import bdd.TypeErreurDAO;
 
@@ -35,18 +35,30 @@ public class DeclarerErreur extends HttpServlet {
 
     public DeclarerErreur() {
         super();
-        // TODO Auto-generated constructor stub
         form = new Formulaire();
     }
 
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
             IOException {
-        setTypesErreurs( TypeErreurDAO.selectAll() );
+        AgentComptable agent = null;
+        try {
+            agent = (AgentComptable) Check.checkAgent( request, "comptable" );
+        } catch ( ClassCastException e )
+        {
+            e.printStackTrace();
+            form.setErreur( "", "Vous n'êtes pas autorisé à effectuer cette opération" );
+        }
+        if ( agent != null )
+        {
+            setTypesErreurs( TypeErreurDAO.selectAll() );
 
-        this.getServletContext().setAttribute( "this", this );
+            this.getServletContext().setAttribute( "this", this );
 
-        this.getServletContext().getRequestDispatcher( "/WEB-INF/agent-comptable/declarer-erreur.jsp" )
-                .forward( request, response );
+            this.getServletContext().getRequestDispatcher( "/WEB-INF/agent-comptable/declarer-erreur.jsp" )
+                    .forward( request, response );
+        }
+        else
+            response.sendRedirect( "LoginServlet" );
     }
 
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
@@ -57,12 +69,9 @@ public class DeclarerErreur extends HttpServlet {
 
             if ( form.getResultat() == SUCCES )
             {
-                HttpSession session = request.getSession();
-                /* Récupération de l'objet depuis la session */
-
                 AgentComptable agent = null;
                 try {
-                    agent = (AgentComptable) session.getAttribute( "agent" );
+                    agent = (AgentComptable) Check.checkAgent( request, "comptable" );
                 } catch ( ClassCastException e )
                 {
                     e.printStackTrace();
