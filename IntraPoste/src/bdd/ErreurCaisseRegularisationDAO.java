@@ -16,14 +16,7 @@ public class ErreurCaisseRegularisationDAO {
 
         // TODO init ErreurCaisse
         empty();
-        //try {
-        //Thread.sleep(2000);
-        //Thread.sleep(2000);
-        //Thread.sleep(2000);
-        //Thread.sleep(2000);
-        //Thread.sleep(2000);
-		//Thread.sleep(2000);
-	/*} catch (InterruptedException e) {
+
         // On choisi au hasard l'une des 5 erreurs de caisse
         ErreurCaisse erreur = ErreurCaisseDAO.selectAll().get( (int) Math.round( Math.random() * 4 ) );
 
