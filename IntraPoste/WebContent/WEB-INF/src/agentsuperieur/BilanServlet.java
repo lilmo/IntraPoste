@@ -69,10 +69,10 @@ public class BilanServlet extends HttpServlet {
 	            	recherche.recupererEtVerifierFormulaire( request );
 	            	if ( recherche.getResultat() == SUCCES )
 	            	{
-	            		if (recherche.checkDate.equals("journee"))
-	            			soldeAgence = agent.bilanJourneeErreursCaisse(recherche.agence.getCodeAgence(), recherche.dateJournee, recherche.codeTypeErreur, recherche.codeStatusRegularisation);
-	            		else if (recherche.checkDate.equals("periode"))
-	            			soldeAgence = agent.bilanErreursCaisse(recherche.agence.getCodeAgence(), recherche.datePeriode, recherche.codeTypeErreur, recherche.codeStatusRegularisation);
+	            		if (recherche.getCheckDate().equals("journee"))
+	            			soldeAgence = agent.bilanJourneeErreursCaisse(recherche.getAgence().getCodeAgence(), recherche.getDateJournee(), recherche.getCodeTypeErreur(), recherche.getCodeStatusRegularisation());
+	            		else if (recherche.getCheckDate().equals("periode"))
+	            			soldeAgence = agent.bilanErreursCaisse(recherche.getAgence().getCodeAgence(), recherche.getDatePeriode(), recherche.getCodeTypeErreur(), recherche.getCodeStatusRegularisation());
 	            	}
 	            	else
 	            		soldeAgence = 0;
@@ -151,7 +151,7 @@ public class BilanServlet extends HttpServlet {
         this.erreurs = erreurs;
     }
 
-	private class RechercheForm
+	public class RechercheForm
     {
         private static final String CHAMP_JOURNEE               = "dateJournee";
         private static final String CHAMP_PERIODE               = "datePeriode";
@@ -245,10 +245,13 @@ public class BilanServlet extends HttpServlet {
         /* Validation des champs */
 
         private void validationTypeErreur( String codeTypeErreurString ) throws Exception {
-            if ( codeTypeErreurString.equals( "E" ) || codeTypeErreurString.equals( "D" ) )
-                setCodeTypeErreur( codeTypeErreurString );
-            else
-                throw new Exception( "Type d'erreur inconnu" );
+        	if (codeTypeErreurString != null)
+        	{
+        		if ( codeTypeErreurString.equals( "E" ) || codeTypeErreurString.equals( "D" ) )
+        			setCodeTypeErreur( codeTypeErreurString );
+        		else
+        			throw new Exception( "Type d'erreur inconnu" );
+        	}
         }
 
         private void validationCodeStatus( String codeStatusRegularisationString ) throws Exception {
@@ -263,6 +266,7 @@ public class BilanServlet extends HttpServlet {
                 if ( codeStatusRegularisation < 0 || codeStatusRegularisation > 2 )
                     throw new Exception( "Status de regularisation inconnu" );
             }
+            setCodeStatusRegularisation(-1);
         }
         
         @SuppressWarnings("deprecation")
@@ -271,14 +275,16 @@ public class BilanServlet extends HttpServlet {
         	{
         		if (checkDate.equals("journee"))
         		{
-        			dateDebut = dateJournee;
-        			dateFin = dateJournee;
+        			setDateDebut(dateJournee);
+        			setDateFin(dateJournee);
+        			setCheckDate(checkDate);
         		}
         		else if (checkDate.equals("periode"))
         		{
-        			dateDebut = new Date( Calendar.getInstance().get( Calendar.YEAR ), 1,
-                            1 );
-        			dateFin = datePeriode;
+        			setDateDebut(new Date( Calendar.getInstance().get( Calendar.YEAR ) -1900, 0,
+                            1 ));
+        			setDateFin(datePeriode);
+        			setCheckDate(checkDate);
         		}
         	}
         	else

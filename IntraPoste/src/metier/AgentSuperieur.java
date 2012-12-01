@@ -72,7 +72,7 @@ public class AgentSuperieur extends Agent {
 						codeTypeErreur, codeStatusRegularisation);
 		if (erreurs != null)
 			for (ErreurCaisse e : erreurs)
-				if (e.getTypeErreur().getNomTypeErreur().equals("D"))
+				if (e.getTypeErreur().getCodeTypeErreur().equals("D"))
 					somme -= e.getMontant();
 				else
 					somme += e.getMontant();

@@ -62,8 +62,6 @@
 
 		</form>
 	</fieldset>
-
-	<c:if test="${this.soldeAgence == 0}">
 		<fieldset>
 			<legend>Bilan</legend>
 			Bilan du <fmt:formatDate pattern="dd/MM/yyyy" value="${this.recherche.dateDebut}" /> 
@@ -71,6 +69,5 @@
 			Agence  : ${this.recherche.agence.nomAgence}
 			Solde erreurs : ${this.soldeAgence}
 		</fieldset>
-	</c:if>
 </body>
 </html>
