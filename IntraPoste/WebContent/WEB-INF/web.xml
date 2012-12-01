@@ -97,4 +97,14 @@
     <servlet-name>AccueilAgentComptableServlet</servlet-name>
     <url-pattern>/AccueilAgentComptableServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BilanServlet</display-name>
+    <servlet-name>BilanServlet</servlet-name>
+    <servlet-class>agentsuperieur.BilanServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BilanServlet</servlet-name>
+    <url-pattern>/BilanServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

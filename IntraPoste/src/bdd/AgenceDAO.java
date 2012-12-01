@@ -58,6 +58,7 @@ public class AgenceDAO {
 		return null;
 	}
 
+	
 	public static ArrayList<Agence> selectByNom(String nomAgence) {
 		ArrayList<Agence> results = new ArrayList<>();
 		try {
@@ -76,6 +77,27 @@ public class AgenceDAO {
 		return results;
 	}
 
+	public static boolean existingByCode(String codeAgence) {
+
+		try {
+			Statement select = Connexion.getInstance().getConnection()
+					.createStatement();
+			ResultSet result = select
+					.executeQuery("SELECT CODE_AGENCE FROM AGENCE WHERE EXISTS " +
+							"(SELECT * FROM AGENCE WHERE CODE_AGENCE = '" + codeAgence + "')");
+			if (result.next()) {
+				// System.out.println(result.getString("CODE_AGENCE"));
+				return true;
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	
 	public static boolean insert(String codeAgence, String nomAgence) {
 
 		try {
