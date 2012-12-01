@@ -13,12 +13,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import metier.AgentComptable;
 import metier.ErreurCaisse;
 import metier.StatusRegularisation;
 import metier.TypeErreur;
+import tools.Check;
 import bdd.ErreurCaisseDAO;
 import bdd.StatusRegularisationDAO;
 import bdd.TypeErreurDAO;
@@ -49,41 +49,51 @@ public class AccueilAgentComptableServlet extends HttpServlet {
 
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
             IOException {
+        boolean redirect = false;
         try {
-            recherche.recupererEtVerifierFormulaire( request );
-
-            if ( recherche.getResultat() == SUCCES )
+            AgentComptable agent = null;
+            try {
+                agent = (AgentComptable) Check.checkAgent( request, "comptable" );
+            } catch ( ClassCastException e )
             {
-                HttpSession session = request.getSession();
-                /* Récupération de l'objet depuis la session */
+                e.printStackTrace();
+                agent = null;
+            }
+            if ( agent != null )
+            {
+                recherche.recupererEtVerifierFormulaire( request );
 
-                AgentComptable agent = (AgentComptable) session.getAttribute( "agent" );
-
-                setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseByAgent( agent.getCodeAgent(),
-                        recherche.getDateDebut(), recherche.getDateFin(),
-                        recherche.getCodeTypeErreur(),
-                        recherche.getCodeStatusRegularisation() ) );
-
-                if ( erreursCaisse.isEmpty() )
+                if ( recherche.getResultat() == SUCCES )
                 {
-                    setErreursCaisse( ErreurCaisseDAO.selectAll() );
-                    recherche.setErreur( "noResult", "Aucun resultat ne correspond a votre recherche." );
+
+                    setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseByAgent( agent.getCodeAgent(),
+                            recherche.getDateDebut(), recherche.getDateFin(),
+                            recherche.getCodeTypeErreur(),
+                            recherche.getCodeStatusRegularisation() ) );
+
+                    if ( erreursCaisse.isEmpty() )
+                    {
+                        setErreursCaisse( ErreurCaisseDAO.selectAll() );
+                        recherche.setErreur( "noResult", "Aucun resultat ne correspond a votre recherche." );
+                    }
                 }
+
+                setTypesErreurs( TypeErreurDAO.selectAll() );
+                setStatusRegularisation( StatusRegularisationDAO.selectAll() );
+
+                this.getServletContext().setAttribute( "this", this );
             }
             else
-                setErreursCaisse( ErreurCaisseDAO.selectAll() );
-
-            setTypesErreurs( TypeErreurDAO.selectAll() );
-            setStatusRegularisation( StatusRegularisationDAO.selectAll() );
-
-            this.getServletContext().setAttribute( "this", this );
-
+                redirect = true;
         } catch ( SQLException e ) {
             e.printStackTrace();
             recherche.setErreur( "", "La base de donnees a rencontre un probleme. Recherche abandonnee." );
         } finally {
-            this.getServletContext().getRequestDispatcher( "/WEB-INF/agent-comptable/accueil-agent-comptable.jsp" )
-                    .forward( request, response );
+            if ( redirect )
+                response.sendRedirect( "LoginServlet" );
+            else
+                this.getServletContext().getRequestDispatcher( "/WEB-INF/agent-comptable/accueil-agent-comptable.jsp" )
+                        .forward( request, response );
         }
     }
 

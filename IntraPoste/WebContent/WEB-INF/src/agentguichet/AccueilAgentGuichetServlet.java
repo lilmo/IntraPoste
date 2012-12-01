@@ -13,12 +13,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import metier.AgentGuichet;
 import metier.ErreurCaisse;
 import metier.StatusRegularisation;
 import metier.TypeErreur;
+import tools.Check;
 import bdd.ErreurCaisseDAO;
 import bdd.StatusRegularisationDAO;
 import bdd.TypeErreurDAO;
@@ -51,22 +51,20 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
             IOException {
         boolean rediriger = false;
         try {
-            recherche.recupererEtVerifierFormulaire( request );
-
-            if ( recherche.getResultat() == SUCCES )
+            AgentGuichet agent = null;
+            try {
+                agent = (AgentGuichet) Check.checkAgent( request, "guichet" );
+            } catch ( ClassCastException e )
             {
-                HttpSession session = request.getSession();
-                /* Récupération de l'objet depuis la session */
+                e.printStackTrace();
+                agent = null;
+                recherche.setErreur( "", "Vous n'êtes pas autorisé à effectuer cette opération" );
+            }
+            if ( agent != null )
+            {
+                recherche.recupererEtVerifierFormulaire( request );
 
-                AgentGuichet agent = null;
-                try {
-                    agent = (AgentGuichet) session.getAttribute( "agent" );
-                } catch ( ClassCastException e )
-                {
-                    e.printStackTrace();
-                    recherche.setErreur( "", "Vous n'êtes pas autorisé à effectuer cette opération" );
-                }
-                if ( agent != null )
+                if ( recherche.getResultat() == SUCCES )
                 {
                     setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseByAgent( agent.getCodeAgent(),
                             recherche.getDateDebut(), recherche.getDateFin(),
@@ -79,11 +77,11 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
                                 null, -1 ) );
                         recherche.setErreur( "noResult", "Aucun resultat ne correspond a votre recherche." );
                     }
-                }
-                else
-                    rediriger = true;
-            } // Sinon les erreurs seront affichées via la jsp
 
+                } // Sinon les erreurs seront affichées via la jsp
+            }
+            else
+                rediriger = true;
             setTypesErreurs( TypeErreurDAO.selectAll() );
             setStatusRegularisation( StatusRegularisationDAO.selectAll() );
 
