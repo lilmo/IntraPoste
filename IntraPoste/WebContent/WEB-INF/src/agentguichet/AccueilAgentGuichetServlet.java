@@ -19,6 +19,7 @@ import metier.ErreurCaisse;
 import metier.StatusRegularisation;
 import metier.TypeErreur;
 import tools.Check;
+import bdd.AgentDAO;
 import bdd.ErreurCaisseDAO;
 import bdd.StatusRegularisationDAO;
 import bdd.TypeErreurDAO;
@@ -52,33 +53,33 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
         boolean rediriger = false;
         try {
             AgentGuichet agent = null;
-            try {
-                agent = (AgentGuichet) Check.checkAgent( request, "guichet" );
-            } catch ( ClassCastException e )
+            if ( Check.checkAgent( request ) )
             {
-                e.printStackTrace();
-                agent = null;
-                recherche.setErreur( "", "Vous n'êtes pas autorisé à effectuer cette opération" );
-            }
-            if ( agent != null )
-            {
-                recherche.recupererEtVerifierFormulaire( request );
-
-                if ( recherche.getResultat() == SUCCES )
+                agent = (AgentGuichet) AgentDAO.selectByCode( (String) request.getSession()
+                        .getAttribute( "codeAgent" ) );
+                if ( Check.checkTypeAgent( "guichet", agent ) )
                 {
-                    setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseByAgent( agent.getCodeAgent(),
-                            recherche.getDateDebut(), recherche.getDateFin(),
-                            recherche.getCodeTypeErreur(),
-                            recherche.getCodeStatusRegularisation() ) );
+                    recherche.recupererEtVerifierFormulaire( request );
 
-                    if ( erreursCaisse.isEmpty() )
+                    if ( recherche.getResultat() == SUCCES )
                     {
-                        setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseByAgent( agent.getCodeAgent(), null, null,
-                                null, -1 ) );
-                        recherche.setErreur( "noResult", "Aucun resultat ne correspond a votre recherche." );
-                    }
+                        setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseByAgent( agent.getCodeAgent(),
+                                recherche.getDateDebut(), recherche.getDateFin(),
+                                recherche.getCodeTypeErreur(),
+                                recherche.getCodeStatusRegularisation() ) );
 
-                } // Sinon les erreurs seront affichées via la jsp
+                        if ( erreursCaisse.isEmpty() )
+                        {
+                            setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseByAgent( agent.getCodeAgent(), null,
+                                    null,
+                                    null, -1 ) );
+                            recherche.setErreur( "noResult", "Aucun resultat ne correspond a votre recherche." );
+                        }
+
+                    }
+                }
+                else
+                    recherche.setErreur( "droit", "Accès refusé." );
             }
             else
                 rediriger = true;
@@ -151,14 +152,24 @@ public class AccueilAgentGuichetServlet extends HttpServlet {
         private static final String CHAMP_TYPE_ERREUR           = "typeErreur";
         private static final String CHAMP_STATUS_REGULARISATION = "statusRegularisationRecherche";
 
-        private Date                dateDebut                   = null;
-        private Date                dateFin                     = null;
-        private int                 codeStatusRegularisation    = -1;
-        private String              codeTypeErreur              = null;
+        private Date                dateDebut;
+        private Date                dateFin;
+        private int                 codeStatusRegularisation;
+        private String              codeTypeErreur;
 
         private int                 resultat;
 
+        public void resetForm()
+        {
+            setDateDebut( null );
+            setDateFin( null );
+            setCodeStatusRegularisation( -1 );
+            setCodeTypeErreur( null );
+        }
+
         public RechercheForm recupererEtVerifierFormulaire( HttpServletRequest request ) {
+
+            resetForm();
 
             erreurs = new HashMap<String, String>();
             String dateDebutString = getValeurChamp( request, CHAMP_DEBUT );

@@ -62,6 +62,7 @@
 				Réinitialiser </a>
 
 		</form>
+		<span class="erreur">${this.erreurs['droit'] }</span>
 	</fieldset>
 
 	<c:if test="${!empty this.erreursCaisse }">
@@ -119,5 +120,7 @@
 			</tbody>
 		</table>
 	</c:if>
+	<a href="<c:url value="DeclarerErreurServlet"></c:url>">Declarer
+		une erreur de caisse </a>
 </body>
 </html>

@@ -171,7 +171,6 @@ public class ErreurCaisseDAO {
 		return results;
 	}
 
-	@SuppressWarnings("deprecation")
 	public static ArrayList<ErreurCaisse> selectErreursCaisseByAgent(
 			String codeAgent, Date dateDebut, Date dateFin,
 			String codeTypeErreur, int codeStatusRegularisation)
@@ -182,8 +181,6 @@ public class ErreurCaisseDAO {
 			select = Connexion.getInstance().getConnection().createStatement();
 			String query = "SELECT * FROM ERREUR_CAISSE WHERE CODE_AGENT = '"
 					+ codeAgent.toUpperCase() + "'";
-			if (dateFin != null)
-				dateFin.setDate(dateFin.getDate() + 1);
 
 			if (dateDebut != null && dateFin != null)
 				query += " AND DATE_VACATION BETWEEN to_date('"

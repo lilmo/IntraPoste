@@ -56,37 +56,37 @@ public class AccueilAgentComptableServlet extends HttpServlet {
         boolean redirect = false;
         try {
             AgentComptable agent = null;
-            try {
-                agent = (AgentComptable) Check.checkAgent( request, "comptable" );
-            } catch ( ClassCastException e )
+            if ( Check.checkAgent( request ) )
             {
-                e.printStackTrace();
-                agent = null;
-            }
-            if ( agent != null )
-            {
-                recherche.recupererEtVerifierFormulaire( request );
-
-                if ( recherche.getResultat() == SUCCES )
+                agent = (AgentComptable) AgentDAO.selectByCode( (String) request.getSession()
+                        .getAttribute( "codeAgent" ) );
+                if ( Check.checkTypeAgent( "comptable", agent ) )
                 {
+                    recherche.recupererEtVerifierFormulaire( request );
 
+                    if ( recherche.getResultat() == SUCCES )
+                    {
                     setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseAgentSup(recherche.getAgenceID(), 
                     		recherche.getAgentID(),
-                            recherche.getDateDebut(), recherche.getDateFin(),
-                            recherche.getCodeTypeErreur(),
-                            recherche.getCodeStatusRegularisation() ) );
+                                recherche.getDateDebut(), recherche.getDateFin(),
+                                recherche.getCodeTypeErreur(),
+                                recherche.getCodeStatusRegularisation() ) );
 
-                    if ( erreursCaisse.isEmpty() )
-                    {
-                        setErreursCaisse( ErreurCaisseDAO.selectAll() );
-                        recherche.setErreur( "noResult", "Aucun resultat ne correspond a votre recherche." );
+                        if ( erreursCaisse.isEmpty() )
+                        {
+                            setErreursCaisse( ErreurCaisseDAO.selectAll() );
+                            recherche.setErreur( "noResult", "Aucun resultat ne correspond a votre recherche." );
+                        }
                     }
+                    else
+                        setErreursCaisse( ErreurCaisseDAO.selectAll() );
+                    setTypesErreurs( TypeErreurDAO.selectAll() );
+                    setStatusRegularisation( StatusRegularisationDAO.selectAll() );
+
+                    this.getServletContext().setAttribute( "this", this );
                 }
-
-                setTypesErreurs( TypeErreurDAO.selectAll() );
-                setStatusRegularisation( StatusRegularisationDAO.selectAll() );
-
-                this.getServletContext().setAttribute( "this", this );
+                else
+                    recherche.setErreur( "droit", "Accès refusé." );
             }
             else
                 redirect = true;

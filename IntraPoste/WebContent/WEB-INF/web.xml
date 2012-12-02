@@ -79,13 +79,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>DeclarerErreur</display-name>
-    <servlet-name>DeclarerErreur</servlet-name>
-    <servlet-class>agentcomptable.DeclarerErreur</servlet-class>
+    <display-name>DeclarerErreurServlet</display-name>
+    <servlet-name>DeclarerErreurServlet</servlet-name>
+    <servlet-class>agentcomptable.DeclarerErreurServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>DeclarerErreur</servlet-name>
-    <url-pattern>/DeclarerErreur</url-pattern>
+    <servlet-name>DeclarerErreurServlet</servlet-name>
+    <url-pattern>/DeclarerErreurServlet</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
