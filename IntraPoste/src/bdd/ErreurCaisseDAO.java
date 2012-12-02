@@ -388,6 +388,7 @@ public class ErreurCaisseDAO {
 		}
 		return results;
 	}
+
 	
 	public static void insert(String codeAgence, String codeAgent,
 			Date dateVacation, String typeErreur, float montant)

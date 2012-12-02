@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Accueil Agent Comptable</title>
+<title>Accueil Agent de Direction</title>
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
 <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
@@ -51,7 +51,9 @@
 
 			<label for="agentId">N° Agent :</label> <input type="text"
 				name="agentId" id="agentId" tabindex="50" /> <span class="erreur">${this.erreurs['agentId']
-				}</span> 
+				}</span> <label for="agenceId">N° Agence :</label> <input type="text"
+				name="agenceId" id="agenceId" tabindex="60" /> <span class="erreur">${this.erreurs['agenceId']}</span>
+
 			<input type="submit" value="Rechercher" /> <span class="erreur">${this.erreurs['noResult']
 				}</span> <span class="erreur">${this.erreurs['bdd'] }</span> <a
 				href="<c:url	value="AccueilAgentComptableServlet">
@@ -71,7 +73,7 @@
 					<td>N° Agent</td>
 					<td>N° Erreur</td>
 					<td>Type Erreur</td>
-					<td>Status Regularisation</td>
+					<td>Statut Regularisation</td>
 					<td>Date</td>
 					<td>Montant</td>
 				</tr>
@@ -79,9 +81,12 @@
 			<tbody>
 				<c:forEach var="erreur" items="${this.erreursCaisse}">
 					<tr>
-						<td>
+						<td><a
+							href="<c:url	value="AccueilAgentComptableServlet">
+								<c:param name="agenceID" value="${erreur.agence.codeAgence}" />
+							</c:url>">
 								<c:out value="${erreur.agence.codeAgence}" />
-						</td>
+						</a></td>
 						<td><a
 							href="<c:url	value="AccueilAgentComptableServlet">
 								<c:param name="agentID" value="${erreur.agent.codeAgent}" />
@@ -90,12 +95,9 @@
 						</a></td>
 						<td><c:choose>
 								<c:when
-									test="${erreur.statusRegularisation.codeStatusRegularisation == 0}">
-									<c:set var="url" value="RegulariserServlet" />
-								</c:when>
-								<c:otherwise>
+									test="${erreur.statusRegularisation.codeStatusRegularisation != 0}">
 									<c:set var="url" value="ListeRegularisationsServlet" />
-								</c:otherwise>
+								</c:when>
 							</c:choose> <a
 							href="<c:url
 								value="${ url }">
@@ -115,7 +117,5 @@
 			</tbody>
 		</table>
 	</c:if>
-	<a href="<c:url value="DeclarerErreurServlet"></c:url>">Declarer
-		une erreur de caisse </a>
 </body>
 </html>
