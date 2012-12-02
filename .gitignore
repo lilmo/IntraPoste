@@ -25,3 +25,4 @@ IntraPosteServlet/hs_err_pid6668.log
 RemoteSystemsTempFiles/.project
 IntraPoste/.tomcatplugin
 *.orig
+IntraPoste/WebContent/WEB-INF/jquery/

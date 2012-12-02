@@ -94,7 +94,7 @@ public class RegulariserServlet extends HttpServlet {
             float montant = -1;
             int motif = -1;
             try {
-                montant = Float.parseFloat( request.getParameter( "montant" ) );
+                montant = Float.valueOf( request.getParameter( "montant" ).trim() ).floatValue();
             } catch ( NumberFormatException e )
             {
                 setErreur( "Le montant doit etre un chiffre." );
@@ -118,7 +118,7 @@ public class RegulariserServlet extends HttpServlet {
                 }
                 int resultat = -1;
                 if ( agentComptable != null )
-                    resultat = agentComptable.regulariserErreur( erreurCaisseId, montant, agentGuichet.getCodeAgent(),
+                    resultat = agentComptable.regulariserErreur( erreurCaisseId, montant, agentComptable.getCodeAgent(),
                             motifEnBase );
                 else if ( agentGuichet != null )
                     resultat = agentGuichet.regulariserErreur( erreurCaisseId, montant, agentGuichet.getCodeAgent(),
@@ -139,7 +139,7 @@ public class RegulariserServlet extends HttpServlet {
                 setErreur( "La base de donnee a rencontre un probleme. Operation abandonee." );
             }
 
-            if ( erreur.isEmpty() )
+            if ( erreur == null || erreur.isEmpty() )
                 pageRetour = "/AccueilAgentGuichetServlet";
         }
         this.getServletContext().getRequestDispatcher( pageRetour )
