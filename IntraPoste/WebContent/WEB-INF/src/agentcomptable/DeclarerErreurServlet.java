@@ -125,7 +125,7 @@ public class DeclarerErreurServlet extends HttpServlet {
         private static final String CHAMP_MONTANT     = "montant";
 
         private String              codeAgent         = null;
-        private int                 montant           = -1;
+        private float               montant           = -1;
         private String              codeTypeErreur    = null;
 
         private int                 resultat;
@@ -202,7 +202,7 @@ public class DeclarerErreurServlet extends HttpServlet {
             if ( montantString != null )
             {
                 try {
-                    setMontant( Integer.parseInt( montantString ) );
+                    setMontant( Float.valueOf( montantString ).floatValue() );
                 } catch ( NumberFormatException e ) {
                     throw new Exception( "Montant invalide" );
                 }
@@ -223,11 +223,11 @@ public class DeclarerErreurServlet extends HttpServlet {
             this.codeAgent = codeAgent;
         }
 
-        public int getMontant() {
+        public float getMontant() {
             return montant;
         }
 
-        public void setMontant( int montant ) {
+        public void setMontant( float montant ) {
             this.montant = montant;
         }
 
