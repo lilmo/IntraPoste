@@ -21,7 +21,7 @@ import bdd.TypeErreurDAO;
 /**
  * Servlet implementation class DeclarerErreur
  */
-public class DeclarerErreur extends HttpServlet {
+public class DeclarerErreurServlet extends HttpServlet {
     private static final long      serialVersionUID = 1L;
 
     private static final int       SUCCES           = 0;
@@ -33,7 +33,7 @@ public class DeclarerErreur extends HttpServlet {
 
     private Formulaire             form             = null;
 
-    public DeclarerErreur() {
+    public DeclarerErreurServlet() {
         super();
         form = new Formulaire();
     }
@@ -46,19 +46,20 @@ public class DeclarerErreur extends HttpServlet {
             agent = (AgentComptable) AgentDAO.selectByCode( (String) request.getSession()
                     .getAttribute( "codeAgent" ) );
             if ( Check.checkTypeAgent( "comptable", agent ) )
-            {
                 setTypesErreurs( TypeErreurDAO.selectAll() );
-
-                this.getServletContext().setAttribute( "this", this );
-
-                this.getServletContext().getRequestDispatcher( "/WEB-INF/agent-comptable/declarer-erreur.jsp" )
-                        .forward( request, response );
-            }
             else
                 form.setErreur( "droit", "Accès refusé." );
         }
         else
+        {
             response.sendRedirect( "LoginServlet" );
+            return;
+        }
+
+        this.getServletContext().setAttribute( "this", this );
+
+        this.getServletContext().getRequestDispatcher( "/WEB-INF/agent-comptable/declarer-erreur.jsp" )
+                .forward( request, response );
     }
 
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
@@ -66,19 +67,21 @@ public class DeclarerErreur extends HttpServlet {
         boolean rediriger = false;
         try {
 
-            AgentComptable agent = null;
+            Agent agent = null;
             if ( Check.checkAgent( request ) )
             {
-                agent = (AgentComptable) AgentDAO.selectByCode( (String) request.getSession()
+                agent = AgentDAO.selectByCode( (String) request.getSession()
                         .getAttribute( "codeAgent" ) );
                 if ( Check.checkTypeAgent( "comptable", agent ) )
                 {
+                    AgentComptable agentComptable = (AgentComptable) agent;
                     form.recupererEtVerifierFormulaire( request );
 
                     if ( form.getResultat() == SUCCES )
                     {
                         Agent a = AgentDAO.selectByCode( form.getCodeAgent() );
-                        agent.declarerErreurCaisse( a.getAgence().getCodeAgence(), a.getCodeAgent(), new Date(),
+                        agentComptable.declarerErreurCaisse( a.getAgence().getCodeAgence(), a.getCodeAgent(),
+                                new Date(),
                                 form.getCodeTypeErreur(), form.getMontant() );
                     }
                 }
@@ -94,8 +97,7 @@ public class DeclarerErreur extends HttpServlet {
             if ( rediriger )
                 response.sendRedirect( "LoginServlet" );
             else
-                this.getServletContext().getRequestDispatcher( "/WEB-INF/agent-comptable/accueil-agent-comptable.jsp" )
-                        .forward( request, response );
+                response.sendRedirect( "AccueilAgentComptableServlet" );
         }
 
     }

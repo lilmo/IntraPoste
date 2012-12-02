@@ -11,12 +11,12 @@ public class Check {
     public static Boolean checkAgent( HttpServletRequest request )
     {
         HttpSession session = request.getSession();
-        /* Récupération de l'objet depuis la session */
-        Agent agent = AgentDAO.selectByCode( (String) session.getAttribute( "codeAgent" ) );
-        if ( agent != null )
-            return true;
-        else
-            return false;
+
+        while ( session.getAttributeNames().hasMoreElements() )
+            if ( session.getAttributeNames().nextElement().equals( "codeAgent" ) )
+                if ( AgentDAO.selectByCode( (String) session.getAttribute( "codeAgent" ) ) != null )
+                    return true;
+        return false;
     }
 
     public static Boolean checkTypeAgent( String typeAgent, Agent agent )

@@ -38,9 +38,8 @@
 				<c:forEach var="typeEnCours" items="${this.typesErreurs}">
 					<option value="${typeEnCours.codeTypeErreur}">${typeEnCours.nomTypeErreur}</option>
 				</c:forEach>
-			</select> <span class="erreur">${this.erreurs['typeErreur'] }</span>
-
-			<label for="statusRegularisationRecherche">Statut :</label> <select
+			</select> <span class="erreur">${this.erreurs['typeErreur'] }</span> <label
+				for="statusRegularisationRecherche">Statut :</label> <select
 				name="statusRegularisationRecherche"
 				id="statusRegularisationRecherche" tabindex="40">
 				<option value=""></option>
@@ -48,13 +47,11 @@
 					<option value="${statusEnCours.codeStatusRegularisation}">${statusEnCours.nomStatusRegularisation}</option>
 				</c:forEach>
 			</select> <span class="erreur">${this.erreurs['statusRegularisationRecherche']}</span>
-				<label for="agentId">N° Agent :</label> <input type="text"
-				name="agentId" id="agentId" tabindex="50" /> 
-				<span class="erreur">${this.erreurs['agentId'] }</span> 
-				<label for="agenceId">N° Agence :</label> <input type="text"
-				name="agenceId" id="agenceId" tabindex="60" /> 
-				<span class="erreur">${this.erreurs['agenceId']}</span> 
-				 <input type="submit" value="Rechercher" /> <span class="erreur">${this.erreurs['noResult']
+			<label for="agentId">N° Agent :</label> <input type="text"
+				name="agentId" id="agentId" tabindex="50" /> <span class="erreur">${this.erreurs['agentId']
+				}</span> <label for="agenceId">N° Agence :</label> <input type="text"
+				name="agenceId" id="agenceId" tabindex="60" /> <span class="erreur">${this.erreurs['agenceId']}</span>
+			<input type="submit" value="Rechercher" /> <span class="erreur">${this.erreurs['noResult']
 				}</span> <span class="erreur">${this.erreurs['bdd'] }</span>
 
 		</form>
@@ -77,12 +74,8 @@
 			<tbody>
 				<c:forEach var="erreur" items="${this.erreursCaisse}">
 					<tr>
-						<td>
-							<c:out value="${erreur.agence.codeAgence}" />
-						</td>
-						<td>
-							<c:out value="${erreur.agent.codeAgent}" />
-						</td>
+						<td><c:out value="${erreur.agence.codeAgence}" /></td>
+						<td><c:out value="${erreur.agent.codeAgent}" /></td>
 						<td><c:choose>
 								<c:when
 									test="${erreur.typeErreur.codeTypeErreur == 'E' && erreur.montant <= 5}">
@@ -119,5 +112,7 @@
 			</tbody>
 		</table>
 	</c:if>
+	<a href="<c:url value="DeclarerErreurServlet"></c:url>">Declarer
+		une erreur de caisse </a>
 </body>
 </html>

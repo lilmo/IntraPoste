@@ -63,7 +63,6 @@ public class AccueilAgentComptableServlet extends HttpServlet {
 
                     if ( recherche.getResultat() == SUCCES )
                     {
-
                         setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseByAgent( agent.getCodeAgent(),
                                 recherche.getDateDebut(), recherche.getDateFin(),
                                 recherche.getCodeTypeErreur(),
@@ -75,7 +74,8 @@ public class AccueilAgentComptableServlet extends HttpServlet {
                             recherche.setErreur( "noResult", "Aucun resultat ne correspond a votre recherche." );
                         }
                     }
-
+                    else
+                        setErreursCaisse( ErreurCaisseDAO.selectAll() );
                     setTypesErreurs( TypeErreurDAO.selectAll() );
                     setStatusRegularisation( StatusRegularisationDAO.selectAll() );
 

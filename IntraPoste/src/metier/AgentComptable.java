@@ -19,13 +19,14 @@ public class AgentComptable extends AgentSuperieur {
         super( codeAgent, typeAgent, mail, nom, prenom, motDePasse, agence );
     }
 
-    public void regulariserErreur( int idErreur, float montantRegularisation, String codeAgentRegularisateur,
+    public int regulariserErreur( int idErreur, float montantRegularisation, String codeAgentRegularisateur,
             MotifRegularisation motifRegularisation ) throws SQLException
     {
         ErreurCaisse erreur = ErreurCaisseDAO.selectById( idErreur );
         if ( erreur != null )
-            erreur.regulariserErreurCaisseComptable( montantRegularisation, codeAgentRegularisateur,
+            return erreur.regulariserErreurCaisseComptable( montantRegularisation, codeAgentRegularisateur,
                     motifRegularisation );
+        return 3;
     }
 
     /**

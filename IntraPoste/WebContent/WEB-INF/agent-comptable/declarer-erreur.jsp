@@ -7,26 +7,25 @@
 <title>Déclarer erreur</title>
 </head>
 <body>
+	<c:import url="/HeaderServlet" />
 	<fieldset>
 		<legend>Déclarer une erreur</legend>
 		<form method="post" action="#">
 
-			<label for="codeAgent">Code Agent :</label> 
-			<input type="text" name="codeAgent" id="codeAgent" tabindex="10" /> 
-				
-			<label for="typeErreur">Type d'erreur :</label> 
-			<select name="typeErreur" id="typeErreur" tabindex="30">
+			<label for="codeAgent">Code Agent :</label> <input type="text"
+				name="codeAgent" id="codeAgent" tabindex="10" /> <label
+				for="typeErreur">Type d'erreur :</label> <select name="typeErreur"
+				id="typeErreur" tabindex="30">
 				<c:forEach var="typeEnCours" items="${this.typesErreurs}">
 					<option value="${typeEnCours.codeTypeErreur}">${typeEnCours.nomTypeErreur}</option>
 				</c:forEach>
-			</select> 
-			
-<%-- 			<span class="erreur">${this.erreurs['typeErreur'] }</span>  --%>
-			
-			<label for="montant">Type d'erreur :</label> 
-			<input type="text" name="montant" id="montant" tabindex="40" /> 
+			</select>
 
-			<input type="submit" value="Declarer" /> 
+			<%-- 			<span class="erreur">${this.erreurs['typeErreur'] }</span>  --%>
+
+			<label for="montant">Type d'erreur :</label> <input type="text"
+				name="montant" id="montant" tabindex="40" /> <input type="submit"
+				value="Declarer" />
 
 		</form>
 		<span class="erreur">${this.erreurs['droit'] }</span>

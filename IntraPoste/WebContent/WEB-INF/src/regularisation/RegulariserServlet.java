@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import metier.Agent;
+import metier.AgentComptable;
 import metier.AgentGuichet;
 import metier.ErreurCaisse;
 import metier.MotifRegularisation;
@@ -76,56 +78,70 @@ public class RegulariserServlet extends HttpServlet {
 
         String pageRetour = "/RegulariserServlet";
 
-        setErreur( null );
-        int montant = -1;
-        int motif = -1;
-        try {
-            montant = Integer.parseInt( request.getParameter( "montant" ) );
-        } catch ( NumberFormatException e )
+        if ( Check.checkAgent( request ) )
         {
-            setErreur( "Le montant doit etre un chiffre." );
-        }
-        try {
-            motif = Integer.parseInt( request.getParameter( "motif" ) );
-        } catch ( NumberFormatException e )
-        {
-            setErreur( "Motif invalide" );
-        }
-        String autreMotif = request.getParameter( "autreMotif" );
+            Agent agent = AgentDAO.selectByCode( (String) request.getSession()
+                    .getAttribute( "codeAgent" ) );
+            AgentComptable agentComptable = null;
+            AgentGuichet agentGuichet = null;
+            if ( Check.checkTypeAgent( "comptable", agent ) )
+                agentComptable = (AgentComptable) agent;
+            else if ( Check.checkTypeAgent( "guichet", agent ) )
+                agentGuichet = (AgentGuichet) agent;
 
-        MotifRegularisation motifEnBase;
-        try {
-            motifEnBase = MotifRegularisationDAO.selectByCode( motif );
-
-            if ( motifEnBase == null )
+            getParameters( request );
+            setErreur( null );
+            float montant = -1;
+            int motif = -1;
+            try {
+                montant = Float.parseFloat( request.getParameter( "montant" ) );
+            } catch ( NumberFormatException e )
             {
-                MotifRegularisationDAO.insert( autreMotif );
-                motifEnBase = MotifRegularisationDAO.selectByNom( autreMotif );
+                setErreur( "Le montant doit etre un chiffre." );
             }
+            try {
+                motif = Integer.parseInt( request.getParameter( "motif" ) );
+            } catch ( NumberFormatException e )
+            {
+                setErreur( "Motif invalide" );
+            }
+            String autreMotif = request.getParameter( "autreMotif" );
 
-            // TODO: récupérer l'agent en session
-            AgentGuichet agentGuichet = (AgentGuichet) AgentDAO.selectByCode( "TOTO_C" );
-            int resultat = agentGuichet.regulariserErreur( erreurCaisseId, montant, agentGuichet.getCodeAgent(),
-                    motifEnBase );
-            switch ( resultat ) {
-            case 1:
-                setErreur( "Cette erreur a deja ete regularisee" );
-                break;
-            case 2:
-                setErreur( "Vous n'etes pas autorise a effectuer cette operation" );
-                break;
-            case 3:
+            MotifRegularisation motifEnBase;
+            try {
+                motifEnBase = MotifRegularisationDAO.selectByCode( motif );
+
+                if ( motifEnBase == null )
+                {
+                    MotifRegularisationDAO.insert( autreMotif );
+                    motifEnBase = MotifRegularisationDAO.selectByNom( autreMotif );
+                }
+                int resultat = -1;
+                if ( agentComptable != null )
+                    resultat = agentComptable.regulariserErreur( erreurCaisseId, montant, agentGuichet.getCodeAgent(),
+                            motifEnBase );
+                else if ( agentGuichet != null )
+                    resultat = agentGuichet.regulariserErreur( erreurCaisseId, montant, agentGuichet.getCodeAgent(),
+                            motifEnBase );
+                switch ( resultat ) {
+                case 1:
+                    setErreur( "Cette erreur a deja ete regularisee" );
+                    break;
+                case 2:
+                    setErreur( "Vous n'etes pas autorise a effectuer cette operation" );
+                    break;
+                case 3:
+                    setErreur( "La base de donnee a rencontre un probleme. Operation abandonee." );
+                    break;
+                }
+            } catch ( SQLException e ) {
+                e.printStackTrace();
                 setErreur( "La base de donnee a rencontre un probleme. Operation abandonee." );
-                break;
             }
-        } catch ( SQLException e ) {
-            e.printStackTrace();
-            setErreur( "La base de donnee a rencontre un probleme. Operation abandonee." );
+
+            if ( erreur.isEmpty() )
+                pageRetour = "/AccueilAgentGuichetServlet";
         }
-
-        if ( erreur.isEmpty() )
-            pageRetour = "/AccueilAgentGuichetServlet";
-
         this.getServletContext().getRequestDispatcher( pageRetour )
                 .forward( request, response );
     }

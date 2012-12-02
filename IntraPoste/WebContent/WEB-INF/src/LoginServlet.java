@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
             /* Mise en session d'une chaîne de caractères */
             session.setAttribute( "codeAgent", agent.getCodeAgent() );
             this.getServletContext().setAttribute( "this", this );
-            
+
             switch ( agent.getTypeAgent().getCodeTypeAgent() ) {
             case 0:
 
@@ -69,10 +69,13 @@ public class LoginServlet extends HttpServlet {
                 pageRetour = "LoginServlet";
                 break;
             }
-            
-//            this.getServletContext().getRequestDispatcher( pageRetour ).forward( request, response );
+
+            // this.getServletContext().getRequestDispatcher( pageRetour
+            // ).forward( request, response );
             response.sendRedirect( pageRetour );
         }
+        else
+            response.sendRedirect( "LoginServlet" );
     }
 
     private Boolean checkIdentification( HttpServletRequest request )

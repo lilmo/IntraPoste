@@ -1,2 +1,2 @@
-<p> Bienvenue à ${agent.codeAgent} </p>
-<a href="<c:url value="DeconnexionServlet" />" >Deconnexion</a>
+<p>Bienvenue à ${codeAgent}</p>
+<a href="<c:url value="DeconnexionServlet" />">Deconnexion</a>
