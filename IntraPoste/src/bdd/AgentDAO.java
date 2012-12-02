@@ -93,6 +93,27 @@ public class AgentDAO {
         return codeAgent;
     }
 
+	public static boolean existingByCode(String codeAgent) {
+
+		try {
+			Statement select = Connexion.getInstance().getConnection()
+					.createStatement();
+			ResultSet result = select
+					.executeQuery("SELECT CODE_AGENT FROM AGENT WHERE EXISTS " +
+							"(SELECT * FROM AGENT WHERE CODE_AGENT = '" + codeAgent.toUpperCase() + "')");
+			if (result.next()) {
+				// System.out.println(result.getString("CODE_AGENCE"));
+				return true;
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	
     public static ArrayList<Agent> selectAll() {
         ArrayList<Agent> results = new ArrayList<Agent>();
         try {

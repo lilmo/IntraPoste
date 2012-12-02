@@ -31,16 +31,16 @@
 				name="dateDebut" id="dateDebut" tabindex="10" /> <span
 				class="erreur">${this.erreurs['dateDebut'] }</span> <label
 				for="dateFin">Date de fin :</label> <input type="text"
-				name="dateFin" id="dateFin" tabindex="20" /> <span class="erreur">${this.erreurs['dateFin']
-				}</span> <label for="typeErreur">Type d'erreur :</label> <select
+				name="dateFin" id="dateFin" tabindex="20" /> <span class="erreur">${this.erreurs['dateFin']}</span>
+
+			<label for="typeErreur">Type d'erreur :</label> <select
 				name="typeErreur" id="typeErreur" tabindex="30">
 				<option value=""></option>
 				<c:forEach var="typeEnCours" items="${this.typesErreurs}">
 					<option value="${typeEnCours.codeTypeErreur}">${typeEnCours.nomTypeErreur}</option>
 				</c:forEach>
-			</select> <span class="erreur">${this.erreurs['typeErreur'] }</span>
-
-			<label for="statusRegularisationRecherche">Statut :</label> <select
+			</select> <span class="erreur">${this.erreurs['typeErreur'] }</span> <label
+				for="statusRegularisationRecherche">Statut :</label> <select
 				name="statusRegularisationRecherche"
 				id="statusRegularisationRecherche" tabindex="40">
 				<option value=""></option>
@@ -48,14 +48,18 @@
 					<option value="${statusEnCours.codeStatusRegularisation}">${statusEnCours.nomStatusRegularisation}</option>
 				</c:forEach>
 			</select> <span class="erreur">${this.erreurs['statusRegularisationRecherche']}</span>
-				<label for="agentId">N° Agent :</label> <input type="text"
-				name="agentId" id="agentId" tabindex="50" /> 
-				<span class="erreur">${this.erreurs['agentId'] }</span> 
-				<label for="agenceId">N° Agence :</label> <input type="text"
-				name="agenceId" id="agenceId" tabindex="60" /> 
-				<span class="erreur">${this.erreurs['agenceId']}</span> 
-				 <input type="submit" value="Rechercher" /> <span class="erreur">${this.erreurs['noResult']
-				}</span> <span class="erreur">${this.erreurs['bdd'] }</span>
+
+			<label for="agentId">N° Agent :</label> <input type="text"
+				name="agentId" id="agentId" tabindex="50" /> <span class="erreur">${this.erreurs['agentId']
+				}</span> <label for="agenceId">N° Agence :</label> <input type="text"
+				name="agenceId" id="agenceId" tabindex="60" /> <span class="erreur">${this.erreurs['agenceId']}</span>
+
+			<input type="submit" value="Rechercher" /> <span class="erreur">${this.erreurs['noResult']
+				}</span> <span class="erreur">${this.erreurs['bdd'] }</span> <a
+				href="<c:url	value="AccueilAgentComptableServlet">
+								<c:param name="reset" value="true" />
+							</c:url>">
+				Réinitialiser </a>
 
 		</form>
 	</fieldset>
@@ -76,37 +80,34 @@
 			<tbody>
 				<c:forEach var="erreur" items="${this.erreursCaisse}">
 					<tr>
-						<td>
-							<c:out value="${erreur.agence.codeAgence}" />
-						</td>
-						<td>
-							<c:out value="${erreur.agent.codeAgent}" />
-						</td>
+						<td><a
+							href="<c:url	value="AccueilAgentComptableServlet">
+								<c:param name="agenceID" value="${erreur.agence.codeAgence}" />
+							</c:url>">
+								<c:out value="${erreur.agence.codeAgence}" />
+						</a></td>
+						<td><a
+							href="<c:url	value="AccueilAgentComptableServlet">
+								<c:param name="agentID" value="${erreur.agent.codeAgent}" />
+							</c:url>">
+								<c:out value="${erreur.agent.codeAgent}" />
+						</a></td>
 						<td><c:choose>
 								<c:when
-									test="${erreur.typeErreur.codeTypeErreur == 'E' && erreur.montant <= 5}">
-									<c:choose>
-										<c:when
-											test="${erreur.statusRegularisation.codeStatusRegularisation == 0}">
-											<c:set var="url" value="RegulariserServlet" />
-										</c:when>
-										<c:otherwise>
-											<c:set var="url" value="ListeRegularisationsServlet" />
-										</c:otherwise>
-									</c:choose>
-									<a
-										href="<c:url
+									test="${erreur.statusRegularisation.codeStatusRegularisation == 0}">
+									<c:set var="url" value="RegulariserServlet" />
+								</c:when>
+								<c:otherwise>
+									<c:set var="url" value="ListeRegularisationsServlet" />
+								</c:otherwise>
+							</c:choose> <a
+							href="<c:url
 								value="${ url }">
 								<c:param name="erreurCaisseId" value="${erreur.erreurCaisseId}" />
 								<c:param name="codeStatusRegularisation" value="${erreur.statusRegularisation.codeStatusRegularisation}" />
 							</c:url>">
-										<c:out value="${erreur.erreurCaisseId}" />
-									</a>
-								</c:when>
-								<c:otherwise>
-									<c:out value="${erreur.erreurCaisseId}" />
-								</c:otherwise>
-							</c:choose></td>
+								<c:out value="${erreur.erreurCaisseId}" />
+						</a></td>
 						<td><c:out value="${erreur.typeErreur.nomTypeErreur}" /></td>
 						<td><c:out
 								value="${erreur.statusRegularisation.nomStatusRegularisation}" /></td>

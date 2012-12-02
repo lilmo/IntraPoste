@@ -148,7 +148,7 @@ public class ErreurCaisseDAO {
 		try {
 			select = Connexion.getInstance().getConnection().createStatement();
 			String query = "SELECT * FROM ERREUR_CAISSE WHERE CODE_AGENT LIKE '"
-					+ codeAgent + "'";
+					+ codeAgent.toUpperCase() + "'";
 			ResultSet result = select.executeQuery(query);
 
 			while (result.next()) {
@@ -239,11 +239,11 @@ public class ErreurCaisseDAO {
 		try {
 			select = Connexion.getInstance().getConnection().createStatement();
 			String query = "SELECT * FROM ERREUR_CAISSE WHERE CODE_AGENT LIKE '"
-					+ codeAgent
+					+ codeAgent.toUpperCase()
 					+ "' AND DATE_VACATION = to_date('"
 					+ new SimpleDateFormat("yyyy/MM/dd").format(dateVacation)
 					+ "', 'yyyy/mm/dd') AND CODE_TYPE_ERREUR LIKE '"
-					+ codeTypeErreur + "'";
+					+ codeTypeErreur.toUpperCase() + "'";
 
 			ResultSet result = select.executeQuery(query);
 
@@ -279,15 +279,15 @@ public class ErreurCaisseDAO {
 			if (dateFin != null)
 				dateFin.setDate(dateFin.getDate() + 1);
 
-			String query = "SELECT MONTANT FROM ERREUR_CAISSE WHERE CODE_AGENCE = '"
-					+ codeAgence
+			String query = "SELECT * FROM ERREUR_CAISSE WHERE CODE_AGENCE = '"
+					+ codeAgence.toUpperCase()
 					+ "' AND DATE_VACATION BETWEEN to_date('"
 					+ new SimpleDateFormat("yyyy/MM/dd").format(dateDebut)
 					+ "', 'yyyy/mm/dd') AND to_date('"
 					+ new SimpleDateFormat("yyyy/MM/dd").format(dateFin)
 					+ "', 'yyyy/mm/dd')";
-			if ((codeTypeErreur.equals("D")) || (codeTypeErreur.equals("E")))
-				query += "' AND CODE_TYPE_ERREUR = '" + codeTypeErreur + "'";
+			if ((codeTypeErreur != null) && ((codeTypeErreur.equals("D")) || (codeTypeErreur.equals("E"))))
+				query += "' AND CODE_TYPE_ERREUR = '" + codeTypeErreur.toUpperCase() + "'";
 			if ((codeStatusRegularisation >= 0)
 					&& (codeStatusRegularisation <= 2))
 				query += " AND CODE_STATUT_REGULARISATION = '"
@@ -299,7 +299,7 @@ public class ErreurCaisseDAO {
 						result.getString("CODE_AGENT"), result
 								.getString("CODE_TYPE_ERREUR"), result
 								.getString("CODE_AGENCE"), result
-								.getInt("STATUS_REGULARISATION"), result
+								.getInt("CODE_STATUT_REGULARISATION"), result
 								.getDate("DATE_VACATION"), result
 								.getFloat("MONTANT")));
 			}
@@ -313,6 +313,85 @@ public class ErreurCaisseDAO {
 		return results;
 	}
 
+	@SuppressWarnings("deprecation")
+	public static ArrayList<ErreurCaisse> selectErreursCaisseAgentSup(
+			String codeAgence, String codeAgent, Date dateDebut, Date dateFin,
+			String codeTypeErreur, int codeStatusRegularisation)
+			throws SQLException {
+		Statement select = null;
+		ArrayList<ErreurCaisse> results = new ArrayList<ErreurCaisse>();
+		try {
+			select = Connexion.getInstance().getConnection().createStatement();
+
+			if (dateFin != null)
+				dateFin.setDate(dateFin.getDate() + 1);
+			String queryAnd = " WHERE ";
+			String query = "SELECT * FROM ERREUR_CAISSE";
+			if (codeAgence != null)
+			{
+				query += queryAnd + "CODE_AGENCE LIKE '"	+ codeAgence.toUpperCase() + "'";
+				queryAnd = " AND ";
+			}
+			if (codeAgent != null)
+			{
+				query += queryAnd + "CODE_AGENT LIKE '"	+ codeAgent.toUpperCase() + "'";
+				queryAnd = " AND ";
+			}
+			if (dateDebut != null && dateFin != null)
+			{
+				query += queryAnd + "DATE_VACATION BETWEEN to_date('"
+						+ new SimpleDateFormat("yyyy/MM/dd").format(dateDebut)
+						+ "', 'yyyy/mm/dd') AND to_date('"
+						+ new SimpleDateFormat("yyyy/MM/dd").format(dateFin)
+						+ "', 'yyyy/mm/dd')";
+				queryAnd = " AND ";
+			}
+			else if (dateDebut != null)
+			{
+				query += queryAnd + "DATE_VACATION => to_date('"
+						+ new SimpleDateFormat("yyyy/MM/dd").format(dateDebut)
+						+ "', 'yyyy/mm/dd')";
+				queryAnd = " AND ";
+			}
+
+			else if (dateFin != null)
+			{
+				query += queryAnd + "DATE_VACATION <= to_date('"
+						+ new SimpleDateFormat("yyyy/MM/dd").format(dateFin)
+						+ "', 'yyyy/mm/dd')";
+				queryAnd = " AND ";
+			}
+			if ((codeTypeErreur != null) && ((codeTypeErreur.equals("D")) || (codeTypeErreur.equals("E"))))
+			{
+				query += queryAnd + "CODE_TYPE_ERREUR LIKE '" + codeTypeErreur + "'";
+				queryAnd = " AND ";
+			}
+			if ((codeStatusRegularisation >= 0)	&& (codeStatusRegularisation <= 2))
+			{
+				query += queryAnd + "CODE_STATUT_REGULARISATION = '"
+						+ codeStatusRegularisation + "'";
+			}
+			ResultSet result = select.executeQuery(query);
+
+			while (result.next()) {
+				results.add(new ErreurCaisse(result.getInt("ERREUR_CAISSE_ID"),
+						result.getString("CODE_AGENT"), result
+								.getString("CODE_TYPE_ERREUR"), result
+								.getString("CODE_AGENCE"), result
+								.getInt("CODE_STATUT_REGULARISATION"), result
+								.getDate("DATE_VACATION"), result
+								.getFloat("MONTANT")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (select != null)
+				select.close();
+		}
+		return results;
+	}
+	
 	public static void insert(String codeAgence, String codeAgent,
 			Date dateVacation, String typeErreur, float montant)
 			throws SQLException {

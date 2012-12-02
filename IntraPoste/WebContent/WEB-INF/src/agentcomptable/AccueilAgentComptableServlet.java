@@ -19,6 +19,8 @@ import metier.ErreurCaisse;
 import metier.StatusRegularisation;
 import metier.TypeErreur;
 import tools.Check;
+import bdd.AgenceDAO;
+import bdd.AgentDAO;
 import bdd.ErreurCaisseDAO;
 import bdd.StatusRegularisationDAO;
 import bdd.TypeErreurDAO;
@@ -34,6 +36,8 @@ public class AccueilAgentComptableServlet extends HttpServlet {
     private ArrayList<ErreurCaisse>         erreursCaisse;
     private ArrayList<TypeErreur>           typesErreurs;
     private ArrayList<StatusRegularisation> statusRegularisation;
+    private String							agentID;
+    private String							agenceID;
 
     private RechercheForm                   recherche;
     private Map<String, String>             erreurs;
@@ -66,7 +70,8 @@ public class AccueilAgentComptableServlet extends HttpServlet {
                 if ( recherche.getResultat() == SUCCES )
                 {
 
-                    setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseByAgent( agent.getCodeAgent(),
+                    setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseAgentSup(recherche.getAgenceID(), 
+                    		recherche.getAgentID(),
                             recherche.getDateDebut(), recherche.getDateFin(),
                             recherche.getCodeTypeErreur(),
                             recherche.getCodeStatusRegularisation() ) );
@@ -102,6 +107,8 @@ public class AccueilAgentComptableServlet extends HttpServlet {
         doGet( request, response );
     }
 
+    
+    
     public ArrayList<ErreurCaisse> getErreursCaisse() {
         return erreursCaisse;
     }
@@ -126,6 +133,23 @@ public class AccueilAgentComptableServlet extends HttpServlet {
         this.typesErreurs = typesErreurs;
     }
 
+    public String getAgentID() {
+        return agentID;
+    }
+
+    public void setAgentID( String agentID ) {
+        this.agentID = agentID;
+    }
+
+    public String getAgenceID() {
+        return agenceID;
+    }
+
+    public void setAgenceID( String agenceID ) {
+        this.agenceID = agenceID;
+    }
+
+    
     public RechercheForm getRecherche() {
         return recherche;
     }
@@ -148,59 +172,119 @@ public class AccueilAgentComptableServlet extends HttpServlet {
         private static final String CHAMP_FIN                   = "dateFin";
         private static final String CHAMP_TYPE_ERREUR           = "typeErreur";
         private static final String CHAMP_STATUS_REGULARISATION = "statusRegularisationRecherche";
+        private static final String CHAMP_AGENT_ID				= "agentID";
+        private static final String CHAMP_AGENCE_ID				= "agenceID";
 
         private Date                dateDebut;
         private Date                dateFin;
         private int                 codeStatusRegularisation;
         private String              codeTypeErreur;
+        private String				agentID;
+        private String				agenceID;
 
         private int                 resultat;
 
         public RechercheForm recupererEtVerifierFormulaire( HttpServletRequest request ) {
 
-            erreurs = new HashMap<String, String>();
-            String dateDebutString = getValeurChamp( request, CHAMP_DEBUT );
-            String dateFinString = getValeurChamp( request, CHAMP_FIN );
-            String codeStatusRegularisationString = getValeurChamp( request, CHAMP_STATUS_REGULARISATION );
-            String codeTypeErreurString = getValeurChamp( request, CHAMP_TYPE_ERREUR );
+        	if (getValeurChamp(request, "reset") != null)
+        	{
+        		reinitialiserChamps();
+        		setResultat(SUCCES);
+        	}
+        	else
+        	{
+        		erreurs = new HashMap<String, String>();
+        		getParameters(request);
+        		String dateDebutString = getValeurChamp( request, CHAMP_DEBUT );
+        		String dateFinString = getValeurChamp( request, CHAMP_FIN );
+        		String codeStatusRegularisationString = getValeurChamp( request, CHAMP_STATUS_REGULARISATION );
+        		String codeTypeErreurString = getValeurChamp( request, CHAMP_TYPE_ERREUR );
+        		String agentIDString = getValeurChamp( request, CHAMP_AGENT_ID );
+        		String agenceIDString = getValeurChamp( request, CHAMP_AGENCE_ID );
 
-            try {
-                setDateDebut( validationDate( dateDebutString ) );
-            } catch ( Exception e ) {
-                setErreur( CHAMP_DEBUT, e.getMessage() );
-                setDateDebut( null );
-            }
+        		try {
+        			setDateDebut( validationDate( dateDebutString ) );
+        		} catch ( Exception e ) {
+        			setErreur( CHAMP_DEBUT, e.getMessage() );
+        			setDateDebut( null );
+        		}
 
-            try {
-                setDateFin( validationDate( dateFinString ) );
-            } catch ( Exception e ) {
-                setErreur( CHAMP_FIN, e.getMessage() );
-                setDateFin( null );
-            }
+        		try {
+        			setDateFin( validationDate( dateFinString ) );
+        		} catch ( Exception e ) {
+        			setErreur( CHAMP_FIN, e.getMessage() );
+        			setDateFin( null );
+        		}
 
-            try {
-                validationCodeStatus( codeStatusRegularisationString );
-            } catch ( Exception e ) {
-                setErreur( CHAMP_STATUS_REGULARISATION, e.getMessage() );
-                setCodeStatusRegularisation( -1 );
-            }
+        		try {
+        			validationCodeStatus( codeStatusRegularisationString );
+        		} catch ( Exception e ) {
+        			setErreur( CHAMP_STATUS_REGULARISATION, e.getMessage() );
+        			setCodeStatusRegularisation( -1 );
+        		}
 
-            try {
-                validationTypeErreur( codeTypeErreurString );
-            } catch ( Exception e ) {
-                setErreur( CHAMP_TYPE_ERREUR, e.getMessage() );
-                setCodeTypeErreur( null );
-            }
+        		try {
+        			validationTypeErreur( codeTypeErreurString );
+        		} catch ( Exception e ) {
+        			setErreur( CHAMP_TYPE_ERREUR, e.getMessage() );
+        			setCodeTypeErreur( null );
+        		}
 
-            if ( erreurs.isEmpty() ) {
-                setResultat( SUCCES );
-            } else {
-                setResultat( ECHEC );
-            }
-
-            return this;
+        		try {
+        			validationAgentID( agentIDString );
+        		} catch ( Exception e ) {
+        			setErreur( CHAMP_AGENT_ID, e.getMessage() );
+        			setAgentID( null );
+        		}
+            
+        		try {
+        			validationAgenceID( agenceIDString );
+        		} catch ( Exception e ) {
+        			setErreur( CHAMP_AGENCE_ID, e.getMessage() );
+        			setAgenceID( null );
+        		}
+            
+        		if ( erreurs.isEmpty() ) {
+        			setResultat( SUCCES );
+        		} else {
+        			setResultat( ECHEC );
+        		}
+        	}
+        	return this;
         }
 
+        private void reinitialiserChamps()
+        {
+        	dateDebut = null;
+            dateFin = null;
+            codeStatusRegularisation = -1;
+            codeTypeErreur = null;
+            agentID = null;
+            agenceID = null;
+        }
+        
+        private void getParameters( HttpServletRequest request ) {
+
+        	            
+        		String agentIDString = getValeurChamp( request, CHAMP_AGENT_ID );
+                try {
+                    validationAgentID( agentIDString );
+                } catch ( Exception e1 ) {
+                    e1.printStackTrace();
+                    setErreur(CHAMP_AGENT_ID, e1.getMessage() );
+                }
+
+                String agenceIDString = getValeurChamp( request, CHAMP_AGENCE_ID );
+                try {
+                    validationAgenceID( agenceIDString );
+                } catch ( Exception e1 ) {
+                    e1.printStackTrace();
+                    setErreur(CHAMP_AGENCE_ID, e1.getMessage() );
+                }
+            
+        }
+       
+        
         private String getValeurChamp( HttpServletRequest request, String nomChamp ) {
             String valeur = request.getParameter( nomChamp );
             if ( valeur == null || valeur.trim().length() == 0 ) {
@@ -213,10 +297,13 @@ public class AccueilAgentComptableServlet extends HttpServlet {
         /* Validation des champs */
 
         private void validationTypeErreur( String codeTypeErreurString ) throws Exception {
-            if ( codeTypeErreurString.equals( "E" ) || codeTypeErreurString.equals( "D" ) )
-                setCodeTypeErreur( codeTypeErreurString );
-            else
-                throw new Exception( "Type d'erreur inconnu" );
+            if (codeTypeErreurString != null)
+            {
+            	if ( codeTypeErreurString.equals( "E" ) || codeTypeErreurString.equals( "D" ) )
+            		setCodeTypeErreur( codeTypeErreurString );
+            	else
+            		throw new Exception( "Type d'erreur inconnu" );
+            }
         }
 
         private void validationCodeStatus( String codeStatusRegularisationString ) throws Exception {
@@ -231,8 +318,37 @@ public class AccueilAgentComptableServlet extends HttpServlet {
                 if ( codeStatusRegularisation < 0 || codeStatusRegularisation > 2 )
                     throw new Exception( "Status de regularisation inconnu" );
             }
+            setCodeStatusRegularisation(-1);
         }
 
+        private void validationAgenceID (String agenceID) throws Exception {
+        	if (agenceID != null)
+        	{
+        		boolean agenceExists;
+        		agenceExists = AgenceDAO.existingByCode(agenceID);
+        		if (!agenceExists)
+        		{
+        			throw new Exception( "Code agence inconnu" );
+        		}
+        		else
+        			setAgenceID(agenceID);
+        	}
+        }
+        
+        private void validationAgentID (String agentID) throws Exception {
+        	if (agentID != null)
+        	{
+        		boolean agentExists;
+        		agentExists = AgentDAO.existingByCode(agentID);
+        		if (!agentExists)
+        		{
+        			throw new Exception( "Code agent inconnu" );
+        		}
+        		else
+        			setAgentID(agentID);
+        	}
+        }
+        
         private Date validationDate( String dateString ) throws Exception {
             if ( dateString != null )
                 try {
@@ -281,6 +397,23 @@ public class AccueilAgentComptableServlet extends HttpServlet {
         public void setCodeTypeErreur( String codeTypeErreur ) {
             this.codeTypeErreur = codeTypeErreur;
         }
+        
+        public String getAgentID() {
+            return agentID;
+        }
+
+        public void setAgentID( String agentID ) {
+            this.agentID = agentID;
+        }
+
+        public String getAgenceID() {
+            return agenceID;
+        }
+
+        public void setAgenceID( String agenceID ) {
+            this.agenceID = agenceID;
+        }
+
 
         public int getResultat() {
             return resultat;

@@ -84,7 +84,7 @@ public class AgenceDAO {
 					.createStatement();
 			ResultSet result = select
 					.executeQuery("SELECT CODE_AGENCE FROM AGENCE WHERE EXISTS " +
-							"(SELECT * FROM AGENCE WHERE CODE_AGENCE = '" + codeAgence + "')");
+							"(SELECT * FROM AGENCE WHERE CODE_AGENCE = '" + codeAgence.toUpperCase() + "')");
 			if (result.next()) {
 				// System.out.println(result.getString("CODE_AGENCE"));
 				return true;
