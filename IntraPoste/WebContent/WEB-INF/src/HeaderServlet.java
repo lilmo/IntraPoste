@@ -25,6 +25,7 @@ public class HeaderServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+	    this.getServletContext().setAttribute( "agent", request.getSession().getAttribute( "agent" ) );
 		this.getServletContext().getRequestDispatcher("/WEB-INF/header.jsp")
 				.forward(request, response);
 	}

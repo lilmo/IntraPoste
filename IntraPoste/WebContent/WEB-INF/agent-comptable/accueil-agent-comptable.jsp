@@ -58,6 +58,7 @@
 				}</span> <span class="erreur">${this.erreurs['bdd'] }</span>
 
 		</form>
+		<span class="erreur">${this.erreurs['droit'] }</span>
 	</fieldset>
 
 	<c:if test="${!empty this.erreursCaisse }">

@@ -8,10 +8,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import metier.Agent;
 import metier.ErreursCaisseRegularisation;
+import tools.Check;
+import bdd.AgentDAO;
 import bdd.ErreurCaisseDAO;
 import bdd.ErreurCaisseRegularisationDAO;
 
@@ -45,26 +46,32 @@ public class ListeRegularisationsServlet extends HttpServlet {
 
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
             IOException {
+        boolean redirect = false;
+        try {
+            if ( Check.checkAgent( request ) )
+            {
+                setAgent( AgentDAO.selectByCode( (String) request.getSession()
+                        .getAttribute( "codeAgent" ) ) );
+                getParameters( request );
 
-        HttpSession session = request.getSession();
-        setAgent( (Agent) session.getAttribute( "agent" ) );
-
-        getParameters( request );
-
-        if ( ErreurCaisseDAO.selectById( erreurCaisseId ) != null )
-        {
-            try {
-                setRegularisations( ErreurCaisseRegularisationDAO.selectByErreurCaisse( erreurCaisseId ) );
-            } catch ( SQLException e ) {
-                e.printStackTrace();
-                erreurs.add( "La base de donnee a rencontre un probleme. Recherche abandonee." );
-            } finally {
+                if ( ErreurCaisseDAO.selectById( erreurCaisseId ) != null )
+                    setRegularisations( ErreurCaisseRegularisationDAO.selectByErreurCaisse( erreurCaisseId ) );
+            }
+            else
+                redirect = true;
+        } catch ( SQLException e ) {
+            e.printStackTrace();
+            erreurs.add( "La base de donnee a rencontre un probleme. Recherche abandonee." );
+        } finally {
+            if ( redirect )
+                response.sendRedirect( "LoginServlet" );
+            else
+            {
                 this.getServletContext().setAttribute( "this", this );
                 this.getServletContext().getRequestDispatcher( "/WEB-INF/regularisation/liste-regularisations.jsp" )
                         .forward( request, response );
             }
         }
-
     }
 
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException,

@@ -29,6 +29,7 @@
 			<input type="submit" value="Declarer" /> 
 
 		</form>
+		<span class="erreur">${this.erreurs['droit'] }</span>
 	</fieldset>
 
 </body>

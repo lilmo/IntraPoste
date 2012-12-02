@@ -41,21 +41,21 @@ public class DeclarerErreur extends HttpServlet {
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
             IOException {
         AgentComptable agent = null;
-        try {
-            agent = (AgentComptable) Check.checkAgent( request, "comptable" );
-        } catch ( ClassCastException e )
+        if ( Check.checkAgent( request ) )
         {
-            e.printStackTrace();
-            form.setErreur( "", "Vous n'êtes pas autorisé à effectuer cette opération" );
-        }
-        if ( agent != null )
-        {
-            setTypesErreurs( TypeErreurDAO.selectAll() );
+            agent = (AgentComptable) AgentDAO.selectByCode( (String) request.getSession()
+                    .getAttribute( "codeAgent" ) );
+            if ( Check.checkTypeAgent( "comptable", agent ) )
+            {
+                setTypesErreurs( TypeErreurDAO.selectAll() );
 
-            this.getServletContext().setAttribute( "this", this );
+                this.getServletContext().setAttribute( "this", this );
 
-            this.getServletContext().getRequestDispatcher( "/WEB-INF/agent-comptable/declarer-erreur.jsp" )
-                    .forward( request, response );
+                this.getServletContext().getRequestDispatcher( "/WEB-INF/agent-comptable/declarer-erreur.jsp" )
+                        .forward( request, response );
+            }
+            else
+                form.setErreur( "droit", "Accès refusé." );
         }
         else
             response.sendRedirect( "LoginServlet" );
@@ -65,28 +65,28 @@ public class DeclarerErreur extends HttpServlet {
             IOException {
         boolean rediriger = false;
         try {
-            form.recupererEtVerifierFormulaire( request );
 
-            if ( form.getResultat() == SUCCES )
+            AgentComptable agent = null;
+            if ( Check.checkAgent( request ) )
             {
-                AgentComptable agent = null;
-                try {
-                    agent = (AgentComptable) Check.checkAgent( request, "comptable" );
-                } catch ( ClassCastException e )
+                agent = (AgentComptable) AgentDAO.selectByCode( (String) request.getSession()
+                        .getAttribute( "codeAgent" ) );
+                if ( Check.checkTypeAgent( "comptable", agent ) )
                 {
-                    e.printStackTrace();
-                    form.setErreur( "", "Vous n'êtes pas autorisé à effectuer cette opération" );
-                }
-                if ( agent != null )
-                {
-                    Agent a = AgentDAO.selectByCode( form.getCodeAgent() );
-                    agent.declarerErreurCaisse( a.getAgence().getCodeAgence(), a.getCodeAgent(), new Date(),
-                            form.getCodeTypeErreur(), form.getMontant() );
+                    form.recupererEtVerifierFormulaire( request );
+
+                    if ( form.getResultat() == SUCCES )
+                    {
+                        Agent a = AgentDAO.selectByCode( form.getCodeAgent() );
+                        agent.declarerErreurCaisse( a.getAgence().getCodeAgence(), a.getCodeAgent(), new Date(),
+                                form.getCodeTypeErreur(), form.getMontant() );
+                    }
                 }
                 else
-                    rediriger = true;
-            } // Sinon les erreurs seront affichées via la jsp
-
+                    form.setErreur( "droit", "Accès refusé." );
+            }
+            else
+                rediriger = true;
         } catch ( SQLException e ) {
             e.printStackTrace();
             form.setErreur( "", "La base de donnee a rencontre un probleme. Recherche abandonnee." );

@@ -52,24 +52,26 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
 
             /* Mise en session d'une chaîne de caractères */
-            session.setAttribute( "agent", agent );
-
+            session.setAttribute( "codeAgent", agent.getCodeAgent() );
+            this.getServletContext().setAttribute( "this", this );
+            
             switch ( agent.getTypeAgent().getCodeTypeAgent() ) {
             case 0:
 
                 break;
             case 1:
-                pageRetour = "/AccueilAgentComptableServlet";
+                pageRetour = "AccueilAgentComptableServlet";
                 break;
             case 2:
-                pageRetour = "/AccueilAgentGuichetServlet";
+                pageRetour = "AccueilAgentGuichetServlet";
                 break;
             default:
-                pageRetour = "/LoginServlet";
+                pageRetour = "LoginServlet";
                 break;
             }
-            this.getServletContext().setAttribute( "this", this );
-            this.getServletContext().getRequestDispatcher( pageRetour ).forward( request, response );
+            
+//            this.getServletContext().getRequestDispatcher( pageRetour ).forward( request, response );
+            response.sendRedirect( pageRetour );
         }
     }
 

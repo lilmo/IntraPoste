@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import metier.AgentGuichet;
 import metier.ErreurCaisse;
 import metier.MotifRegularisation;
+import tools.Check;
 import bdd.AgentDAO;
 import bdd.ErreurCaisseDAO;
 import bdd.MotifRegularisationDAO;
@@ -45,15 +46,25 @@ public class RegulariserServlet extends HttpServlet {
      */
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
             IOException {
-        getParameters( request );
-        setMotifs();
+        boolean redirect = false;
+        if ( Check.checkAgent( request ) )
+        {
+            getParameters( request );
+            setMotifs();
 
-        if ( ErreurCaisseDAO.selectById( erreurCaisseId ) == null )
-            setErreur( "Le numero d'erreur n'existe pas." );
-
-        this.getServletContext().setAttribute( "this", this );
-        this.getServletContext().getRequestDispatcher( "/WEB-INF/regularisation/regulariser.jsp" )
-                .forward( request, response );
+            if ( ErreurCaisseDAO.selectById( erreurCaisseId ) == null )
+                setErreur( "Le numero d'erreur n'existe pas." );
+        }
+        else
+            redirect = true;
+        if ( redirect )
+            response.sendRedirect( "LoginServlet" );
+        else
+        {
+            this.getServletContext().setAttribute( "this", this );
+            this.getServletContext().getRequestDispatcher( "/WEB-INF/regularisation/regulariser.jsp" )
+                    .forward( request, response );
+        }
     }
 
     /**
