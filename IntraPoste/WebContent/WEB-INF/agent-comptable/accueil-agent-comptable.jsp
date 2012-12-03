@@ -118,7 +118,6 @@ label {
 						</div>
 					</div>
 				</c:if>
-
 				<c:if test="${not empty this.erreurs['typeErreur']}">
 					<div class="ui-widget">
 						<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
@@ -219,12 +218,9 @@ label {
 			<tbody>
 				<c:forEach var="erreur" items="${this.erreursCaisse}">
 					<tr>
-						<td><a
-							href="<c:url	value="AccueilAgentComptableServlet">
-								<c:param name="agenceID" value="${erreur.agence.codeAgence}" />
-							</c:url>">
+						<td>
 								<c:out value="${erreur.agence.codeAgence}" />
-						</a></td>
+						</td>
 						<td><a
 							href="<c:url	value="AccueilAgentComptableServlet">
 								<c:param name="agentID" value="${erreur.agent.codeAgent}" />

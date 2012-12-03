@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
                 pageRetour = "AccueilAgentGuichetServlet";
                 break;
             default:
-                pageRetour = "LoginServlet";
+                pageRetour = "AccueilAgentDirectionServlet";
                 break;
             }
 

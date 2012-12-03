@@ -1,4 +1,4 @@
-package agentcomptable;
+package agentdirection;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -14,20 +14,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import metier.AgentComptable;
+import metier.AgentSuperieur;
 import metier.ErreurCaisse;
 import metier.StatusRegularisation;
 import metier.TypeErreur;
 import tools.Check;
+import bdd.AgenceDAO;
 import bdd.AgentDAO;
 import bdd.ErreurCaisseDAO;
 import bdd.StatusRegularisationDAO;
 import bdd.TypeErreurDAO;
 
 /**
- * Servlet implementation class AccueilAgentComptableServlet
+ * Servlet implementation class AccueilAgentDirectionServlet
  */
-public class AccueilAgentComptableServlet extends HttpServlet {
+public class AccueilAgentDirectionServlet extends HttpServlet {
     private static final long               serialVersionUID = 1L;
     private static final int                SUCCES           = 0;
     private static final int                ECHEC            = 1;
@@ -41,7 +42,7 @@ public class AccueilAgentComptableServlet extends HttpServlet {
     private RechercheForm                   recherche;
     private Map<String, String>             erreurs;
 
-    public AccueilAgentComptableServlet() {
+    public AccueilAgentDirectionServlet() {
         super();
         setErreursCaisse( null );
         setTypesErreurs( null );
@@ -54,18 +55,18 @@ public class AccueilAgentComptableServlet extends HttpServlet {
             IOException {
         boolean redirect = false;
         try {
-            AgentComptable agent = null;
+            AgentSuperieur agent = null;
             if ( Check.checkAgent( request ) )
             {
-                agent = (AgentComptable) AgentDAO.selectByCode( (String) request.getSession()
+                agent = (AgentSuperieur) AgentDAO.selectByCode( (String) request.getSession()
                         .getAttribute( "codeAgent" ) );
-                if ( Check.checkTypeAgent( "comptable", agent ) )
+                if ( Check.checkTypeAgent( "superieur", agent ) )
                 {
                     recherche.recupererEtVerifierFormulaire( request );
 
                     if ( recherche.getResultat() == SUCCES )
                     {
-                    setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseAgentSup(agent.getAgence().getCodeAgence(), 
+                    setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseAgentSup(recherche.getAgenceID(), 
                     		recherche.getAgentID(),
                                 recherche.getDateDebut(), recherche.getDateFin(),
                                 recherche.getCodeTypeErreur(),
@@ -96,7 +97,7 @@ public class AccueilAgentComptableServlet extends HttpServlet {
             if ( redirect )
                 response.sendRedirect( "LoginServlet" );
             else
-                this.getServletContext().getRequestDispatcher( "/WEB-INF/agent-comptable/accueil-agent-comptable.jsp" )
+                this.getServletContext().getRequestDispatcher( "/WEB-INF/agent-direction/accueil-agent-direction.jsp" )
                         .forward( request, response );
         }
     }
@@ -172,12 +173,14 @@ public class AccueilAgentComptableServlet extends HttpServlet {
         private static final String CHAMP_TYPE_ERREUR           = "typeErreur";
         private static final String CHAMP_STATUS_REGULARISATION = "statusRegularisationRecherche";
         private static final String CHAMP_AGENT_ID				= "agentID";
+        private static final String CHAMP_AGENCE_ID				= "agenceID";
 
         private Date                dateDebut;
         private Date                dateFin;
         private int                 codeStatusRegularisation;
         private String              codeTypeErreur;
         private String				agentID;
+        private String				agenceID;
 
         private int                 resultat;
 
@@ -197,6 +200,7 @@ public class AccueilAgentComptableServlet extends HttpServlet {
         		String codeStatusRegularisationString = getValeurChamp( request, CHAMP_STATUS_REGULARISATION );
         		String codeTypeErreurString = getValeurChamp( request, CHAMP_TYPE_ERREUR );
         		String agentIDString = getValeurChamp( request, CHAMP_AGENT_ID );
+        		String agenceIDString = getValeurChamp( request, CHAMP_AGENCE_ID );
 
         		try {
         			setDateDebut( validationDate( dateDebutString ) );
@@ -208,7 +212,7 @@ public class AccueilAgentComptableServlet extends HttpServlet {
         		try {
         			setDateFin( validationDate( dateFinString ) );
         		} catch ( Exception e ) {
-        			setErreur( CHAMP_FIN, "Merci de saisir une date de fin valide." );
+        			setErreur( CHAMP_FIN, e.getMessage() );
         			setDateFin( null );
         		}
 
@@ -232,7 +236,14 @@ public class AccueilAgentComptableServlet extends HttpServlet {
         			setErreur( CHAMP_AGENT_ID, e.getMessage() );
         			setAgentID( null );
         		}
-                        
+            
+        		try {
+        			validationAgenceID( agenceIDString );
+        		} catch ( Exception e ) {
+        			setErreur( CHAMP_AGENCE_ID, e.getMessage() );
+        			setAgenceID( null );
+        		}
+            
         		if ( erreurs.isEmpty() ) {
         			setResultat( SUCCES );
         		} else {
@@ -262,6 +273,15 @@ public class AccueilAgentComptableServlet extends HttpServlet {
                     e1.printStackTrace();
                     setErreur(CHAMP_AGENT_ID, e1.getMessage() );
                 }
+
+                String agenceIDString = getValeurChamp( request, CHAMP_AGENCE_ID );
+                try {
+                    validationAgenceID( agenceIDString );
+                } catch ( Exception e1 ) {
+                    e1.printStackTrace();
+                    setErreur(CHAMP_AGENCE_ID, e1.getMessage() );
+                }
+            
         }
        
         
@@ -299,6 +319,20 @@ public class AccueilAgentComptableServlet extends HttpServlet {
                     throw new Exception( "Status de regularisation inconnu" );
             }
             setCodeStatusRegularisation(-1);
+        }
+
+        private void validationAgenceID (String agenceID) throws Exception {
+        	if (agenceID != null)
+        	{
+        		boolean agenceExists;
+        		agenceExists = AgenceDAO.existingByCode(agenceID);
+        		if (!agenceExists)
+        		{
+        			throw new Exception( "Code agence inconnu" );
+        		}
+        		else
+        			setAgenceID(agenceID);
+        	}
         }
         
         private void validationAgentID (String agentID) throws Exception {
@@ -371,6 +405,15 @@ public class AccueilAgentComptableServlet extends HttpServlet {
         public void setAgentID( String agentID ) {
             this.agentID = agentID;
         }
+
+        public String getAgenceID() {
+            return agenceID;
+        }
+
+        public void setAgenceID( String agenceID ) {
+            this.agenceID = agenceID;
+        }
+
 
         public int getResultat() {
             return resultat;

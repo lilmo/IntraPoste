@@ -107,4 +107,14 @@
     <servlet-name>BilanServlet</servlet-name>
     <url-pattern>/BilanServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AccueilAgentDirectionServlet</display-name>
+    <servlet-name>AccueilAgentDirectionServlet</servlet-name>
+    <servlet-class>agentdirection.AccueilAgentDirectionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AccueilAgentDirectionServlet</servlet-name>
+    <url-pattern>/AccueilAgentDirectionServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
