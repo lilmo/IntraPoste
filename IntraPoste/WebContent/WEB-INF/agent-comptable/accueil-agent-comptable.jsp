@@ -5,11 +5,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Accueil Agent Comptable</title>
-<link rel="stylesheet"
-	href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
-<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
-<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="/resources/demos/style.css" />
+<link
+	href=<c:url value="/jquery-ui-1.9.2.custom/css/redmond/jquery-ui-1.9.2.custom.css" />
+	rel="stylesheet">
+<script src=<c:url value="/jquery-ui-1.9.2.custom/js/jquery-1.8.3.js" />></script>
+<script
+	src=<c:url value="/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.js" />></script>
+
+<link
+	href=<c:url value="/table-sorter/themes/blue/style.css" />
+	rel="stylesheet">	
+<script type="text/javascript"
+	src=<c:url value="/table-sorter/jquery.tablesorter.js" />></script>
+
 <script>
 	$(function() {
 		$("#dateDebut").datepicker({
@@ -19,7 +27,35 @@
 			dateFormat : "dd/mm/yy"
 		});
 	});
+
+	$("button").button();
+
+	$(document).ready(function() {
+		$("#myTable").tablesorter({sortList: [[1,0], [5,0]]});
+	});
 </script>
+
+<style type="text/css">
+body {
+	font: 62.5% "Trebuchet MS", sans-serif;
+	margin: 50px;
+}
+
+.ui-state-error {
+	margin-top: .3em;
+	width: 50%;
+	align: center;
+	margin-top: .3em;
+}
+
+label {
+	display: block;
+	width: 150px;
+	float: left;
+}
+
+</style>
+
 </head>
 <body>
 	<c:import url="/HeaderServlet" />
@@ -27,53 +63,156 @@
 		<legend>Rechercher une erreur</legend>
 		<form method="get" action="#">
 
-			<label for="dateDebut">Date de début :</label> <input type="text"
-				name="dateDebut" id="dateDebut" tabindex="10" /> <span
-				class="erreur">${this.erreurs['dateDebut'] }</span> <label
-				for="dateFin">Date de fin :</label> <input type="text"
-				name="dateFin" id="dateFin" tabindex="20" /> <span class="erreur">${this.erreurs['dateFin']}</span>
+			<table>
+				<tr>
+					<td><label for="dateDebut">Date de début :</label> <input
+						type="text" name="dateDebut" id="dateDebut" tabindex="10" /></td>
+					<td><label for="dateFin">Date de fin :</label> <input
+						type="text" name="dateFin" id="dateFin" tabindex="20" /></td>
+				</tr>
+				<tr>
+					<td><label for="typeErreur">Type d'erreur :</label> <select
+						name="typeErreur" id="typeErreur" tabindex="30">
+							<option value=""></option>
+							<c:forEach var="typeEnCours" items="${this.typesErreurs}">
+								<option value="${typeEnCours.codeTypeErreur}">${typeEnCours.nomTypeErreur}</option>
+							</c:forEach>
+					</select></td>
+					<td><label for="statusRegularisationRecherche">Statut
+							:</label> <select name="statusRegularisationRecherche"
+						id="statusRegularisationRecherche" tabindex="40">
+							<option value=""></option>
+							<c:forEach var="statusEnCours"
+								items="${this.statusRegularisation}">
+								<option value="${statusEnCours.codeStatusRegularisation}">${statusEnCours.nomStatusRegularisation}</option>
+							</c:forEach>
+					</select></td>
+				</tr>
+				<tr>
+					<td><label for="agentID">N° Agent :</label> <input type="text"
+						name="agentID" id="agentID" tabindex="50" /></td>
+					<td><label for="agenceID">N° Agence :</label> <input
+						type="text" name="agenceID" id="agenceID" tabindex="60" /></td>
+				</tr>
+			</table>
+			<div class="erreur">
+				<c:if test="${not empty this.erreurs['dateDebut']}">
+					<div class="ui-widget">
+						<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+							<p>
+								<span class="ui-icon ui-icon-alert"
+									style="float: left; margin-right: .3em;"> </span>${this.erreurs['dateDebut']
+								}
+							</p>
+						</div>
+					</div>
+				</c:if>
 
-			<label for="typeErreur">Type d'erreur :</label> <select
-				name="typeErreur" id="typeErreur" tabindex="30">
-				<option value=""></option>
-				<c:forEach var="typeEnCours" items="${this.typesErreurs}">
-					<option value="${typeEnCours.codeTypeErreur}">${typeEnCours.nomTypeErreur}</option>
-				</c:forEach>
-			</select> <span class="erreur">${this.erreurs['typeErreur'] }</span> <label
-				for="statusRegularisationRecherche">Statut :</label> <select
-				name="statusRegularisationRecherche"
-				id="statusRegularisationRecherche" tabindex="40">
-				<option value=""></option>
-				<c:forEach var="statusEnCours" items="${this.statusRegularisation}">
-					<option value="${statusEnCours.codeStatusRegularisation}">${statusEnCours.nomStatusRegularisation}</option>
-				</c:forEach>
-			</select> <span class="erreur">${this.erreurs['statusRegularisationRecherche']}</span>
+				<c:if test="${not empty this.erreurs['dateFin']}">
+					<div class="ui-widget">
+						<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+							<p>
+								<span class="ui-icon ui-icon-alert"
+									style="float: left; margin-right: .3em;"> </span>${this.erreurs['dateFin']}
+							</p>
+						</div>
+					</div>
+				</c:if>
+				<c:if test="${not empty this.erreurs['typeErreur']}">
+					<div class="ui-widget">
+						<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+							<p>
+								<span class="ui-icon ui-icon-alert"
+									style="float: left; margin-right: .3em;"> </span>${this.erreurs['typeErreur']}
+							</p>
+						</div>
+					</div>
+				</c:if>
 
-			<label for="agentId">N° Agent :</label> <input type="text"
-				name="agentId" id="agentId" tabindex="50" /> <span class="erreur">${this.erreurs['agentId']
-				}</span> 
-			<input type="submit" value="Rechercher" /> <span class="erreur">${this.erreurs['noResult']
-				}</span> <span class="erreur">${this.erreurs['bdd'] }</span> <a
-				href="<c:url	value="AccueilAgentComptableServlet">
-								<c:param name="reset" value="true" />
-							</c:url>">
-				Réinitialiser </a>
+				<c:if
+					test="${not empty this.erreurs['statusRegularisationRecherche']}">
+					<div class="ui-widget">
+						<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+							<p>
+								<span class="ui-icon ui-icon-alert"
+									style="float: left; margin-right: .3em;"> </span>${this.erreurs['statusRegularisationRecherche']}
+							</p>
+						</div>
+					</div>
+				</c:if>
 
+				<c:if test="${not empty this.erreurs['agentID']}">
+					<div class="ui-widget">
+						<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+							<p>
+								<span class="ui-icon ui-icon-alert"
+									style="float: left; margin-right: .3em;"> </span>${this.erreurs['agentID']}
+							</p>
+						</div>
+					</div>
+				</c:if>
+
+				<c:if test="${not empty this.erreurs['agenceID']}">
+					<div class="ui-widget">
+						<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+							<p>
+								<span class="ui-icon ui-icon-alert"
+									style="float: left; margin-right: .3em;"> </span>${this.erreurs['agenceID']}
+							</p>
+						</div>
+					</div>
+				</c:if>
+
+				<c:if test="${not empty this.erreurs['noResult']}">
+					<div class="ui-widget">
+						<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+							<p>
+								<span class="ui-icon ui-icon-alert"
+									style="float: left; margin-right: .3em;"> </span>${this.erreurs['noResult']}
+							</p>
+						</div>
+					</div>
+				</c:if>
+				<c:if test="${not empty this.erreurs['bdd']}">
+					<div class="ui-widget">
+						<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+							<p>
+								<span class="ui-icon ui-icon-alert"
+									style="float: left; margin-right: .3em;"> </span>${this.erreurs['bdd']}
+							</p>
+						</div>
+					</div>
+				</c:if>
+
+				<c:if test="${not empty this.erreurs['droit']}">
+					<div class="ui-widget">
+						<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+							<p>
+								<span class="ui-icon ui-icon-alert"
+									style="float: left; margin-right: .3em;"> </span>${this.erreurs['droit']}
+							</p>
+						</div>
+					</div>
+				</c:if>
+			</div>
+
+			<input type="submit" value="Rechercher" /> <input type="submit"
+				value="Réinitialiser" name="reset" />
 		</form>
-		<span class="erreur">${this.erreurs['droit'] }</span>
+
 	</fieldset>
 
 	<c:if test="${!empty this.erreursCaisse }">
-		<table border="1">
+		<table id="myTable" class="tablesorter">
 			<thead>
 				<tr>
-					<td>N° Agence</td>
-					<td>N° Agent</td>
-					<td>N° Erreur</td>
-					<td>Type Erreur</td>
-					<td>Status Regularisation</td>
-					<td>Date</td>
-					<td>Montant</td>
+					<th>N° Agence</th>
+					<th>N° Agent</th>
+					<th>N° Erreur</th>
+					<th>Type Erreur</th>
+					<th>Status Regularisation</th>
+					<th>Date</th>
+					<th>Montant</th>
 				</tr>
 			</thead>
 			<tbody>

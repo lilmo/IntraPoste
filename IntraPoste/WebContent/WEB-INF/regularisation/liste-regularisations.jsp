@@ -56,8 +56,8 @@
 		</table>
 	</c:if>
 
-	<!-- TODO: Verifier le code agent en session -->
-	<c:if test="${this.codeStatusRegularisation == 1}">
+	<c:if
+		test="${this.codeStatusRegularisation == 1} && ${this.agent.typeAgent.codeTypeAgent} == 1">
 		<a
 			href="<c:url value="/RegulariserServlet"> 
 					<c:param name="erreurCaisseId" value="${this.erreurCaisseId}" />
