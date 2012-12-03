@@ -212,7 +212,7 @@ public class AccueilAgentComptableServlet extends HttpServlet {
         		try {
         			setDateFin( validationDate( dateFinString ) );
         		} catch ( Exception e ) {
-        			setErreur( CHAMP_FIN, e.getMessage() );
+        			setErreur( CHAMP_FIN, "Merci de saisir une date de fin valide." );
         			setDateFin( null );
         		}
 
