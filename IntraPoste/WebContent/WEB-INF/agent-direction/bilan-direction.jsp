@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Bilan</title>
+<title>Bilan Direction</title>
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
 <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
@@ -24,16 +24,31 @@
 <body>
 	<c:import url="/HeaderServlet" />
 	<fieldset>
-		<legend>Voir le bilan de l'agence</legend>
+		<legend>Recherche le bilan d'une agence</legend>
 		<form method="get" action="#">
 
-			<input
-				type="radio" name="checkDate" value="journee" checked>Pour
-			la journée <input type="text" name="dateJournee" id="dateJournee"
-				tabindex="10" /> <span class="erreur">${this.erreurs['dateJournee']
-				}</span> <input type="radio" name="checkDate" value="periode">Pour
-			la période jusqu'au <input type="text" name="datePeriode"
-				id="datePeriode" tabindex="20" /> <span class="erreur">${this.erreurs['datePeriode']}</span>
+			<label for="codeAgence">N° Agence :</label> <input type="text"
+				name="codeAgence" id="codeAgence" tabindex="60" /> <span
+				class="erreur">${this.erreurs['agenceId']}</span> 
+				
+				<c:choose>
+					<c:when
+									test="${erreur.statusRegularisation.codeStatusRegularisation == 0}">
+									<c:set var="url" value="RegulariserServlet" />
+								</c:when>
+								<c:otherwise>
+									<c:set var="url" value="ListeRegularisationsServlet" />
+								</c:otherwise>
+							</c:choose>
+				<input type="radio" name="checkDate" value="journee" checked>
+				Pour la journée 
+				<input type="text" name="dateJournee" id="dateJournee" tabindex="10" /> 
+				<span class="erreur">${this.erreurs['dateJournee']}</span> 
+				
+				<input type="radio" name="checkDate" value="periode">
+				Pour la période jusqu'au 
+				<input type="text" name="datePeriode" id="datePeriode" tabindex="20" /> 
+				<span class="erreur">${this.erreurs['datePeriode']}</span>
 
 			<label for="typeErreur">Type d'erreur :</label> <select
 				name="typeErreur" id="typeErreur" tabindex="30">
@@ -58,18 +73,13 @@
 	</fieldset>
 	<fieldset>
 		<legend>Bilan</legend>
-		<c:if test="${this.recherche.dateDebut != null}">
-			Bilan du
-			<fmt:formatDate pattern="dd/MM/yyyy"
-				value="${this.recherche.dateDebut}" />
-			au
-			<fmt:formatDate pattern="dd/MM/yyyy" value="${this.recherche.dateFin}" />
-		</c:if>
-		Agence : ${this.agenceAgent.nomAgence} 
-		<c:if test="${this.soldeAgence != null}">
-		Solde erreurs :
+		Bilan du
+		<fmt:formatDate pattern="dd/MM/yyyy"
+			value="${this.recherche.dateDebut}" />
+		au
+		<fmt:formatDate pattern="dd/MM/yyyy" value="${this.recherche.dateFin}" />
+		Agence : ${this.recherche.agence.nomAgence} Solde erreurs :
 		${this.soldeAgence}
-		</c:if>
 	</fieldset>
 </body>
 </html>
