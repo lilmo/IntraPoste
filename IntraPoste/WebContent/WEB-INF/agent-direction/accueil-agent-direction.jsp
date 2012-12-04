@@ -138,7 +138,7 @@
 
 			<input type="submit" value="Rechercher" /> <span class="erreur">${this.erreurs['noResult']
 				}</span> <span class="erreur">${this.erreurs['bdd'] }</span> <a
-				href="<c:url	value="AccueilAgentComptableServlet">
+				href="<c:url	value="AccueilAgentDirectionServlet">
 								<c:param name="reset" value="true" />
 							</c:url>">
 				Réinitialiser </a>
@@ -164,13 +164,13 @@
 				<c:forEach var="erreur" items="${this.erreursCaisse}">
 					<tr>
 						<td><a
-							href="<c:url	value="AccueilAgentComptableServlet">
+							href="<c:url	value="AccueilAgentDirectionServlet">
 								<c:param name="agenceID" value="${erreur.agence.codeAgence}" />
 							</c:url>">
 								<c:out value="${erreur.agence.codeAgence}" />
 						</a></td>
 						<td><a
-							href="<c:url	value="AccueilAgentComptableServlet">
+							href="<c:url	value="AccueilAgentDirectionServlet">
 								<c:param name="agentID" value="${erreur.agent.codeAgent}" />
 							</c:url>">
 								<c:out value="${erreur.agent.codeAgent}" />

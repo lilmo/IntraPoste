@@ -255,12 +255,12 @@ public class AccueilAgentDirectionServlet extends HttpServlet {
 
         private void reinitialiserChamps()
         {
-        	dateDebut = null;
-            dateFin = null;
-            codeStatusRegularisation = -1;
-            codeTypeErreur = null;
-            agentID = null;
-            agenceID = null;
+        	setDateDebut(null);
+        	setDateFin(null);
+        	setCodeStatusRegularisation(-1);
+        	setCodeTypeErreur(null);
+        	setAgentID(null);
+        	setAgenceID(null);
         }
         
         private void getParameters( HttpServletRequest request ) {
