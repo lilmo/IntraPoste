@@ -108,7 +108,7 @@ public class BilanServlet extends HttpServlet {
             else
                 this.getServletContext()
                         .getRequestDispatcher(
-                                "/WEB-INF/agent-superieur/bilan.jsp" )
+                                "/WEB-INF/agent-comptable/bilan.jsp" )
                         .forward( request, response );
         }
     }
