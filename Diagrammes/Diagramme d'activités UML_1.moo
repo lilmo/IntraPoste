@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?PowerDesigner AppLocale="UTF16" ID="{A51496F2-C6A9-4F99-89F1-90866A957E05}" Label="" LastModificationDate="1352659689" Name="Diagramme d&#39;activités UML_1" Objects="43" Symbols="37" Target="Java" TargetLink="Reference" Type="{18112060-1A4B-11D1-83D9-444553540000}" signature="CLD_OBJECT_MODEL" version="15.1.0.2850"?>
+<?PowerDesigner AppLocale="UTF16" ID="{A51496F2-C6A9-4F99-89F1-90866A957E05}" Label="" LastModificationDate="1354658814" Name="Diagramme d&#39;activités UML_1" Objects="43" Symbols="37" Target="Java" TargetLink="Reference" Type="{18112060-1A4B-11D1-83D9-444553540000}" signature="CLD_OBJECT_MODEL" version="15.1.0.2850"?>
 <!-- Veuillez ne pas modifier ce fichier -->
 
 <Model xmlns:a="attribute" xmlns:c="collection" xmlns:o="object">
@@ -1404,7 +1404,7 @@ NameToCode=No</a:ModelOptionsText>
 <a:Code>DiagrammeActivites_1</a:Code>
 <a:CreationDate>1351540050</a:CreationDate>
 <a:Creator>Morgane</a:Creator>
-<a:ModificationDate>1352659665</a:ModificationDate>
+<a:ModificationDate>1354658814</a:ModificationDate>
 <a:Modifier>Morgane LOPVET</a:Modifier>
 <a:DisplayPreferences>[DisplayPreferences]
 
@@ -1888,7 +1888,7 @@ Pen=1 0 0 0 255
 Shadow color=192 192 192
 Shadow=0</a:DisplayPreferences>
 <a:PaperSize>(8268, 11693)</a:PaperSize>
-<a:PageMargins>((315,354), (433,354))</a:PageMargins>
+<a:PageMargins>((354,315), (354,433))</a:PageMargins>
 <a:PageOrientation>1</a:PageOrientation>
 <a:PaperSource>15</a:PaperSource>
 <c:Symbols>
@@ -1938,7 +1938,7 @@ DESTINATION 0 Arial,8,N</a:FontList>
 <o:FlowSymbol Id="o48">
 <a:CreationDate>1351540104</a:CreationDate>
 <a:ModificationDate>1351541232</a:ModificationDate>
-<a:Rect>((-4259,-580), (14314,5519))</a:Rect>
+<a:Rect>((-4259,-580), (14039,5519))</a:Rect>
 <a:ListOfPoints>((13814,5519),(13814,-519))</a:ListOfPoints>
 <a:CornerStyle>2</a:CornerStyle>
 <a:ArrowStyle>1</a:ArrowStyle>

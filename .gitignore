@@ -26,3 +26,4 @@ RemoteSystemsTempFiles/.project
 IntraPoste/.tomcatplugin
 *.orig
 IntraPoste/WebContent/WEB-INF/jquery/
+*lexis*
