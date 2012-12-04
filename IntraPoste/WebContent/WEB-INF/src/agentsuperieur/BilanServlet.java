@@ -41,6 +41,8 @@ public class BilanServlet extends HttpServlet {
     private RechercheForm                   recherche;
     private Map<String, String>             erreurs;
     private Agence                          agenceAgent;
+	private Date dateDebut = new Date();
+	private Date dateFin = new Date();
 
     private Date                            dateDebut;
     private Date                            dateFin;
@@ -164,6 +166,23 @@ public class BilanServlet extends HttpServlet {
     public void setTypesErreurs( ArrayList<TypeErreur> typesErreurs ) {
         this.typesErreurs = typesErreurs;
     }
+	
+	public Date getDateFin() {
+		return dateFin;
+	}
+
+	public void setDateFin(Date dateFin) {
+		this.dateFin = dateFin;
+	}
+
+	public Date getDateDebut() {
+		return dateDebut;
+	}
+
+	public void setDateDebut(Date dateDebut) {
+		this.dateDebut = dateDebut;
+	}
+
 
     public RechercheForm getRecherche() {
         return recherche;
@@ -266,6 +285,7 @@ public class BilanServlet extends HttpServlet {
                 setResultat( ECHEC );
             }
 
+			
             return this;
         }
 

@@ -50,7 +50,7 @@
 	<fieldset class="droite">
 		<legend>Bilan</legend>
 		<c:if test="${this.dateDebut != null}">
-			Bilan du
+		Bilan du
 			<fmt:formatDate pattern="dd/MM/yyyy" value="${this.dateDebut}" />
 			au
 			<fmt:formatDate pattern="dd/MM/yyyy" value="${this.dateFin}" />
