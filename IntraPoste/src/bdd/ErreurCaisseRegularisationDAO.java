@@ -14,7 +14,6 @@ public class ErreurCaisseRegularisationDAO {
 
     public static void init() throws SQLException, InterruptedException {
 
-        // TODO init ErreurCaisse
         empty();
 
         // On choisi au hasard l'une des 5 erreurs de caisse

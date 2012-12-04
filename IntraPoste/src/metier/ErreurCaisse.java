@@ -65,8 +65,6 @@ public class ErreurCaisse {
     public int regulariserErreurCaisseComptable( float montantRegularisation,
             String codeAgentRegularisateur,
             MotifRegularisation motifRegularisation ) throws SQLException {
-        // TODO: implement
-        // TODO: mettre des enums au lieu des chiffres
         if ( this.statusRegularisation.getCodeStatusRegularisation() != 2 ) // totalement
                                                                             // régularisée
         {
@@ -101,8 +99,6 @@ public class ErreurCaisse {
     public int regulariserErreurCaisseGuichet( float montantRegularisation,
             String codeAgentRegularisateur,
             MotifRegularisation motifRegularisation ) {
-        // TODO: implement
-        // TODO: mettre des enums au lieu des chiffres
         int maxRegul = 5;
         if ( this.typeErreur.getCodeTypeErreur().equals( "E" ) )
             if ( this.montant < maxRegul )

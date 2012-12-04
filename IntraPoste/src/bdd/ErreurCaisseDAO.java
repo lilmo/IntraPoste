@@ -14,7 +14,6 @@ public class ErreurCaisseDAO {
 
 	public static void init() throws SQLException {
 
-		// TODO init ErreurCaisse
 		empty();
 		insert("PAR201", "lopvet_m", new Date(), "E",
 				Math.round(Math.random() * 10));
