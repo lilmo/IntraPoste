@@ -1,4 +1,4 @@
-package agentsuperieur;
+package agentdirection;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -21,6 +21,7 @@ import metier.ErreurCaisse;
 import metier.StatusRegularisation;
 import metier.TypeErreur;
 import tools.Check;
+import bdd.AgenceDAO;
 import bdd.AgentDAO;
 import bdd.StatusRegularisationDAO;
 import bdd.TypeErreurDAO;
@@ -28,7 +29,7 @@ import bdd.TypeErreurDAO;
 /**
  * Servlet implementation class BilanServlet
  */
-public class BilanServlet extends HttpServlet {
+public class BilanDirectionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final int SUCCES = 0;
 	private static final int ECHEC = 1;
@@ -39,12 +40,11 @@ public class BilanServlet extends HttpServlet {
 	private float soldeAgence;
 	private RechercheForm recherche;
 	private Map<String, String> erreurs;
-	private Agence agenceAgent;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public BilanServlet() {
+	public BilanDirectionServlet() {
 		super();
 		setErreursCaisse(null);
 		setTypesErreurs(null);
@@ -65,19 +65,18 @@ public class BilanServlet extends HttpServlet {
 			if (Check.checkAgent(request)) {
 				agent = (AgentSuperieur) AgentDAO.selectByCode((String) request
 						.getSession().getAttribute("codeAgent"));
-				if (Check.checkTypeAgent("superieur", agent)) {
-
-					agenceAgent = agent.getAgence();
+				if ((!Check.checkTypeAgent("comptable", agent))&&(Check.checkTypeAgent("superieur", agent))) {
 					recherche.recupererEtVerifierFormulaire(request);
 					if (recherche.getResultat() == SUCCES) {
 						if (recherche.getCheckDate().equals("journee"))
 							soldeAgence = agent.bilanJourneeErreursCaisse(
-									agent.getAgence().getCodeAgence(),
+									recherche.getAgence().getCodeAgence(),
 									recherche.getDateJournee(),
 									recherche.getCodeTypeErreur(),
 									recherche.getCodeStatusRegularisation());
 						else if (recherche.getCheckDate().equals("periode"))
-							soldeAgence = agent.bilanErreursCaisse(agent.getAgence().getCodeAgence(), recherche
+							soldeAgence = agent.bilanErreursCaisse(recherche
+									.getAgence().getCodeAgence(), recherche
 									.getDatePeriode(), recherche
 									.getCodeTypeErreur(), recherche
 									.getCodeStatusRegularisation());
@@ -131,16 +130,6 @@ public class BilanServlet extends HttpServlet {
 		return soldeAgence;
 	}
 
-	public Agence getAgenceAgent()
-	{
-		return agenceAgent;
-	}
-	
-	public void setAgenceAgent(Agence agence)
-	{
-		this.agenceAgent = agence;
-	}
-	
 	public void setSoldeAgence(float soldeAgence) {
 		this.soldeAgence = soldeAgence;
 	}
@@ -180,6 +169,7 @@ public class BilanServlet extends HttpServlet {
 		private static final String CHAMP_CHECK_DATE = "checkDate";
 		private static final String CHAMP_TYPE_ERREUR = "typeErreur";
 		private static final String CHAMP_STATUS_REGULARISATION = "statusRegularisationRecherche";
+		private static final String CHAMP_CODE_AGENCE = "codeAgence";
 
 		private Date dateJournee;
 		private Date datePeriode;
@@ -188,19 +178,35 @@ public class BilanServlet extends HttpServlet {
 		private String checkDate;
 		private int codeStatusRegularisation;
 		private String codeTypeErreur;
+		private Agence agence;
 		private int resultat;
 
 		public RechercheForm recupererEtVerifierFormulaire(
 				HttpServletRequest request) {
 
 			erreurs = new HashMap<String, String>();
-			String checkDateString = getValeurChamp(request, CHAMP_CHECK_DATE);
 			String dateJourneeString = getValeurChamp(request, CHAMP_JOURNEE);
 			String datePeriodeString = getValeurChamp(request, CHAMP_PERIODE);
+			String checkDateString = getValeurChamp(request, CHAMP_CHECK_DATE);
 			String codeStatusRegularisationString = getValeurChamp(request,
 					CHAMP_STATUS_REGULARISATION);
 			String codeTypeErreurString = getValeurChamp(request,
 					CHAMP_TYPE_ERREUR);
+			String codeAgence = getValeurChamp(request, CHAMP_CODE_AGENCE);
+
+			try {
+				setDateJournee(validationDate(dateJourneeString));
+			} catch (Exception e) {
+				setErreur(CHAMP_JOURNEE, e.getMessage());
+				setDateJournee(null);
+			}
+
+			try {
+				setDatePeriode(validationDate(datePeriodeString));
+			} catch (Exception e) {
+				setErreur(CHAMP_PERIODE, e.getMessage());
+				setDatePeriode(null);
+			}
 
 			try {
 				validationCheckDate(checkDateString);
@@ -209,31 +215,6 @@ public class BilanServlet extends HttpServlet {
 				setCheckDate(null);
 			}
 
-			if (checkDateString.equals("journee"))
-			{
-				try {
-					setDateJournee(validationDate(dateJourneeString));
-				} catch (Exception e) {
-					setErreur(CHAMP_JOURNEE, e.getMessage());
-					setDateJournee(null);
-				}
-				if (getDateJournee() == null)
-					setErreur(CHAMP_JOURNEE, "Saisir une date valide");
-			}
-
-			if (checkDateString.equals("periode"))
-			{
-				try {
-					setDatePeriode(validationDate(datePeriodeString));
-				} catch (Exception e) {
-					setErreur(CHAMP_PERIODE, e.getMessage());
-					setDatePeriode(null);
-				}
-				if (getDatePeriode() == null)
-					setErreur(CHAMP_PERIODE, "Saisir une date valide");
-			}
-
-			
 			try {
 				validationCodeStatus(codeStatusRegularisationString);
 			} catch (Exception e) {
@@ -246,6 +227,14 @@ public class BilanServlet extends HttpServlet {
 			} catch (Exception e) {
 				setErreur(CHAMP_TYPE_ERREUR, e.getMessage());
 				setCodeTypeErreur(null);
+			}
+
+			try {
+				validationCodeAgence(codeAgence);
+				setAgence(AgenceDAO.selectByCode(codeAgence));
+			} catch (Exception e) {
+				setErreur(CHAMP_CODE_AGENCE, e.getMessage());
+				setAgence(null);
 			}
 
 			if (erreurs.isEmpty()) {
@@ -315,6 +304,16 @@ public class BilanServlet extends HttpServlet {
 
 		}
 
+		private void validationCodeAgence(String codeAgence) throws Exception {
+			if (codeAgence != null) {
+				boolean agenceExists;
+				agenceExists = AgenceDAO.existingByCode(codeAgence);
+				if (!agenceExists) {
+					throw new Exception("Code agence inconnu");
+				}
+			}
+		}
+
 		private Date validationDate(String dateString) throws Exception {
 			if (dateString != null)
 				try {
@@ -364,6 +363,13 @@ public class BilanServlet extends HttpServlet {
 			this.datePeriode = datePeriode;
 		}
 
+		public void setAgence(Agence agence) {
+			this.agence = agence;
+		}
+
+		public Agence getAgence() {
+			return agence;
+		}
 
 		public String getCheckDate() {
 			return checkDate;

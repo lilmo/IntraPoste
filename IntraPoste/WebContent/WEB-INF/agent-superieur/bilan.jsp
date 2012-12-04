@@ -5,12 +5,10 @@
 </head>
 <body>
 	<fieldset>
-		<legend>Recherche le bilan d'une agence</legend>
+		<legend>Voir le bilan de l'agence</legend>
 		<form method="get" action="#">
 
-			<label for="codeAgence">N° Agence :</label> <input type="text"
-				name="codeAgence" id="codeAgence" tabindex="60" /> <span
-				class="erreur">${this.erreurs['agenceId']}</span> <input
+			<input
 				type="radio" name="checkDate" value="journee" checked>Pour
 			la journée <input type="text" name="dateJournee" id="dateJournee"
 				tabindex="10" /> <span class="erreur">${this.erreurs['dateJournee']
@@ -41,13 +39,18 @@
 	</fieldset>
 	<fieldset>
 		<legend>Bilan</legend>
-		Bilan du
-		<fmt:formatDate pattern="dd/MM/yyyy"
-			value="${this.recherche.dateDebut}" />
-		au
-		<fmt:formatDate pattern="dd/MM/yyyy" value="${this.recherche.dateFin}" />
-		Agence : ${this.recherche.agence.nomAgence} Solde erreurs :
+		<c:if test="${this.recherche.dateDebut != null}">
+			Bilan du
+			<fmt:formatDate pattern="dd/MM/yyyy"
+				value="${this.recherche.dateDebut}" />
+			au
+			<fmt:formatDate pattern="dd/MM/yyyy" value="${this.recherche.dateFin}" />
+		</c:if>
+		Agence : ${this.agenceAgent.nomAgence} 
+		<c:if test="${this.soldeAgence != null}">
+		Solde erreurs :
 		${this.soldeAgence}
+		</c:if>
 	</fieldset>
 </body>
 </html>

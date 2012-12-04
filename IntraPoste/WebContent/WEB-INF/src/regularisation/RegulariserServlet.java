@@ -140,7 +140,12 @@ public class RegulariserServlet extends HttpServlet {
             }
 
             if ( erreur == null || erreur.isEmpty() )
+            {
+            	if (agentGuichet != null)
                 pageRetour = "/AccueilAgentGuichetServlet";
+            	else if (agentComptable != null)
+            		pageRetour = "/AccueilAgentComptableServlet";
+            }
         }
         this.getServletContext().getRequestDispatcher( pageRetour )
                 .forward( request, response );
