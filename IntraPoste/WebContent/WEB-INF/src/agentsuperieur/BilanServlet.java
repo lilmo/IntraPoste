@@ -197,7 +197,21 @@ public class BilanServlet extends HttpServlet {
         this.erreurs = erreurs;
     }
 
+    public Date getDateFin() {
+        return dateFin;
+    }
 
+    public void setDateFin( Date dateFin ) {
+        this.dateFin = dateFin;
+    }
+
+    public Date getDateDebut() {
+        return dateDebut;
+    }
+
+    public void setDateDebut( Date dateDebut ) {
+        this.dateDebut = dateDebut;
+    }
     public class RechercheForm {
         private static final String CHAMP_JOURNEE               = "dateJournee";
         private static final String CHAMP_PERIODE               = "datePeriode";
