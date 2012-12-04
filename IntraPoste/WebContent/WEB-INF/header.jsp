@@ -24,6 +24,12 @@
 		$("#dateFin").datepicker({
 			dateFormat : "dd/mm/yy"
 		});
+		$("#dateJournee").datepicker({
+			dateFormat : "dd/mm/yy"
+		});
+		$("#datePeriode").datepicker({
+			dateFormat : "dd/mm/yy"
+		});
 	});
 
 	$("button").button();
@@ -93,4 +99,11 @@ form input {
 		<c:url value="AccueilAgentGuichetServlet"/>
 	</c:if>
 	 ">Accueil</a>
-	 <br><br>
+	<c:if test="${ typeAgent == 0 }">
+		<a href="<c:url value="BilanDirectionServlet" />">Bilan</a>
+	</c:if>
+	<c:if test="${ typeAgent == 1 }">
+		<a href="<c:url value="BilanServlet" />">Bilan</a>
+	</c:if>
+	<br>
+	<br>

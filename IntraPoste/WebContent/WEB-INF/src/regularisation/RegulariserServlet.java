@@ -26,6 +26,7 @@ public class RegulariserServlet extends HttpServlet {
     private static final long              serialVersionUID = 1L;
     private int                            erreurCaisseId;
     private ArrayList<MotifRegularisation> motifs;
+
     private float                          reste;
     private String                         erreur;
 
@@ -118,7 +119,8 @@ public class RegulariserServlet extends HttpServlet {
                 }
                 int resultat = -1;
                 if ( agentComptable != null )
-                    resultat = agentComptable.regulariserErreur( erreurCaisseId, montant, agentComptable.getCodeAgent(),
+                    resultat = agentComptable.regulariserErreur( erreurCaisseId, montant,
+                            agentComptable.getCodeAgent(),
                             motifEnBase );
                 else if ( agentGuichet != null )
                     resultat = agentGuichet.regulariserErreur( erreurCaisseId, montant, agentGuichet.getCodeAgent(),
@@ -141,10 +143,10 @@ public class RegulariserServlet extends HttpServlet {
 
             if ( erreur == null || erreur.isEmpty() )
             {
-            	if (agentGuichet != null)
-                pageRetour = "/AccueilAgentGuichetServlet";
-            	else if (agentComptable != null)
-            		pageRetour = "/AccueilAgentComptableServlet";
+                if ( agentGuichet != null )
+                    pageRetour = "/AccueilAgentGuichetServlet";
+                else if ( agentComptable != null )
+                    pageRetour = "/AccueilAgentComptableServlet";
             }
         }
         this.getServletContext().getRequestDispatcher( pageRetour )
@@ -213,7 +215,7 @@ public class RegulariserServlet extends HttpServlet {
     }
 
     public void setReste( float reste ) {
-        this.reste = reste;
+        this.reste = (float) ( Math.round( reste * 100.0 ) / 100.0 );
     }
 
     public String getErreur() {

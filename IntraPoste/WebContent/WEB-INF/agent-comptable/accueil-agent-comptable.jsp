@@ -23,7 +23,8 @@
 			<c:forEach var="statusEnCours" items="${this.statusRegularisation}">
 				<option value="${statusEnCours.codeStatusRegularisation}">${statusEnCours.nomStatusRegularisation}</option>
 			</c:forEach>
-		</select> <label for="agentID">N° Agent :</label> <input type="text"
+		</select> 
+		<br><label for="agentID">N° Agent :</label> <input type="text"
 			name="agentID" id="agentID" tabindex="50" />
 
 		<div class="erreur">
@@ -49,6 +50,7 @@
 					</div>
 				</div>
 			</c:if>
+			
 			<c:if test="${not empty this.erreurs['typeErreur']}">
 				<div class="ui-widget">
 					<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
@@ -126,7 +128,7 @@
 				</div>
 			</c:if>
 		</div>
-
+<br>
 		<input type="submit" value="Rechercher" /> <input type="submit"
 			value="Réinitialiser" name="reset" />
 	</form>

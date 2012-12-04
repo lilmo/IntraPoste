@@ -1,10 +1,21 @@
 <c:import url="/HeaderServlet" />
 </body>
 <head>
+<style type="text/css">
+.gauche {
+	width: 46%;
+	float: left;
+}
+
+.droite {
+	width: 46%;
+	float: right;
+}
+</style>
 <title>Bilan</title>
 </head>
 <body>
-	<fieldset>
+	<fieldset class="gauche">
 		<legend>Voir le bilan de l'agence</legend>
 		<form method="get" action="#">
 
@@ -36,15 +47,15 @@
 				class="erreur">${this.erreurs['droit']}</span>
 		</form>
 	</fieldset>
-	<fieldset>
+	<fieldset class="droite">
 		<legend>Bilan</legend>
+		<c:if test="${this.dateDebut != null}">
 		Bilan du
-			<fmt:formatDate pattern="dd/MM/yyyy"
-				value="${this.dateDebut}" />
+			<fmt:formatDate pattern="dd/MM/yyyy" value="${this.dateDebut}" />
 			au
-			<fmt:formatDate pattern="dd/MM/yyyy"
-				value="${this.dateFin}" />
-		Agence : ${this.agenceAgent.nomAgence}
+			<fmt:formatDate pattern="dd/MM/yyyy" value="${this.dateFin}" />
+		</c:if>
+		Agence : ${this.agenceAgent.nomAgence}<br>
 		<c:if test="${this.soldeAgence != null}">
 		Solde erreurs :
 		${this.soldeAgence}

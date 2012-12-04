@@ -1,25 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<c:import url="/HeaderServlet" />
+</body>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Bilan Direction</title>
-<link rel="stylesheet"
-	href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
-<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
-<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="/resources/demos/style.css" />
-<script>
-	$(function() {
-		$("#dateJournee").datepicker({
-			dateFormat : "dd/mm/yy"
-		});
-		$("#datePeriode").datepicker({
-			dateFormat : "dd/mm/yy"
-		});
-	});
-</script>
+<title>Bilan</title>
 </head>
 <body>
 	<c:import url="/HeaderServlet" />
@@ -29,26 +11,24 @@
 
 			<label for="codeAgence">N° Agence :</label> <input type="text"
 				name="codeAgence" id="codeAgence" tabindex="60" /> <span
-				class="erreur">${this.erreurs['agenceId']}</span> 
-				
-				<c:choose>
-					<c:when
-									test="${erreur.statusRegularisation.codeStatusRegularisation == 0}">
-									<c:set var="url" value="RegulariserServlet" />
-								</c:when>
-								<c:otherwise>
-									<c:set var="url" value="ListeRegularisationsServlet" />
-								</c:otherwise>
-							</c:choose>
-				<input type="radio" name="checkDate" value="journee" checked>
-				Pour la journée 
-				<input type="text" name="dateJournee" id="dateJournee" tabindex="10" /> 
-				<span class="erreur">${this.erreurs['dateJournee']}</span> 
-				
-				<input type="radio" name="checkDate" value="periode">
-				Pour la période jusqu'au 
-				<input type="text" name="datePeriode" id="datePeriode" tabindex="20" /> 
-				<span class="erreur">${this.erreurs['datePeriode']}</span>
+				class="erreur">${this.erreurs['agenceId']}</span>
+
+			<c:choose>
+				<c:when
+					test="${erreur.statusRegularisation.codeStatusRegularisation == 0}">
+					<c:set var="url" value="RegulariserServlet" />
+				</c:when>
+				<c:otherwise>
+					<c:set var="url" value="ListeRegularisationsServlet" />
+				</c:otherwise>
+			</c:choose>
+			<input type="radio" name="checkDate" value="journee" checked>
+			Pour la journée <input type="text" name="dateJournee"
+				id="dateJournee" tabindex="10" /> <span class="erreur">${this.erreurs['dateJournee']}</span>
+
+			<input type="radio" name="checkDate" value="periode"> Pour la
+			période jusqu'au <input type="text" name="datePeriode"
+				id="datePeriode" tabindex="20" /> <span class="erreur">${this.erreurs['datePeriode']}</span>
 
 			<label for="typeErreur">Type d'erreur :</label> <select
 				name="typeErreur" id="typeErreur" tabindex="30">
@@ -74,10 +54,9 @@
 	<fieldset>
 		<legend>Bilan</legend>
 		Bilan du
-		<fmt:formatDate pattern="dd/MM/yyyy"
-			value="${this.recherche.dateDebut}" />
+		<fmt:formatDate pattern="dd/MM/yyyy" value="${this.dateDebut}" />
 		au
-		<fmt:formatDate pattern="dd/MM/yyyy" value="${this.recherche.dateFin}" />
+		<fmt:formatDate pattern="dd/MM/yyyy" value="${this.dateFin}" />
 		Agence : ${this.recherche.agence.nomAgence} Solde erreurs :
 		${this.soldeAgence}
 	</fieldset>

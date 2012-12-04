@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
     protected void doGet( HttpServletRequest request,
             HttpServletResponse response ) throws ServletException, IOException {
         this.getServletContext().setAttribute( "this", this );
-        this.getServletContext().getRequestDispatcher( "/WEB-INF/login.jsp" )
+        this.getServletContext().getRequestDispatcher( "/WEB-INF/index.jsp" )
                 .forward( request, response );
     }
 
@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
 
             switch ( agent.getTypeAgent().getCodeTypeAgent() ) {
             case 0:
-
+                pageRetour = "AccueilAgentDirectionServlet";
                 break;
             case 1:
                 pageRetour = "AccueilAgentComptableServlet";
@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
                 pageRetour = "AccueilAgentGuichetServlet";
                 break;
             default:
-                pageRetour = "AccueilAgentDirectionServlet";
+                
                 break;
             }
 

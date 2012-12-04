@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import metier.Agent;
 import metier.AgentComptable;
 import metier.ErreurCaisse;
 import metier.StatusRegularisation;
@@ -54,18 +55,19 @@ public class AccueilAgentComptableServlet extends HttpServlet {
             IOException {
         boolean redirect = false;
         try {
-            AgentComptable agent = null;
+            Agent agent = null;
             if ( Check.checkAgent( request ) )
             {
-                agent = (AgentComptable) AgentDAO.selectByCode( (String) request.getSession()
+                agent = AgentDAO.selectByCode( (String) request.getSession()
                         .getAttribute( "codeAgent" ) );
                 if ( Check.checkTypeAgent( "comptable", agent ) )
                 {
+                    AgentComptable agentComptable = (AgentComptable) agent;
                     recherche.recupererEtVerifierFormulaire( request );
 
                     if ( recherche.getResultat() == SUCCES )
                     {
-                        setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseAgentSup( agent.getAgence()
+                        setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseAgentSup( agentComptable.getAgence()
                                 .getCodeAgence(),
                                 recherche.getAgentID(),
                                 recherche.getDateDebut(), recherche.getDateFin(),
@@ -74,12 +76,12 @@ public class AccueilAgentComptableServlet extends HttpServlet {
 
                         if ( erreursCaisse.isEmpty() )
                         {
-                            setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseAgentSup( agent.getAgence().getCodeAgence(), null, null, null, null, -1 ) );
+                            setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseAgentSup( agentComptable.getAgence().getCodeAgence(), null, null, null, null, -1 ) );
                             recherche.setErreur( "noResult", "Aucun resultat ne correspond a votre recherche." );
                         }
                     }
                     else
-                        setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseAgentSup( agent.getAgence().getCodeAgence(), null, null, null, null, -1 ) );
+                        setErreursCaisse( ErreurCaisseDAO.selectErreursCaisseAgentSup( agentComptable.getAgence().getCodeAgence(), null, null, null, null, -1 ) );
                     setTypesErreurs( TypeErreurDAO.selectAll() );
                     setStatusRegularisation( StatusRegularisationDAO.selectAll() );
 
