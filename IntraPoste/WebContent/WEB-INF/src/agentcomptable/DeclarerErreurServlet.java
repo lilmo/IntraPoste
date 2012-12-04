@@ -40,10 +40,10 @@ public class DeclarerErreurServlet extends HttpServlet {
 
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
             IOException {
-        AgentComptable agent = null;
+        Agent agent = null;
         if ( Check.checkAgent( request ) )
         {
-            agent = (AgentComptable) AgentDAO.selectByCode( (String) request.getSession()
+            agent = AgentDAO.selectByCode( (String) request.getSession()
                     .getAttribute( "codeAgent" ) );
             if ( Check.checkTypeAgent( "comptable", agent ) )
                 setTypesErreurs( TypeErreurDAO.selectAll() );
@@ -65,6 +65,7 @@ public class DeclarerErreurServlet extends HttpServlet {
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
             IOException {
         boolean rediriger = false;
+        boolean actualiser = false;
         try {
 
             Agent agent = null;
@@ -84,6 +85,11 @@ public class DeclarerErreurServlet extends HttpServlet {
                                 new Date(),
                                 form.getCodeTypeErreur(), form.getMontant() );
                     }
+                    else
+                    {
+                    	// réaffiche la page si erreur
+                    	actualiser = true;
+                    }
                 }
                 else
                     form.setErreur( "droit", "Accès refusé." );
@@ -94,7 +100,12 @@ public class DeclarerErreurServlet extends HttpServlet {
             e.printStackTrace();
             form.setErreur( "bdd", "La base de donnee a rencontre un probleme. Recherche abandonnee." );
         } finally {
-            if ( rediriger )
+        	if ( actualiser )
+        		this.getServletContext()
+                .getRequestDispatcher(
+                        "/WEB-INF/agent-comptable/declarer-erreur.jsp" )
+                .forward( request, response );
+        	else if ( rediriger )
                 response.sendRedirect( "LoginServlet" );
             else
                 response.sendRedirect( "AccueilAgentComptableServlet" );
@@ -138,7 +149,7 @@ public class DeclarerErreurServlet extends HttpServlet {
             String codeTypeErreurString = getValeurChamp( request, CHAMP_TYPE_ERREUR );
 
             try {
-                validationCodeAgent( codeAgentString );
+                validationCodeAgent( codeAgentString, request );
             } catch ( Exception e ) {
                 setErreur( CHAMP_CODE_AGENT, e.getMessage() );
                 setCodeAgent( null );
@@ -178,14 +189,24 @@ public class DeclarerErreurServlet extends HttpServlet {
 
         /* Validation des champs */
 
-        private void validationCodeAgent( String codeAgentString ) throws Exception {
+        private void validationCodeAgent( String codeAgentString, HttpServletRequest request ) throws Exception {
             if ( codeAgentString != null )
             {
-                if ( AgentDAO.selectByCode( codeAgentString ) != null )
-                    setCodeAgent( codeAgentString );
+                if (AgentDAO.selectByCode( codeAgentString ) != null)
+                {
+                	if (AgentDAO.selectByCode( codeAgentString ).getAgence().getCodeAgence() == 
+                	AgentDAO.selectByCode( (String) request.getSession().getAttribute( "codeAgent" )).getAgence().getCodeAgence())
+                	{
+                		setCodeAgent( codeAgentString );
+                	}
+                	else
+                		throw new Exception( "Agent inconnu" );
+                }
                 else
                     throw new Exception( "Agent inconnu" );
             }
+            else
+                throw new Exception( "Agent inconnu" );
         }
 
         private void validationTypeErreur( String codeTypeErreurString ) throws Exception {
@@ -207,6 +228,8 @@ public class DeclarerErreurServlet extends HttpServlet {
                     throw new Exception( "Montant invalide" );
                 }
             }
+            else
+            	setErreur(CHAMP_MONTANT, "Saisir le montant de l'erreur");
         }
 
         /* Getters and Setters */

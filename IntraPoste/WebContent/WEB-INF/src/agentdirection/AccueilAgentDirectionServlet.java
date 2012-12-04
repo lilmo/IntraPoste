@@ -179,8 +179,8 @@ public class AccueilAgentDirectionServlet extends HttpServlet {
         private Date                dateFin;
         private int                 codeStatusRegularisation;
         private String              codeTypeErreur;
-        private String				agentID;
-        private String				agenceID;
+        private String				codeAgent;
+        private String				codeAgence;
 
         private int                 resultat;
 
@@ -255,12 +255,12 @@ public class AccueilAgentDirectionServlet extends HttpServlet {
 
         private void reinitialiserChamps()
         {
-        	dateDebut = null;
-            dateFin = null;
-            codeStatusRegularisation = -1;
-            codeTypeErreur = null;
-            agentID = null;
-            agenceID = null;
+        	setDateDebut(null);
+        	setDateFin(null);
+        	setCodeStatusRegularisation(-1);
+        	setCodeTypeErreur(null);
+        	setAgentID(null);
+        	setAgenceID(null);
         }
         
         private void getParameters( HttpServletRequest request ) {
@@ -399,19 +399,19 @@ public class AccueilAgentDirectionServlet extends HttpServlet {
         }
         
         public String getAgentID() {
-            return agentID;
+            return codeAgent;
         }
 
         public void setAgentID( String agentID ) {
-            this.agentID = agentID;
+            this.codeAgent = agentID;
         }
 
         public String getAgenceID() {
-            return agenceID;
+            return codeAgence;
         }
 
         public void setAgenceID( String agenceID ) {
-            this.agenceID = agenceID;
+            this.codeAgence = agenceID;
         }
 
 

@@ -30,10 +30,10 @@
 				</c:forEach>
 			</select> <span class="erreur">${this.erreurs['statusRegularisationRecherche']}</span>
 
-			<label for="agentId">N° Agent :</label> <input type="text"
-				name="agentId" id="agentId" tabindex="50" /> <span class="erreur">${this.erreurs['agentId']
-				}</span> <label for="agenceId">N° Agence :</label> <input type="text"
-				name="agenceId" id="agenceId" tabindex="60" /> <span class="erreur">${this.erreurs['agenceId']}</span>
+			<label for="agentID">N° Agent :</label> <input type="text"
+				name="agentID" id="agentID" tabindex="50" /> <span class="erreur">${this.erreurs['agentID']
+				}</span> <label for="agenceID">N° Agence :</label> <input type="text"
+				name="agenceID" id="agenceID" tabindex="60" /> <span class="erreur">${this.erreurs['agenceID']}</span>
 
 			<div class="erreur">
 				<c:if test="${not empty this.erreurs['dateDebut']}">
@@ -138,7 +138,7 @@
 
 			<input type="submit" value="Rechercher" /> <span class="erreur">${this.erreurs['noResult']
 				}</span> <span class="erreur">${this.erreurs['bdd'] }</span> <a
-				href="<c:url	value="AccueilAgentComptableServlet">
+				href="<c:url	value="AccueilAgentDirectionServlet">
 								<c:param name="reset" value="true" />
 							</c:url>">
 				Réinitialiser </a>
@@ -164,13 +164,13 @@
 				<c:forEach var="erreur" items="${this.erreursCaisse}">
 					<tr>
 						<td><a
-							href="<c:url	value="AccueilAgentComptableServlet">
+							href="<c:url	value="AccueilAgentDirectionServlet">
 								<c:param name="agenceID" value="${erreur.agence.codeAgence}" />
 							</c:url>">
 								<c:out value="${erreur.agence.codeAgence}" />
 						</a></td>
 						<td><a
-							href="<c:url	value="AccueilAgentComptableServlet">
+							href="<c:url	value="AccueilAgentDirectionServlet">
 								<c:param name="agentID" value="${erreur.agent.codeAgent}" />
 							</c:url>">
 								<c:out value="${erreur.agent.codeAgent}" />
