@@ -4,7 +4,6 @@
 <title>Bilan</title>
 </head>
 <body>
-	<c:import url="/HeaderServlet" />
 	<fieldset>
 		<legend>Recherche le bilan d'une agence</legend>
 		<form method="get" action="#">
@@ -51,14 +50,19 @@
 				class="erreur">${this.erreurs['droit']}</span>
 		</form>
 	</fieldset>
-	<fieldset>
+	<fieldset class="droite">
 		<legend>Bilan</legend>
-		Bilan du
-		<fmt:formatDate pattern="dd/MM/yyyy" value="${this.dateDebut}" />
-		au
-		<fmt:formatDate pattern="dd/MM/yyyy" value="${this.dateFin}" />
-		Agence : ${this.recherche.agence.nomAgence} Solde erreurs :
+		<c:if test="${this.dateDebut != null}">
+			Bilan du
+			<fmt:formatDate pattern="dd/MM/yyyy" value="${this.dateDebut}" />
+			au
+			<fmt:formatDate pattern="dd/MM/yyyy" value="${this.dateFin}" />
+		</c:if>
+		Agence : ${this.agenceAgent.nomAgence}<br>
+		<c:if test="${this.soldeAgence != null}">
+		Solde erreurs :
 		${this.soldeAgence}
+		</c:if>
 	</fieldset>
 </body>
 </html>
