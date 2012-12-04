@@ -5,6 +5,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import metier.Agent;
+
+import bdd.AgentDAO;
+
 /**
  * Servlet implementation class HeaderServlet
  */
@@ -25,8 +29,10 @@ public class HeaderServlet extends HttpServlet {
      */
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
             IOException {
-        // TODO Auto-generated method stub
-        this.getServletContext().setAttribute( "codeAgent", request.getSession().getAttribute( "codeAgent" ) );
+        Agent a = AgentDAO.selectByCode( (String) request.getSession().getAttribute( "codeAgent" ) );
+        this.getServletContext().setAttribute( "typeAgent", a.getTypeAgent().getCodeTypeAgent());
+        this.getServletContext().setAttribute( "nomAgent", a.getNom());
+        this.getServletContext().setAttribute( "prenomAgent", a.getPrenom());
         this.getServletContext().getRequestDispatcher( "/WEB-INF/header.jsp" )
                 .forward( request, response );
     }

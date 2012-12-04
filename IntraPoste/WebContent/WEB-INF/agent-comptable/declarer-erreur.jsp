@@ -1,34 +1,89 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<c:import url="/HeaderServlet" />
+</body>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<style>
+form label {
+	float: left;
+	width: 100px;
+	margin: 3px 0px 0px 0px;
+}
+</style>
 <title>Déclarer erreur</title>
 </head>
 <body>
-	<c:import url="/HeaderServlet" />
 	<fieldset>
 		<legend>Déclarer une erreur</legend>
 		<form method="post" action="#">
 
 			<label for="codeAgent">Code Agent :</label> <input type="text"
-				name="codeAgent" id="codeAgent" tabindex="10" /> <label
-				for="typeErreur">Type d'erreur :</label> <select name="typeErreur"
-				id="typeErreur" tabindex="30">
+				name="codeAgent" id="codeAgent" tabindex="10" /> <br> <br>
+			<label for="typeErreur">Type d'erreur :</label> <select
+				name="typeErreur" id="typeErreur" tabindex="30">
 				<c:forEach var="typeEnCours" items="${this.typesErreurs}">
 					<option value="${typeEnCours.codeTypeErreur}">${typeEnCours.nomTypeErreur}</option>
 				</c:forEach>
 			</select>
 
 			<%-- 			<span class="erreur">${this.erreurs['typeErreur'] }</span>  --%>
+			<br> <br> <label for="montant">Type d'erreur :</label> <input
+				type="text" name="montant" id="montant" tabindex="40" />
+				
+			<div class="erreur">
+				<c:if test="${not empty this.erreurs['codeAgent']}">
+					<div class="ui-widget">
+						<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+							<p>
+								<span class="ui-icon ui-icon-alert"
+									style="float: left; margin-right: .3em;"> </span>${this.erreurs['codeAgent']}
+							</p>
+						</div>
+					</div>
+				</c:if>
+				<c:if test="${not empty this.erreurs['typeErreur']}">
+					<div class="ui-widget">
+						<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+							<p>
+								<span class="ui-icon ui-icon-alert"
+									style="float: left; margin-right: .3em;"> </span>${this.erreurs['typeErreur']}
+							</p>
+						</div>
+					</div>
+				</c:if>
+				<c:if test="${not empty this.erreurs['montant']}">
+					<div class="ui-widget">
+						<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+							<p>
+								<span class="ui-icon ui-icon-alert"
+									style="float: left; margin-right: .3em;"> </span>${this.erreurs['montant']}
+							</p>
+						</div>
+					</div>
+				</c:if>
+				<c:if test="${not empty this.erreurs['bdd']}">
+					<div class="ui-widget">
+						<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+							<p>
+								<span class="ui-icon ui-icon-alert"
+									style="float: left; margin-right: .3em;"> </span>${this.erreurs['bdd']}
+							</p>
+						</div>
+					</div>
+				</c:if>
+				<c:if test="${not empty this.erreurs['droit']}">
+					<div class="ui-widget">
+						<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+							<p>
+								<span class="ui-icon ui-icon-alert"
+									style="float: left; margin-right: .3em;"> </span>${this.erreurs['droit']}
+							</p>
+						</div>
+					</div>
+				</c:if>
+			</div>
 
-			<label for="montant">Type d'erreur :</label> <input type="text"
-				name="montant" id="montant" tabindex="40" /> <input type="submit"
-				value="Declarer" />
+			<br> <br> <input type="submit" value="Declarer" />
 
 		</form>
-		<span class="erreur">${this.erreurs['droit'] }</span>
 	</fieldset>
 
 </body>

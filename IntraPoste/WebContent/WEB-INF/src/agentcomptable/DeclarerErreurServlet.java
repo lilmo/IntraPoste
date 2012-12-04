@@ -92,7 +92,7 @@ public class DeclarerErreurServlet extends HttpServlet {
                 rediriger = true;
         } catch ( SQLException e ) {
             e.printStackTrace();
-            form.setErreur( "", "La base de donnee a rencontre un probleme. Recherche abandonnee." );
+            form.setErreur( "bdd", "La base de donnee a rencontre un probleme. Recherche abandonnee." );
         } finally {
             if ( rediriger )
                 response.sendRedirect( "LoginServlet" );

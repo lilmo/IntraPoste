@@ -1,69 +1,71 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<c:import url="/HeaderServlet" />
+</body>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Liste des regularisations de l'erreur n°<c:out
 		value="${this.erreurCaisseId}" /></title>
 </head>
 <body>
-	<c:import url="/HeaderServlet" />
-	<h1>
-		Liste des regularisations de l'erreur n°
-		<c:out value="${this.erreurCaisseId}" />
-		<c:choose>
-			<c:when test="${codeStatusRegularisation == 1}">
-				<span>Partiellement régularisée</span>
-			</c:when>
-			<c:otherwise>
-				<span>Totalement régularisée</span>
-			</c:otherwise>
-		</c:choose>
-	</h1>
+	<fieldset>
+		<legend>
+			Liste des regularisations de l'erreur n°
+			<c:out value="${this.erreurCaisseId}" />
+			<c:choose>
+				<c:when test="${this.codeStatusRegularisation == 1}">
+					<span>- Partiellement régularisée</span>
+				</c:when>
+				<c:otherwise>
+					<span>- Totalement régularisée</span>
+				</c:otherwise>
+			</c:choose>
+		</legend>
 
+		<c:forEach var="erreurEnCours" items="${this.erreurs}">
+			<span class="erreur">${erreurEnCours}</span>
+		</c:forEach>
 
-	<c:forEach var="erreurEnCours" items="${this.erreurs}">
-		<span class="erreur">${erreurEnCours}</span>
-	</c:forEach>
-
-	<c:if test="${!empty this.regularisations}">
-		<table border="1">
-			<thead>
-				<tr>
-					<td>N° Agent Régularisateur</td>
-					<td>Date</td>
-					<td>Motif</td>
-					<td>Type Regularisation</td>
-					<td>Montant</td>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="regularisation" items="${this.regularisations}">
+		<c:if test="${!empty this.regularisations}">
+			<table id="myTable" class="tablesorter">
+				<thead>
 					<tr>
-						<td><c:out
-								value="${regularisation.agentRegularisateur.codeAgent}" /></td>
-						<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm"
-								value="${regularisation.timestamp}" /></td>
-						<td><c:out
-								value="${regularisation.motifRegularisation.nomMotifRegularisation}" /></td>
-						<td><c:out
-								value="${regularisation.typeRegularisation.nomTypeRegularisation}" /></td>
-						<td><c:out value="${regularisation.montantRegularisation}" /></td>
+						<th>N° Agent Régularisateur</th>
+						<th>Date</th>
+						<th>Motif</th>
+						<th>Type Regularisation</th>
+						<th>Montant</th>
 					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-	</c:if>
+				</thead>
+				<tbody>
+					<c:forEach var="regularisation" items="${this.regularisations}">
+						<tr>
+							<td><c:out
+									value="${regularisation.agentRegularisateur.codeAgent}" /></td>
+							<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm"
+									value="${regularisation.timestamp}" /></td>
+							<td><c:out
+									value="${regularisation.motifRegularisation.nomMotifRegularisation}" /></td>
+							<td><c:out
+									value="${regularisation.typeRegularisation.nomTypeRegularisation}" /></td>
+							<td><c:out value="${regularisation.montantRegularisation}" /></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</c:if>
 
-	<c:if
-		test="${this.codeStatusRegularisation == 1} && ${this.agent.typeAgent.codeTypeAgent} == 1">
-		<a
-			href="<c:url value="/RegulariserServlet"> 
+		<c:if
+			test="${this.codeStatusRegularisation == 1 && this.agent.typeAgent.codeTypeAgent == 1}">
+			<form method="get" action="RegulariserServlet">
+				<input type="hidden" name="erreurCaisseId" id="erreurCaisseId"
+					value="${this.erreurCaisseId}" /> <input type="submit"
+					value="Regulariser l'erreur">
+			</form>
+			<%-- <a
+				href="<c:url value="/RegulariserServlet"> 
 					<c:param name="erreurCaisseId" value="${this.erreurCaisseId}" />
 				</c:url>">
-			Regulariser l'erreur </a>
-	</c:if>
+				Regulariser l'erreur </a> --%>
+		</c:if>
+	</fieldset>
 
 </body>
 </html>

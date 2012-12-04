@@ -19,22 +19,22 @@ public class AgentDAO {
         // 2 agents dir, 1 agent comptable, 2 guichets
 
         // directrices Paris20
-        insert( "PAR201", 0, "MORGANE.LOPVET@LAPOSTE.FR", "LOPVET", "MORGANE", "toto" );
-        insert( "PAR201", 0, "AUDREY.GUYONNET@LAPOSTE.FR", "GUYONNET", "AUDREY", "toto" );
+        insert( "PAR201", 0, "MORGANE.LOPVET@YOPMAIL.FR", "LOPVET", "MORGANE", "toto" );
+        insert( "PAR201", 0, "AUDREY.GUYONNET@YOPMAIL.FR", "GUYONNET", "AUDREY", "toto" );
         // comptable paris20
-        insert( "PAR201", 1, "PICSOU.CANARD@LAPOSTE.FR", "CANARD", "PICSOU", "toto" );
+        insert( "PAR201", 1, "PICSOU.CANARD@YOPMAIL.FR", "CANARD", "PICSOU", "toto" );
         // guichetiers paris20
-        insert( "PAR201", 2, "JEANNE.TARTINE@LAPOSTE.FR", "TARTINE", "JEANNE", "toto" );
-        insert( "PAR201", 2, "GERMAIN.POULET@LAPOSTE.FR", "POULET", "GERMAIN", "toto" );
+        insert( "PAR201", 2, "JEANNE.TARTINE@YOPMAIL.FR", "TARTINE", "JEANNE", "toto" );
+        insert( "PAR201", 2, "GERMAIN.POULET@YOPMAIL.FR", "POULET", "GERMAIN", "toto" );
 
         // directrices Antony
-        insert( "ANT001", 2, "EMILIE.BONNIN@LAPOSTE.FR", "BONNIN", "EMILIE", "toto" );
-        insert( "ANT001", 0, "PRINCE.CHARMANT@LAPOSTE.FR", "CHARMANT", "PRINCE", "toto" );
+        insert( "ANT001", 2, "EMILIE.BONNIN@YOPMAIL.FR", "BONNIN", "EMILIE", "toto" );
+        insert( "ANT001", 0, "PRINCE.CHARMANT@YOPMAIL.FR", "CHARMANT", "PRINCE", "toto" );
         // comptable Antony
-        insert( "ANT001", 1, "PICSETTE.CANARDE@LAPOSTE.FR", "CANARDE", "PICSETTE", "toto" );
+        insert( "ANT001", 1, "PICSETTE.CANARDE@YOPMAIL.FR", "CANARDE", "PICSETTE", "toto" );
         // guichetiers Antony
-        insert( "ANT001", 2, "PAULETTE.LADOUILLE@LAPOSTE.FR", "LADOUILLE", "PAULETTE", "toto" );
-        insert( "ANT001", 2, "PIERRE.CHOCAPIC@LAPOSTE.FR", "CHOCAPIC", "PIERRE", "toto" );
+        insert( "ANT001", 2, "PAULETTE.LADOUILLE@YOPMAIL.FR", "LADOUILLE", "PAULETTE", "toto" );
+        insert( "ANT001", 2, "PIERRE.CHOCAPIC@YOPMAIL.FR", "CHOCAPIC", "PIERRE", "toto" );
 
     }
 
@@ -260,8 +260,8 @@ public class AgentDAO {
         Statement select = null;
         try {
             select = Connexion.getInstance().getConnection().createStatement();
-            String query = "SELECT * FROM AGENT WHERE CODE_AGENCE = '"
-                    + codeAgence + "'";
+            String query = "SELECT * FROM AGENT WHERE CODE_AGENCE LIKE '"
+                    + codeAgence.toUpperCase() + "'";
             ResultSet result = select.executeQuery( query );
 
             while ( result.next() ) {

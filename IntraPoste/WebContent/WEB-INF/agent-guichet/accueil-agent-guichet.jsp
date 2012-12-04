@@ -1,28 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<c:import url="/HeaderServlet" />
+</body>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Accueil Agent Guichet</title>
-<link rel="stylesheet"
-	href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
-<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
-<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="/resources/demos/style.css" />
-<script>
-	$(function() {
-		$("#dateDebut").datepicker({
-			dateFormat : "dd/mm/yy"
-		});
-		$("#dateFin").datepicker({
-			dateFormat : "dd/mm/yy"
-		});
-	});
-</script>
 </head>
 <body>
-	<c:import url="/HeaderServlet" />
 	<fieldset>
 		<legend>Rechercher une erreur</legend>
 		<form method="get" action="#">
@@ -56,14 +37,14 @@
 	</fieldset>
 
 	<c:if test="${!empty this.erreursCaisse }">
-		<table border="1">
+		<table id="myTable" class="tablesorter">
 			<thead>
 				<tr>
-					<td>N° Erreur</td>
-					<td>Type Erreur</td>
-					<td>Status Regularisation</td>
-					<td>Date</td>
-					<td>Montant</td>
+					<th>N° Erreur</th>
+					<th>Type Erreur</th>
+					<th>Status Regularisation</th>
+					<th>Date</th>
+					<th>Montant</th>
 				</tr>
 			</thead>
 			<tbody>
