@@ -16,7 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import metier.Agence;
-import metier.AgentSuperieur;
+import metier.Agent;
+import metier.AgentComptable;
 import metier.ErreurCaisse;
 import metier.StatusRegularisation;
 import metier.TypeErreur;
@@ -29,373 +30,367 @@ import bdd.TypeErreurDAO;
  * Servlet implementation class BilanServlet
  */
 public class BilanServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private static final int SUCCES = 0;
-	private static final int ECHEC = 1;
+    private static final long               serialVersionUID = 1L;
+    private static final int                SUCCES           = 0;
+    private static final int                ECHEC            = 1;
 
-	private ArrayList<ErreurCaisse> erreursCaisse;
-	private ArrayList<TypeErreur> typesErreurs;
-	private ArrayList<StatusRegularisation> statusRegularisation;
-	private float soldeAgence;
-	private RechercheForm recherche;
-	private Map<String, String> erreurs;
-	private Agence agenceAgent;
+    private ArrayList<ErreurCaisse>         erreursCaisse;
+    private ArrayList<TypeErreur>           typesErreurs;
+    private ArrayList<StatusRegularisation> statusRegularisation;
+    private float                           soldeAgence;
+    private RechercheForm                   recherche;
+    private Map<String, String>             erreurs;
+    private Agence                          agenceAgent;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public BilanServlet() {
-		super();
-		setErreursCaisse(null);
-		setTypesErreurs(null);
-		setStatusRegularisation(null);
+    private Date                            dateDebut;
+    private Date                            dateFin;
 
-		recherche = new RechercheForm();
-	}
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public BilanServlet() {
+        super();
+        setErreursCaisse( null );
+        setTypesErreurs( null );
+        setStatusRegularisation( null );
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		boolean redirect = false;
-		try {
-			AgentSuperieur agent = null;
-			if (Check.checkAgent(request)) {
-				agent = (AgentSuperieur) AgentDAO.selectByCode((String) request
-						.getSession().getAttribute("codeAgent"));
-				if (Check.checkTypeAgent("superieur", agent)) {
+        recherche = new RechercheForm();
+    }
 
-					agenceAgent = agent.getAgence();
-					recherche.recupererEtVerifierFormulaire(request);
-					if (recherche.getResultat() == SUCCES) {
-						if (recherche.getCheckDate().equals("journee"))
-							soldeAgence = agent.bilanJourneeErreursCaisse(
-									agent.getAgence().getCodeAgence(),
-									recherche.getDateJournee(),
-									recherche.getCodeTypeErreur(),
-									recherche.getCodeStatusRegularisation());
-						else if (recherche.getCheckDate().equals("periode"))
-							soldeAgence = agent.bilanErreursCaisse(agent.getAgence().getCodeAgence(), recherche
-									.getDatePeriode(), recherche
-									.getCodeTypeErreur(), recherche
-									.getCodeStatusRegularisation());
-					} else
-						soldeAgence = 0;
-					setTypesErreurs(TypeErreurDAO.selectAll());
-					setStatusRegularisation(StatusRegularisationDAO.selectAll());
-					this.getServletContext().setAttribute("this", this);
-				} else
-					recherche.setErreur("droit", "Accès refusé.");
-			} else
-				redirect = true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			recherche
-					.setErreur("",
-							"La base de donnees a rencontre un probleme. Recherche abandonnee.");
-		} finally {
-			if (redirect)
-				response.sendRedirect("LoginServlet");
-			else
-				this.getServletContext()
-						.getRequestDispatcher(
-								"/WEB-INF/agent-superieur/bilan.jsp")
-						.forward(request, response);
-		}
-	}
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+     *      response)
+     */
+    protected void doGet( HttpServletRequest request,
+            HttpServletResponse response ) throws ServletException, IOException {
+        boolean redirect = false;
+        try {
+            Agent agent = null;
+            if ( Check.checkAgent( request ) ) {
+                agent = AgentDAO.selectByCode( (String) request
+                        .getSession().getAttribute( "codeAgent" ) );
+                if ( Check.checkTypeAgent( "comptable", agent ) ) {
+                    AgentComptable agentComptable = (AgentComptable) agent;
+                    agenceAgent = agentComptable.getAgence();
+                    recherche.recupererEtVerifierFormulaire( request );
+                    if ( recherche.getResultat() == SUCCES ) {
+                        if ( recherche.getCheckDate().equals( "journee" ) )
+                            soldeAgence = agentComptable.bilanJourneeErreursCaisse(
+                                    agentComptable.getAgence().getCodeAgence(),
+                                    recherche.getDateJournee(),
+                                    recherche.getCodeTypeErreur(),
+                                    recherche.getCodeStatusRegularisation() );
+                        else if ( recherche.getCheckDate().equals( "periode" ) )
+                            soldeAgence = agentComptable.bilanErreursCaisse(
+                                    agentComptable.getAgence().getCodeAgence(), recherche
+                                            .getDatePeriode(), recherche
+                                            .getCodeTypeErreur(), recherche
+                                            .getCodeStatusRegularisation() );
+                    } else
+                        soldeAgence = 0;
+                    setTypesErreurs( TypeErreurDAO.selectAll() );
+                    setStatusRegularisation( StatusRegularisationDAO.selectAll() );
+                    this.getServletContext().setAttribute( "this", this );
+                } else
+                    recherche.setErreur( "droit", "Accès refusé." );
+            } else
+                redirect = true;
+        } catch ( SQLException e ) {
+            e.printStackTrace();
+            recherche
+                    .setErreur( "",
+                            "La base de donnees a rencontre un probleme. Recherche abandonnee." );
+        } catch ( Exception e1 ) {
+            e1.printStackTrace();
+        } finally {
+            if ( redirect )
+                response.sendRedirect( "LoginServlet" );
+            else
+                this.getServletContext()
+                        .getRequestDispatcher(
+                                "/WEB-INF/agent-superieur/bilan.jsp" )
+                        .forward( request, response );
+        }
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+     *      response)
+     */
+    protected void doPost( HttpServletRequest request,
+            HttpServletResponse response ) throws ServletException, IOException {
+        doGet( request, response );
+    }
 
-	public ArrayList<ErreurCaisse> getErreursCaisse() {
-		return erreursCaisse;
-	}
+    public ArrayList<ErreurCaisse> getErreursCaisse() {
+        return erreursCaisse;
+    }
 
-	public void setErreursCaisse(ArrayList<ErreurCaisse> erreurs) {
-		this.erreursCaisse = erreurs;
-	}
+    public void setErreursCaisse( ArrayList<ErreurCaisse> erreurs ) {
+        this.erreursCaisse = erreurs;
+    }
 
-	public ArrayList<StatusRegularisation> getStatusRegularisation() {
-		return statusRegularisation;
-	}
+    public ArrayList<StatusRegularisation> getStatusRegularisation() {
+        return statusRegularisation;
+    }
 
-	public float getSoldeAgence() {
-		return soldeAgence;
-	}
+    public float getSoldeAgence() {
+        return soldeAgence;
+    }
 
-	public Agence getAgenceAgent()
-	{
-		return agenceAgent;
-	}
-	
-	public void setAgenceAgent(Agence agence)
-	{
-		this.agenceAgent = agence;
-	}
-	
-	public void setSoldeAgence(float soldeAgence) {
-		this.soldeAgence = soldeAgence;
-	}
+    public Agence getAgenceAgent()
+    {
+        return agenceAgent;
+    }
 
-	public void setStatusRegularisation(
-			ArrayList<StatusRegularisation> statusRegularisation) {
-		this.statusRegularisation = statusRegularisation;
-	}
+    public void setAgenceAgent( Agence agence )
+    {
+        this.agenceAgent = agence;
+    }
 
-	public ArrayList<TypeErreur> getTypesErreurs() {
-		return typesErreurs;
-	}
+    public void setSoldeAgence( float soldeAgence ) {
+        this.soldeAgence = soldeAgence;
+    }
 
-	public void setTypesErreurs(ArrayList<TypeErreur> typesErreurs) {
-		this.typesErreurs = typesErreurs;
-	}
+    public void setStatusRegularisation(
+            ArrayList<StatusRegularisation> statusRegularisation ) {
+        this.statusRegularisation = statusRegularisation;
+    }
 
-	public RechercheForm getRecherche() {
-		return recherche;
-	}
+    public ArrayList<TypeErreur> getTypesErreurs() {
+        return typesErreurs;
+    }
 
-	public void setRecherche(RechercheForm recherche) {
-		this.recherche = recherche;
-	}
+    public void setTypesErreurs( ArrayList<TypeErreur> typesErreurs ) {
+        this.typesErreurs = typesErreurs;
+    }
 
-	public Map<String, String> getErreurs() {
-		return erreurs;
-	}
+    public RechercheForm getRecherche() {
+        return recherche;
+    }
 
-	public void setErreurs(Map<String, String> erreurs) {
-		this.erreurs = erreurs;
-	}
+    public void setRecherche( RechercheForm recherche ) {
+        this.recherche = recherche;
+    }
 
-	public class RechercheForm {
-		private static final String CHAMP_JOURNEE = "dateJournee";
-		private static final String CHAMP_PERIODE = "datePeriode";
-		private static final String CHAMP_CHECK_DATE = "checkDate";
-		private static final String CHAMP_TYPE_ERREUR = "typeErreur";
-		private static final String CHAMP_STATUS_REGULARISATION = "statusRegularisationRecherche";
+    public Map<String, String> getErreurs() {
+        return erreurs;
+    }
 
-		private Date dateJournee;
-		private Date datePeriode;
-		private Date dateDebut;
-		private Date dateFin;
-		private String checkDate;
-		private int codeStatusRegularisation;
-		private String codeTypeErreur;
-		private int resultat;
+    public void setErreurs( Map<String, String> erreurs ) {
+        this.erreurs = erreurs;
+    }
 
-		public RechercheForm recupererEtVerifierFormulaire(
-				HttpServletRequest request) {
+    public Date getDateFin() {
+        return dateFin;
+    }
 
-			erreurs = new HashMap<String, String>();
-			String checkDateString = getValeurChamp(request, CHAMP_CHECK_DATE);
-			String dateJourneeString = getValeurChamp(request, CHAMP_JOURNEE);
-			String datePeriodeString = getValeurChamp(request, CHAMP_PERIODE);
-			String codeStatusRegularisationString = getValeurChamp(request,
-					CHAMP_STATUS_REGULARISATION);
-			String codeTypeErreurString = getValeurChamp(request,
-					CHAMP_TYPE_ERREUR);
+    public void setDateFin( Date dateFin ) {
+        this.dateFin = dateFin;
+    }
 
-			try {
-				validationCheckDate(checkDateString);
-			} catch (Exception e) {
-				setErreur(CHAMP_CHECK_DATE, e.getMessage());
-				setCheckDate(null);
-			}
+    public Date getDateDebut() {
+        return dateDebut;
+    }
 
-			if (checkDateString.equals("journee"))
-			{
-				try {
-					setDateJournee(validationDate(dateJourneeString));
-				} catch (Exception e) {
-					setErreur(CHAMP_JOURNEE, e.getMessage());
-					setDateJournee(null);
-				}
-				if (getDateJournee() == null)
-					setErreur(CHAMP_JOURNEE, "Saisir une date valide");
-			}
+    public void setDateDebut( Date dateDebut ) {
+        this.dateDebut = dateDebut;
+    }
 
-			if (checkDateString.equals("periode"))
-			{
-				try {
-					setDatePeriode(validationDate(datePeriodeString));
-				} catch (Exception e) {
-					setErreur(CHAMP_PERIODE, e.getMessage());
-					setDatePeriode(null);
-				}
-				if (getDatePeriode() == null)
-					setErreur(CHAMP_PERIODE, "Saisir une date valide");
-			}
+    public class RechercheForm {
+        private static final String CHAMP_JOURNEE               = "dateJournee";
+        private static final String CHAMP_PERIODE               = "datePeriode";
+        private static final String CHAMP_CHECK_DATE            = "checkDate";
+        private static final String CHAMP_TYPE_ERREUR           = "typeErreur";
+        private static final String CHAMP_STATUS_REGULARISATION = "statusRegularisationRecherche";
 
-			
-			try {
-				validationCodeStatus(codeStatusRegularisationString);
-			} catch (Exception e) {
-				setErreur(CHAMP_STATUS_REGULARISATION, e.getMessage());
-				setCodeStatusRegularisation(-1);
-			}
+        private Date                dateJournee;
+        private Date                datePeriode;
+        private String              checkDate;
+        private int                 codeStatusRegularisation;
+        private String              codeTypeErreur;
+        private int                 resultat;
 
-			try {
-				validationTypeErreur(codeTypeErreurString);
-			} catch (Exception e) {
-				setErreur(CHAMP_TYPE_ERREUR, e.getMessage());
-				setCodeTypeErreur(null);
-			}
+        public RechercheForm recupererEtVerifierFormulaire(
+                HttpServletRequest request ) {
 
-			if (erreurs.isEmpty()) {
-				setResultat(SUCCES);
-			} else {
-				setResultat(ECHEC);
-			}
+            erreurs = new HashMap<String, String>();
+            String checkDateString = getValeurChamp( request, CHAMP_CHECK_DATE );
+            String dateJourneeString = getValeurChamp( request, CHAMP_JOURNEE );
+            String datePeriodeString = getValeurChamp( request, CHAMP_PERIODE );
+            String codeStatusRegularisationString = getValeurChamp( request,
+                    CHAMP_STATUS_REGULARISATION );
+            String codeTypeErreurString = getValeurChamp( request,
+                    CHAMP_TYPE_ERREUR );
 
-			return this;
-		}
+            try {
+                validationCheckDate( checkDateString );
+            } catch ( Exception e ) {
+                setErreur( CHAMP_CHECK_DATE, e.getMessage() );
+                setCheckDate( null );
+            }
 
-		private String getValeurChamp(HttpServletRequest request,
-				String nomChamp) {
-			String valeur = request.getParameter(nomChamp);
-			if (valeur == null || valeur.trim().length() == 0) {
-				return null;
-			} else {
-				return valeur.trim();
-			}
-		}
+            if ( checkDateString != null && checkDateString.equals( "journee" ) )
+                try {
+                    setDateJournee( validationDate( dateJourneeString ) );
+                } catch ( Exception e ) {
+                    setErreur( CHAMP_JOURNEE, "Saisir une date valide" );
+                    setDateJournee( null );
+                }
 
-		/* Validation des champs */
+            if ( checkDateString != null && checkDateString.equals( "periode" ) )
+                try {
+                    setDatePeriode( validationDate( datePeriodeString ) );
+                } catch ( Exception e ) {
+                    setErreur( CHAMP_PERIODE, "Saisir une date valide" );
+                    setDatePeriode( null );
+                }
 
-		private void validationTypeErreur(String codeTypeErreurString)
-				throws Exception {
-			if (codeTypeErreurString != null) {
-				if (codeTypeErreurString.equals("E")
-						|| codeTypeErreurString.equals("D"))
-					setCodeTypeErreur(codeTypeErreurString);
-				else
-					throw new Exception("Type d'erreur inconnu");
-			}
-		}
+            try {
+                validationCodeStatus( codeStatusRegularisationString );
+            } catch ( Exception e ) {
+                setErreur( CHAMP_STATUS_REGULARISATION, e.getMessage() );
+                setCodeStatusRegularisation( -1 );
+            }
 
-		private void validationCodeStatus(String codeStatusRegularisationString)
-				throws Exception {
-			if (codeStatusRegularisationString != null) {
-				try {
-					setCodeStatusRegularisation(Integer
-							.parseInt(codeStatusRegularisationString));
-				} catch (NumberFormatException e) {
-					e.printStackTrace();
-					throw new Exception("Status de regularisation inconnu");
-				}
-				if (codeStatusRegularisation < 0
-						|| codeStatusRegularisation > 2)
-					throw new Exception("Status de regularisation inconnu");
-			}
-			setCodeStatusRegularisation(-1);
-		}
+            try {
+                validationTypeErreur( codeTypeErreurString );
+            } catch ( Exception e ) {
+                setErreur( CHAMP_TYPE_ERREUR, e.getMessage() );
+                setCodeTypeErreur( null );
+            }
 
-		@SuppressWarnings("deprecation")
-		private void validationCheckDate(String checkDate) throws Exception {
-			if (checkDate != null) {
-				if (checkDate.equals("journee")) {
-					setDateDebut(dateJournee);
-					setDateFin(dateJournee);
-					setCheckDate(checkDate);
-				} else if (checkDate.equals("periode")) {
-					setDateDebut(new Date(Calendar.getInstance().get(
-							Calendar.YEAR) - 1900, 0, 1));
-					setDateFin(datePeriode);
-					setCheckDate(checkDate);
-				}
-			} else
-				throw new Exception("Période de recherche inconnue");
+            if ( erreurs.isEmpty() ) {
+                setResultat( SUCCES );
+            } else {
+                setResultat( ECHEC );
+            }
 
-		}
+            return this;
+        }
 
-		private Date validationDate(String dateString) throws Exception {
-			if (dateString != null)
-				try {
-					return new SimpleDateFormat("dd/MM/yyyy").parse(dateString);
-				} catch (ParseException e) {
-					e.printStackTrace();
-					throw new Exception("Merci de saisir une date valide.");
-				}
-			return null;
-		}
+        private String getValeurChamp( HttpServletRequest request,
+                String nomChamp ) {
+            String valeur = request.getParameter( nomChamp );
+            if ( valeur == null || valeur.trim().length() == 0 ) {
+                return null;
+            } else {
+                return valeur.trim();
+            }
+        }
 
-		/* Getters and Setters */
+        /* Validation des champs */
 
-		private void setErreur(String champ, String message) {
-			erreurs.put(champ, message);
-		}
+        private void validationTypeErreur( String codeTypeErreurString )
+                throws Exception {
+            if ( codeTypeErreurString != null ) {
+                if ( codeTypeErreurString.equals( "E" )
+                        || codeTypeErreurString.equals( "D" ) )
+                    setCodeTypeErreur( codeTypeErreurString );
+                else
+                    throw new Exception( "Type d'erreur inconnu" );
+            }
+        }
 
-		public Date getDateJournee() {
-			return dateJournee;
-		}
+        private void validationCodeStatus( String codeStatusRegularisationString )
+                throws Exception {
+            if ( codeStatusRegularisationString != null ) {
+                try {
+                    setCodeStatusRegularisation( Integer
+                            .parseInt( codeStatusRegularisationString ) );
+                } catch ( NumberFormatException e ) {
+                    e.printStackTrace();
+                    throw new Exception( "Status de regularisation inconnu" );
+                }
+                if ( codeStatusRegularisation < 0
+                        || codeStatusRegularisation > 2 )
+                    throw new Exception( "Status de regularisation inconnu" );
+            }
+            setCodeStatusRegularisation( -1 );
+        }
 
-		public void setDateJournee(Date dateJournee) {
-			this.dateJournee = dateJournee;
-		}
+        @SuppressWarnings( "deprecation" )
+        private void validationCheckDate( String checkDate ) throws Exception {
+            if ( checkDate != null ) {
+                if ( checkDate.equals( "journee" ) ) {
+                    setDateDebut( dateJournee );
+                    setDateFin( dateJournee );
+                    setCheckDate( checkDate );
+                } else if ( checkDate.equals( "periode" ) ) {
+                    setDateDebut( new Date( Calendar.getInstance().get(
+                            Calendar.YEAR ) - 1900, 0, 1 ) );
+                    setDateFin( datePeriode );
+                    setCheckDate( checkDate );
+                }
+            } else
+                throw new Exception( "Période de recherche inconnue" );
 
-		public Date getDateFin() {
-			return dateFin;
-		}
+        }
 
-		public void setDateFin(Date dateFin) {
-			this.dateFin = dateFin;
-		}
+        private Date validationDate( String dateString ) throws Exception {
+            if ( dateString != null )
+                try {
+                    return new SimpleDateFormat( "dd/MM/yyyy" ).parse( dateString );
+                } catch ( ParseException e ) {
+                    e.printStackTrace();
+                    throw new Exception( "Merci de saisir une date valide." );
+                }
+            return null;
+        }
 
-		public Date getDateDebut() {
-			return dateDebut;
-		}
+        /* Getters and Setters */
 
-		public void setDateDebut(Date dateDebut) {
-			this.dateDebut = dateDebut;
-		}
+        private void setErreur( String champ, String message ) {
+            erreurs.put( champ, message );
+        }
 
-		public Date getDatePeriode() {
-			return datePeriode;
-		}
+        public Date getDateJournee() {
+            return dateJournee;
+        }
 
-		public void setDatePeriode(Date datePeriode) {
-			this.datePeriode = datePeriode;
-		}
+        public void setDateJournee( Date dateJournee ) {
+            this.dateJournee = dateJournee;
+        }
 
+        public Date getDatePeriode() {
+            return datePeriode;
+        }
 
-		public String getCheckDate() {
-			return checkDate;
-		}
+        public void setDatePeriode( Date datePeriode ) {
+            this.datePeriode = datePeriode;
+        }
 
-		public void setCheckDate(String checkDate) {
-			this.checkDate = checkDate;
-		}
+        public String getCheckDate() {
+            return checkDate;
+        }
 
-		public int getCodeStatusRegularisation() {
-			return codeStatusRegularisation;
-		}
+        public void setCheckDate( String checkDate ) {
+            this.checkDate = checkDate;
+        }
 
-		public void setCodeStatusRegularisation(int codeStatusRegularisation) {
-			this.codeStatusRegularisation = codeStatusRegularisation;
-		}
+        public int getCodeStatusRegularisation() {
+            return codeStatusRegularisation;
+        }
 
-		public String getCodeTypeErreur() {
-			return codeTypeErreur;
-		}
+        public void setCodeStatusRegularisation( int codeStatusRegularisation ) {
+            this.codeStatusRegularisation = codeStatusRegularisation;
+        }
 
-		public void setCodeTypeErreur(String codeTypeErreur) {
-			this.codeTypeErreur = codeTypeErreur;
-		}
+        public String getCodeTypeErreur() {
+            return codeTypeErreur;
+        }
 
-		public int getResultat() {
-			return resultat;
-		}
+        public void setCodeTypeErreur( String codeTypeErreur ) {
+            this.codeTypeErreur = codeTypeErreur;
+        }
 
-		public void setResultat(int resultat) {
-			this.resultat = resultat;
-		}
-	}
+        public int getResultat() {
+            return resultat;
+        }
+
+        public void setResultat( int resultat ) {
+            this.resultat = resultat;
+        }
+    }
 
 }

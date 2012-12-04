@@ -1,15 +1,25 @@
 <c:import url="/HeaderServlet" />
 </body>
 <head>
+<style type="text/css">
+.gauche {
+	width: 46%;
+	float: left;
+}
+
+.droite {
+	width: 46%;
+	float: right;
+}
+</style>
 <title>Bilan</title>
 </head>
 <body>
-	<fieldset>
+	<fieldset class="gauche">
 		<legend>Voir le bilan de l'agence</legend>
 		<form method="get" action="#">
 
-			<input
-				type="radio" name="checkDate" value="journee" checked>Pour
+			<input type="radio" name="checkDate" value="journee" checked>Pour
 			la journée <input type="text" name="dateJournee" id="dateJournee"
 				tabindex="10" /> <span class="erreur">${this.erreurs['dateJournee']
 				}</span> <input type="radio" name="checkDate" value="periode">Pour
@@ -37,16 +47,15 @@
 				class="erreur">${this.erreurs['droit']}</span>
 		</form>
 	</fieldset>
-	<fieldset>
+	<fieldset class="droite">
 		<legend>Bilan</legend>
-		<c:if test="${this.recherche.dateDebut != null}">
+		<c:if test="${this.dateDebut != null}">
 			Bilan du
-			<fmt:formatDate pattern="dd/MM/yyyy"
-				value="${this.recherche.dateDebut}" />
+			<fmt:formatDate pattern="dd/MM/yyyy" value="${this.dateDebut}" />
 			au
-			<fmt:formatDate pattern="dd/MM/yyyy" value="${this.recherche.dateFin}" />
+			<fmt:formatDate pattern="dd/MM/yyyy" value="${this.dateFin}" />
 		</c:if>
-		Agence : ${this.agenceAgent.nomAgence} 
+		Agence : ${this.agenceAgent.nomAgence}<br>
 		<c:if test="${this.soldeAgence != null}">
 		Solde erreurs :
 		${this.soldeAgence}

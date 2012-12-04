@@ -43,7 +43,7 @@ label {
 <body>
 	<fieldset>
 		<legend>Identification</legend>
-		<form method="post" action="#">
+		<form method="post" action="LoginServlet">
 			<label for="Identifiant">Code agent :</label> <input type="text"
 				name="codeAgent" id="codeAgent" /> <br><br> <label for="motDePasse">Mot
 				de passe :</label> <input type="password" id="motDePasse" name="motDePasse"

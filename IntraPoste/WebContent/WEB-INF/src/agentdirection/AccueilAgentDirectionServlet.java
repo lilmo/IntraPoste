@@ -92,7 +92,7 @@ public class AccueilAgentDirectionServlet extends HttpServlet {
                 redirect = true;
         } catch ( SQLException e ) {
             e.printStackTrace();
-            recherche.setErreur( "", "La base de donnees a rencontre un probleme. Recherche abandonnee." );
+            recherche.setErreur( "bdd", "La base de donnees a rencontre un probleme. Recherche abandonnee." );
         } finally {
             if ( redirect )
                 response.sendRedirect( "LoginServlet" );
