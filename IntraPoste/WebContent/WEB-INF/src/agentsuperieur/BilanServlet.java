@@ -40,6 +40,8 @@ public class BilanServlet extends HttpServlet {
 	private RechercheForm recherche;
 	private Map<String, String> erreurs;
 	private Agence agenceAgent;
+	private Date dateDebut = new Date();
+	private Date dateFin = new Date();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -100,9 +102,7 @@ public class BilanServlet extends HttpServlet {
 				response.sendRedirect("LoginServlet");
 			else
 				this.getServletContext()
-						.getRequestDispatcher(
-								"/WEB-INF/agent-superieur/bilan.jsp")
-						.forward(request, response);
+						.getRequestDispatcher("/WEB-INF/agent-superieur/bilan.jsp").forward(request, response);
 		}
 	}
 
@@ -157,6 +157,23 @@ public class BilanServlet extends HttpServlet {
 	public void setTypesErreurs(ArrayList<TypeErreur> typesErreurs) {
 		this.typesErreurs = typesErreurs;
 	}
+	
+	public Date getDateFin() {
+		return dateFin;
+	}
+
+	public void setDateFin(Date dateFin) {
+		this.dateFin = dateFin;
+	}
+
+	public Date getDateDebut() {
+		return dateDebut;
+	}
+
+	public void setDateDebut(Date dateDebut) {
+		this.dateDebut = dateDebut;
+	}
+
 
 	public RechercheForm getRecherche() {
 		return recherche;
@@ -183,9 +200,7 @@ public class BilanServlet extends HttpServlet {
 
 		private Date dateJournee;
 		private Date datePeriode;
-		private Date dateDebut;
-		private Date dateFin;
-		private String checkDate;
+		private String checkDate = "journee";
 		private int codeStatusRegularisation;
 		private String codeTypeErreur;
 		private int resultat;
@@ -254,6 +269,7 @@ public class BilanServlet extends HttpServlet {
 				setResultat(ECHEC);
 			}
 
+			
 			return this;
 		}
 
@@ -340,21 +356,6 @@ public class BilanServlet extends HttpServlet {
 			this.dateJournee = dateJournee;
 		}
 
-		public Date getDateFin() {
-			return dateFin;
-		}
-
-		public void setDateFin(Date dateFin) {
-			this.dateFin = dateFin;
-		}
-
-		public Date getDateDebut() {
-			return dateDebut;
-		}
-
-		public void setDateDebut(Date dateDebut) {
-			this.dateDebut = dateDebut;
-		}
 
 		public Date getDatePeriode() {
 			return datePeriode;

@@ -27,8 +27,7 @@
 		<legend>Voir le bilan de l'agence</legend>
 		<form method="get" action="#">
 
-			<input
-				type="radio" name="checkDate" value="journee" checked>Pour
+			<input type="radio" name="checkDate" value="journee" checked>Pour
 			la journée <input type="text" name="dateJournee" id="dateJournee"
 				tabindex="10" /> <span class="erreur">${this.erreurs['dateJournee']
 				}</span> <input type="radio" name="checkDate" value="periode">Pour
@@ -58,14 +57,13 @@
 	</fieldset>
 	<fieldset>
 		<legend>Bilan</legend>
-		<c:if test="${this.recherche.dateDebut != null}">
-			Bilan du
+		Bilan du
 			<fmt:formatDate pattern="dd/MM/yyyy"
-				value="${this.recherche.dateDebut}" />
+				value="${this.dateDebut}" />
 			au
-			<fmt:formatDate pattern="dd/MM/yyyy" value="${this.recherche.dateFin}" />
-		</c:if>
-		Agence : ${this.agenceAgent.nomAgence} 
+			<fmt:formatDate pattern="dd/MM/yyyy"
+				value="${this.dateFin}" />
+		Agence : ${this.agenceAgent.nomAgence}
 		<c:if test="${this.soldeAgence != null}">
 		Solde erreurs :
 		${this.soldeAgence}
