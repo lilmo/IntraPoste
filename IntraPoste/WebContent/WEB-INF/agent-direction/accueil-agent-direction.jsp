@@ -30,10 +30,10 @@
 				</c:forEach>
 			</select> <span class="erreur">${this.erreurs['statusRegularisationRecherche']}</span>
 
-			<label for="agentId">N° Agent :</label> <input type="text"
-				name="agentId" id="agentId" tabindex="50" /> <span class="erreur">${this.erreurs['agentId']
-				}</span> <label for="agenceId">N° Agence :</label> <input type="text"
-				name="agenceId" id="agenceId" tabindex="60" /> <span class="erreur">${this.erreurs['agenceId']}</span>
+			<label for="agentID">N° Agent :</label> <input type="text"
+				name="agentID" id="agentID" tabindex="50" /> <span class="erreur">${this.erreurs['agentID']
+				}</span> <label for="agenceID">N° Agence :</label> <input type="text"
+				name="agenceID" id="agenceID" tabindex="60" /> <span class="erreur">${this.erreurs['agenceID']}</span>
 
 			<div class="erreur">
 				<c:if test="${not empty this.erreurs['dateDebut']}">
