@@ -44,9 +44,6 @@ public class BilanServlet extends HttpServlet {
 	private Date dateDebut = new Date();
 	private Date dateFin = new Date();
 
-    private Date                            dateDebut;
-    private Date                            dateFin;
-
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -198,22 +195,6 @@ public class BilanServlet extends HttpServlet {
 
     public void setErreurs( Map<String, String> erreurs ) {
         this.erreurs = erreurs;
-    }
-
-    public Date getDateFin() {
-        return dateFin;
-    }
-
-    public void setDateFin( Date dateFin ) {
-        this.dateFin = dateFin;
-    }
-
-    public Date getDateDebut() {
-        return dateDebut;
-    }
-
-    public void setDateDebut( Date dateDebut ) {
-        this.dateDebut = dateDebut;
     }
 
     public class RechercheForm {
