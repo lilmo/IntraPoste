@@ -41,11 +41,8 @@ public class BilanServlet extends HttpServlet {
     private RechercheForm                   recherche;
     private Map<String, String>             erreurs;
     private Agence                          agenceAgent;
-	private Date dateDebut = new Date();
-	private Date dateFin = new Date();
-
-    private Date                            dateDebut;
-    private Date                            dateFin;
+	private Date 							dateDebut = new Date();
+	private Date 							dateFin = new Date();
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -200,21 +197,6 @@ public class BilanServlet extends HttpServlet {
         this.erreurs = erreurs;
     }
 
-    public Date getDateFin() {
-        return dateFin;
-    }
-
-    public void setDateFin( Date dateFin ) {
-        this.dateFin = dateFin;
-    }
-
-    public Date getDateDebut() {
-        return dateDebut;
-    }
-
-    public void setDateDebut( Date dateDebut ) {
-        this.dateDebut = dateDebut;
-    }
 
     public class RechercheForm {
         private static final String CHAMP_JOURNEE               = "dateJournee";
@@ -355,6 +337,7 @@ public class BilanServlet extends HttpServlet {
                     e.printStackTrace();
                     throw new Exception( "Merci de saisir une date valide." );
                 }
+
             return null;
         }
 
