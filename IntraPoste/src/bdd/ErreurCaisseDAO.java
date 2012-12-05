@@ -61,14 +61,14 @@ public class ErreurCaisseDAO {
 		ArrayList<ErreurCaisse> results = new ArrayList<ErreurCaisse>();
 		try {
 			select = Connexion.getInstance().getConnection().createStatement();
-			String query = "SELECT * FROM ERREUR_CAISSE WHERE CODE_AGENCE = '"
+			String query = "SELECT * FROM ERREUR_CAISSE WHERE CODE_AGENCE LIKE '"
 					+ codeAgence.toUpperCase() + "' AND DATE_VACATION = to_date('"
 					+ new SimpleDateFormat("yyyy/MM/dd").format(dateVacation)
 					+ "', 'yyyy/mm/dd')";
 			if (codeTypeErreur != null
 					&& ((codeTypeErreur.equals("D")) || (codeTypeErreur
 							.equals("E"))))
-				query += "' AND CODE_TYPE_ERREUR = '" + codeTypeErreur + "'";
+				query += " AND CODE_TYPE_ERREUR LIKE '" + codeTypeErreur + "'";
 			if ((codeStatusRegularisation >= 0)
 					&& (codeStatusRegularisation <= 2))
 				query += " AND CODE_STATUT_REGULARISATION = '"
@@ -104,7 +104,7 @@ public class ErreurCaisseDAO {
 			select = Connexion.getInstance().getConnection().createStatement();
 			Date debut = new Date(
 					Calendar.getInstance().get(Calendar.YEAR) - 1900, 0, 1);
-			String query = "SELECT * FROM ERREUR_CAISSE WHERE CODE_AGENCE = '"
+			String query = "SELECT * FROM ERREUR_CAISSE WHERE CODE_AGENCE LIKE '"
 					+ codeAgence.toUpperCase()
 					+ "' AND DATE_VACATION BETWEEN to_date('"
 					+ new SimpleDateFormat("yyyy/MM/dd").format(debut)
@@ -114,7 +114,7 @@ public class ErreurCaisseDAO {
 			if (codeTypeErreur != null
 					&& ((codeTypeErreur.equals("D")) || (codeTypeErreur
 							.equals("E"))))
-				query += "' AND CODE_TYPE_ERREUR = '" + codeTypeErreur + "'";
+				query += " AND CODE_TYPE_ERREUR LIKE '" + codeTypeErreur + "'";
 			if ((codeStatusRegularisation >= 0)
 					&& (codeStatusRegularisation <= 2))
 				query += " AND CODE_STATUT_REGULARISATION = '"
@@ -275,7 +275,7 @@ public class ErreurCaisseDAO {
 			if (dateFin != null)
 				dateFin.setDate(dateFin.getDate() + 1);
 
-			String query = "SELECT * FROM ERREUR_CAISSE WHERE CODE_AGENCE = '"
+			String query = "SELECT * FROM ERREUR_CAISSE WHERE CODE_AGENCE LIKE '"
 					+ codeAgence.toUpperCase()
 					+ "' AND DATE_VACATION BETWEEN to_date('"
 					+ new SimpleDateFormat("yyyy/MM/dd").format(dateDebut)
@@ -283,7 +283,7 @@ public class ErreurCaisseDAO {
 					+ new SimpleDateFormat("yyyy/MM/dd").format(dateFin)
 					+ "', 'yyyy/mm/dd')";
 			if ((codeTypeErreur != null) && ((codeTypeErreur.equals("D")) || (codeTypeErreur.equals("E"))))
-				query += "' AND CODE_TYPE_ERREUR = '" + codeTypeErreur.toUpperCase() + "'";
+				query += "' AND CODE_TYPE_ERREUR LIKE '" + codeTypeErreur.toUpperCase() + "'";
 			if ((codeStatusRegularisation >= 0)
 					&& (codeStatusRegularisation <= 2))
 				query += " AND CODE_STATUT_REGULARISATION = '"

@@ -43,7 +43,7 @@ public class AgenceDAO {
 			Statement select = Connexion.getInstance().getConnection()
 					.createStatement();
 			ResultSet result = select
-					.executeQuery("SELECT CODE_AGENCE, NOM_AGENCE FROM AGENCE WHERE CODE_AGENCE = '"
+					.executeQuery("SELECT CODE_AGENCE, NOM_AGENCE FROM AGENCE WHERE CODE_AGENCE LIKE '"
 							+ codeAgence + "'");
 			if (result.next()) {
 				// System.out.println(result.getString("CODE_AGENCE"));
@@ -84,7 +84,7 @@ public class AgenceDAO {
 					.createStatement();
 			ResultSet result = select
 					.executeQuery("SELECT CODE_AGENCE FROM AGENCE WHERE EXISTS " +
-							"(SELECT * FROM AGENCE WHERE CODE_AGENCE = '" + codeAgence.toUpperCase() + "')");
+							"(SELECT * FROM AGENCE WHERE CODE_AGENCE LIKE '" + codeAgence.toUpperCase() + "')");
 			if (result.next()) {
 				// System.out.println(result.getString("CODE_AGENCE"));
 				return true;
@@ -122,7 +122,7 @@ public class AgenceDAO {
 				Statement insert = Connexion.getInstance().getConnection()
 						.createStatement();
 				insert.executeQuery("UPDATE AGENCE SET NOM_AGENCE = '"
-						+ nomAgence.toUpperCase() + "' WHERE CODE_AGENCE = '" + codeAgence.toUpperCase()
+						+ nomAgence.toUpperCase() + "' WHERE CODE_AGENCE LIKE '" + codeAgence.toUpperCase()
 						+ "'");
 				return true;
 			}

@@ -37,7 +37,7 @@ public class TypeErreurDAO {
 		try {
 			Statement select = Connexion.getInstance().getConnection().createStatement();
 			ResultSet result = select
-					.executeQuery("SELECT CODE_TYPE_ERREUR, NOM_TYPE_ERREUR FROM TYPE_ERREUR WHERE CODE_TYPE_ERREUR = '"
+					.executeQuery("SELECT CODE_TYPE_ERREUR, NOM_TYPE_ERREUR FROM TYPE_ERREUR WHERE CODE_TYPE_ERREUR LIKE '"
 							+ codeTypeErreur + "'");
 			if (result.next())
 				return (new TypeErreur(result.getString("CODE_TYPE_ERREUR"),
@@ -76,7 +76,7 @@ public class TypeErreurDAO {
 						.createStatement();
 				insert.executeQuery("UPDATE TYPE_ERREUR SET NOM_TYPE_ERREUR = '"
 						+ nomTypeErreur.toUpperCase()
-						+ "' WHERE CODE_TYPE_ERREUR = "
+						+ "' WHERE CODE_TYPE_ERREUR LIKE "
 						+ codeTypeErreur);
 				return true;
 			}

@@ -9,31 +9,26 @@
 		<form method="get" action="#">
 
 			<label for="dateDebut">Date de début :</label> <input type="text"
-				name="dateDebut" id="dateDebut" tabindex="10" /> <span
-				class="erreur">${this.erreurs['dateDebut'] }</span> <label
+				name="dateDebut" id="dateDebut" tabindex="10" /> <label
 				for="dateFin">Date de fin :</label> <input type="text"
-				name="dateFin" id="dateFin" tabindex="20" /> <span class="erreur">${this.erreurs['dateFin']}</span>
-
-			<label for="typeErreur">Type d'erreur :</label> <select
-				name="typeErreur" id="typeErreur" tabindex="30">
+				name="dateFin" id="dateFin" tabindex="20" /> <label
+				for="typeErreur">Type d'erreur :</label> <select name="typeErreur"
+				id="typeErreur" tabindex="30">
 				<option value=""></option>
 				<c:forEach var="typeEnCours" items="${this.typesErreurs}">
 					<option value="${typeEnCours.codeTypeErreur}">${typeEnCours.nomTypeErreur}</option>
 				</c:forEach>
-			</select> <span class="erreur">${this.erreurs['typeErreur'] }</span> <label
-				for="statusRegularisationRecherche">Statut :</label> <select
+			</select> <label for="statusRegularisationRecherche">Statut :</label> <select
 				name="statusRegularisationRecherche"
 				id="statusRegularisationRecherche" tabindex="40">
 				<option value=""></option>
 				<c:forEach var="statusEnCours" items="${this.statusRegularisation}">
 					<option value="${statusEnCours.codeStatusRegularisation}">${statusEnCours.nomStatusRegularisation}</option>
 				</c:forEach>
-			</select> <span class="erreur">${this.erreurs['statusRegularisationRecherche']}</span>
-
-			<label for="agentID">N° Agent :</label> <input type="text"
-				name="agentID" id="agentID" tabindex="50" /> <span class="erreur">${this.erreurs['agentID']
-				}</span> <label for="agenceID">N° Agence :</label> <input type="text"
-				name="agenceID" id="agenceID" tabindex="60" /> <span class="erreur">${this.erreurs['agenceID']}</span>
+			</select> <br> <label for="agentID">N° Agent :</label> <input type="text"
+				name="agentID" id="agentID" tabindex="50" /><label for="agenceID">N°
+				Agence :</label> <input type="text" name="agenceID" id="agenceID"
+				tabindex="60" />
 
 			<div class="erreur">
 				<c:if test="${not empty this.erreurs['dateDebut']}">
@@ -136,15 +131,13 @@
 				</c:if>
 			</div>
 
-			<input type="submit" value="Rechercher" /> <span class="erreur">${this.erreurs['noResult']
-				}</span> <span class="erreur">${this.erreurs['bdd'] }</span> <a
+			<input type="submit" value="Rechercher" /> <a
 				href="<c:url	value="AccueilAgentDirectionServlet">
 								<c:param name="reset" value="true" />
 							</c:url>">
 				Réinitialiser </a>
 
 		</form>
-		<span class="erreur">${this.erreurs['droit'] }</span>
 	</fieldset>
 
 	<c:if test="${!empty this.erreursCaisse }">

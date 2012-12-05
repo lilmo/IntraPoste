@@ -42,8 +42,9 @@ public class BilanDirectionServlet extends HttpServlet {
     private RechercheForm                   recherche;
     private Map<String, String>             erreurs;
 
-    private Date                            dateDebut;
-    private Date                            dateFin;
+    private Agence                          agenceAgent;
+    private Date                            dateDebut        = new Date();
+    private Date                            dateFin          = new Date();
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -73,22 +74,33 @@ public class BilanDirectionServlet extends HttpServlet {
                         .getSession().getAttribute( "codeAgent" ) );
                 if ( ( !Check.checkTypeAgent( "comptable", agent ) ) && ( Check.checkTypeAgent( "superieur", agent ) ) ) {
                     AgentSuperieur agentSuperieur = (AgentSuperieur) agent;
+                    agenceAgent = agentSuperieur.getAgence();
                     recherche.recupererEtVerifierFormulaire( request );
                     if ( recherche.getResultat() == SUCCES ) {
-                        if ( recherche.getCheckDate().equals( "journee" ) )
+                        if ( recherche.getCheckDate() != null )
+                        {
+                            if ( recherche.getCheckDate().equals( "journee" ) )
+                                soldeAgence = agentSuperieur.bilanJourneeErreursCaisse(
+                                        recherche.getAgence().getCodeAgence(),
+                                        recherche.getDateJournee(),
+                                        recherche.getCodeTypeErreur(),
+                                        recherche.getCodeStatusRegularisation() );
+
+                            else if ( recherche.getCheckDate().equals( "periode" ) )
+                                soldeAgence = agentSuperieur.bilanErreursCaisse( recherche
+                                        .getAgence().getCodeAgence(), recherche
+                                        .getDatePeriode(), recherche
+                                        .getCodeTypeErreur(), recherche
+                                        .getCodeStatusRegularisation() );
+                            setAgenceAgent( recherche.getAgence() );
+                        }
+                        else
+                        {
                             soldeAgence = agentSuperieur.bilanJourneeErreursCaisse(
-                                    recherche.getAgence().getCodeAgence(),
-                                    recherche.getDateJournee(),
-                                    recherche.getCodeTypeErreur(),
-                                    recherche.getCodeStatusRegularisation() );
-                        else if ( recherche.getCheckDate().equals( "periode" ) )
-                            soldeAgence = agentSuperieur.bilanErreursCaisse( recherche
-                                    .getAgence().getCodeAgence(), recherche
-                                    .getDatePeriode(), recherche
-                                    .getCodeTypeErreur(), recherche
-                                    .getCodeStatusRegularisation() );
+                                    agentSuperieur.getAgence().getCodeAgence(), new Date(), null, -1 );
+                        }
                     } else
-                        soldeAgence = 0;
+                        soldeAgence = -8280;
                     setTypesErreurs( TypeErreurDAO.selectAll() );
                     setStatusRegularisation( StatusRegularisationDAO.selectAll() );
                     this.getServletContext().setAttribute( "this", this );
@@ -101,6 +113,8 @@ public class BilanDirectionServlet extends HttpServlet {
             recherche
                     .setErreur( "bdd",
                             "La base de donnees a rencontre un probleme. Recherche abandonnee." );
+        } catch ( Exception e1 ) {
+            e1.printStackTrace();
         } finally {
             if ( redirect )
                 response.sendRedirect( "LoginServlet" );
@@ -135,6 +149,16 @@ public class BilanDirectionServlet extends HttpServlet {
 
     public float getSoldeAgence() {
         return soldeAgence;
+    }
+
+    public Agence getAgenceAgent()
+    {
+        return agenceAgent;
+    }
+
+    public void setAgenceAgent( Agence agence )
+    {
+        this.agenceAgent = agence;
     }
 
     public void setSoldeAgence( float soldeAgence ) {
@@ -202,9 +226,11 @@ public class BilanDirectionServlet extends HttpServlet {
         private Agence              agence;
         private int                 resultat;
 
-        @SuppressWarnings("deprecation")
-		public RechercheForm recupererEtVerifierFormulaire(
+        @SuppressWarnings( "deprecation" )
+        public RechercheForm recupererEtVerifierFormulaire(
                 HttpServletRequest request ) {
+
+            erreurs = new HashMap<String, String>();
 
             String dateJourneeString = getValeurChamp( request, CHAMP_JOURNEE );
             String datePeriodeString = getValeurChamp( request, CHAMP_PERIODE );
@@ -215,56 +241,73 @@ public class BilanDirectionServlet extends HttpServlet {
                     CHAMP_TYPE_ERREUR );
             String codeAgence = getValeurChamp( request, CHAMP_CODE_AGENCE );
 
-            if ( checkDateString != null)
+            if ( checkDateString != null )
             {
-            	if (checkDateString.equals( "journee" ) )
-            	{
-            		try {
-            			setDateJournee( validationDate( dateJourneeString ) );
-            			setDateDebut( dateJournee );
-                        setDateFin( dateJournee );
-                        setCheckDate( checkDateString );
-            		} catch ( Exception e ) {
-            			setErreur( CHAMP_JOURNEE, "Saisir une date valide" );
-            			setDateJournee( null );
-            		}
-            	}
-            	else if (checkDateString.equals( "periode" ) )
-            	{
-            		try {
-            			setDatePeriode( validationDate( datePeriodeString ) );
-            			setDateDebut( new Date( Calendar.getInstance().get(
-                                Calendar.YEAR ) - 1900, 0, 1 ) );
-                        setDateFin( datePeriode );
-                        setCheckDate( checkDateString );
-            		} catch ( Exception e ) {
-            			setErreur( CHAMP_PERIODE, "Saisir une date valide" );
-            			setDatePeriode( null );
-            		}
-            	}
-            } else
-            {
-            	setErreur(CHAMP_CHECK_DATE, "Sélection invalide");
+                if ( checkDateString.equals( "journee" ) )
+                {
+                    try {
+                        if ( validationDate( dateJourneeString ) != null ) {
+                            setDateJournee( validationDate( dateJourneeString ) );
+                            setDateDebut( dateJournee );
+                            setDateFin( dateJournee );
+                        }
+                        else
+                        {
+                            dateJournee = new Date();
+                            setCheckDate( checkDateString );
+                        }
+                    } catch ( Exception e ) {
+                        setErreur( CHAMP_JOURNEE, "Saisir une date valide" );
+                        setDateJournee( new Date() );
+                    }
+                }
+                else if ( checkDateString.equals( "periode" ) )
+                {
+                    try {
+                        if ( validationDate( datePeriodeString ) != null ) {
+                            setDatePeriode( validationDate( datePeriodeString ) );
+                            setDateDebut( new Date( Calendar.getInstance().get(
+                                    Calendar.YEAR ) - 1900, 0, 1 ) );
+                            setDateFin( datePeriode );
+                        }
+                        else
+                            setDatePeriode( new Date() );
+                    } catch ( Exception e ) {
+                        setErreur( CHAMP_PERIODE, "Saisir une date valide" );
+                        setDatePeriode( null );
+                    }
+                    setCheckDate( checkDateString );
+                    setDateDebut( new Date(
+                            Calendar.getInstance().get( Calendar.YEAR ) - 1900, 0, 1 ) );
+                }
+                else
+                    setErreur( CHAMP_CHECK_DATE, "Sélection invalide" );
             }
 
-
             try {
-                validationCodeStatus( codeStatusRegularisationString );
+                if ( codeStatusRegularisationString != null )
+                    validationCodeStatus( codeStatusRegularisationString );
+                else
+                    setCodeStatusRegularisation( -1 );
             } catch ( Exception e ) {
                 setErreur( CHAMP_STATUS_REGULARISATION, e.getMessage() );
                 setCodeStatusRegularisation( -1 );
             }
 
             try {
-                validationTypeErreur( codeTypeErreurString );
+                if ( codeTypeErreurString != null )
+                    validationTypeErreur( codeTypeErreurString );
             } catch ( Exception e ) {
                 setErreur( CHAMP_TYPE_ERREUR, e.getMessage() );
                 setCodeTypeErreur( null );
             }
 
             try {
-                validationCodeAgence( codeAgence );
-                setAgence( AgenceDAO.selectByCode( codeAgence ) );
+                if ( codeAgence != null )
+                {
+                    validationCodeAgence( codeAgence );
+                    setAgence( AgenceDAO.selectByCode( codeAgence ) );
+                }
             } catch ( Exception e ) {
                 setErreur( CHAMP_CODE_AGENCE, e.getMessage() );
                 setAgence( null );
@@ -316,27 +359,10 @@ public class BilanDirectionServlet extends HttpServlet {
                         || codeStatusRegularisation > 2 )
                     throw new Exception( "Status de regularisation inconnu" );
             }
-            setCodeStatusRegularisation( -1 );
+            else
+                setCodeStatusRegularisation( -1 );
         }
 
-/*        @SuppressWarnings( "deprecation" )
-        private void validationCheckDate( String checkDate ) throws Exception {
-            if ( checkDate != null ) {
-                if ( checkDate.equals( "journee" ) ) {
-                    setDateDebut( dateJournee );
-                    setDateFin( dateJournee );
-                    setCheckDate( checkDate );
-                } else if ( checkDate.equals( "periode" ) ) {
-                    setDateDebut( new Date( Calendar.getInstance().get(
-                            Calendar.YEAR ) - 1900, 0, 1 ) );
-                    setDateFin( datePeriode );
-                    setCheckDate( checkDate );
-                }
-            } else
-                throw new Exception( "Période de recherche inconnue" );
-
-        }
-*/
         private void validationCodeAgence( String codeAgence ) throws Exception {
             if ( codeAgence != null ) {
                 boolean agenceExists;
