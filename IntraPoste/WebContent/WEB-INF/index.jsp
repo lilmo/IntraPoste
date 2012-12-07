@@ -45,14 +45,20 @@ label {
 		<legend>Identification</legend>
 		<form method="post" action="LoginServlet">
 			<label for="Identifiant">Code agent :</label> <input type="text"
-				name="codeAgent" id="codeAgent" /> <br><br> <label for="motDePasse">Mot
-				de passe :</label> <input type="password" id="motDePasse" name="motDePasse"
-				size="32" maxlength="32" />
+				name="codeAgent" id="codeAgent" /> <br>
+			<br> <label for="motDePasse">Mot de passe :</label> <input
+				type="password" id="motDePasse" name="motDePasse" size="32"
+				maxlength="32" />
 			<c:out value="${this.erreur }" />
-			<br><br>
-			<input type="submit" value="Connexion" />
+			<br>
+			<br> <input type="submit" value="Connexion" />
 		</form>
 	</fieldset>
+
+	<a
+		href="<c:url	value="LoginServlet">
+<c:param name="init" value="init" /></c:url>">
+		Initialiser la base </a>
 
 </body>
 </html>

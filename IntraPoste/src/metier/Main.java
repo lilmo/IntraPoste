@@ -20,6 +20,12 @@ public class Main {
 		System.out.println("Done !");
 	}
 	
+	public static void initFromServlet() throws SQLException, InterruptedException
+	{
+	    emptyBase();
+        initialiserBase();
+	}
+	
 	private static void initialiserBase() throws SQLException, InterruptedException
 	{
 		MotifRegularisationDAO.init();

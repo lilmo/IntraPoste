@@ -90,7 +90,7 @@ form input {
 	<a
 		href="
 	<c:if test="${ typeAgent == 0 }">
-		<c:url value="#"/>
+		<c:url value="AccueilAgentDirectionServlet"/>
 	</c:if>
 	<c:if test="${ typeAgent == 1 }">
 		<c:url value="AccueilAgentComptableServlet"/>

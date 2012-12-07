@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import metier.Agent;
+import metier.Main;
 import tools.MD5;
 import bdd.AgentDAO;
 
@@ -35,6 +37,15 @@ public class LoginServlet extends HttpServlet {
      */
     protected void doGet( HttpServletRequest request,
             HttpServletResponse response ) throws ServletException, IOException {
+        if ( request.getParameter( "init" ) != null )
+        {
+            try {
+                Main.initFromServlet();
+            } catch ( SQLException | InterruptedException e ) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
         this.getServletContext().setAttribute( "this", this );
         this.getServletContext().getRequestDispatcher( "/WEB-INF/index.jsp" )
                 .forward( request, response );
@@ -66,7 +77,7 @@ public class LoginServlet extends HttpServlet {
                 pageRetour = "AccueilAgentGuichetServlet";
                 break;
             default:
-                
+
                 break;
             }
 
