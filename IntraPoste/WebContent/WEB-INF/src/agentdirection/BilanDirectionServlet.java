@@ -252,14 +252,12 @@ public class BilanDirectionServlet extends HttpServlet {
                             setDateFin( dateJournee );
                         }
                         else
-                        {
                             dateJournee = new Date();
-                            setCheckDate( checkDateString );
-                        }
                     } catch ( Exception e ) {
                         setErreur( CHAMP_JOURNEE, "Saisir une date valide" );
                         setDateJournee( new Date() );
                     }
+                    setCheckDate( checkDateString );
                 }
                 else if ( checkDateString.equals( "periode" ) )
                 {

@@ -25,7 +25,7 @@ form label {
 			</select>
 
 			<%-- 			<span class="erreur">${this.erreurs['typeErreur'] }</span>  --%>
-			<br> <br> <label for="montant">Type d'erreur :</label> <input
+			<br> <br> <label for="montant">Montant :</label> <input
 				type="text" name="montant" id="montant" tabindex="40" />
 				
 			<div class="erreur">

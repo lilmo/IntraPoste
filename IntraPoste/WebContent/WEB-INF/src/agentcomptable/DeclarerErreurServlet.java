@@ -33,6 +33,8 @@ public class DeclarerErreurServlet extends HttpServlet {
 
     private Formulaire             form             = null;
 
+    Agent                          agent            = null;
+
     public DeclarerErreurServlet() {
         super();
         form = new Formulaire();
@@ -67,8 +69,7 @@ public class DeclarerErreurServlet extends HttpServlet {
         boolean rediriger = false;
         boolean actualiser = false;
         try {
-
-            Agent agent = null;
+            agent = null;
             if ( Check.checkAgent( request ) )
             {
                 agent = AgentDAO.selectByCode( (String) request.getSession()
@@ -87,8 +88,8 @@ public class DeclarerErreurServlet extends HttpServlet {
                     }
                     else
                     {
-                    	// réaffiche la page si erreur
-                    	actualiser = true;
+                        // réaffiche la page si erreur
+                        actualiser = true;
                     }
                 }
                 else
@@ -100,12 +101,12 @@ public class DeclarerErreurServlet extends HttpServlet {
             e.printStackTrace();
             form.setErreur( "bdd", "La base de donnee a rencontre un probleme. Recherche abandonnee." );
         } finally {
-        	if ( actualiser )
-        		this.getServletContext()
-                .getRequestDispatcher(
-                        "/WEB-INF/agent-comptable/declarer-erreur.jsp" )
-                .forward( request, response );
-        	else if ( rediriger )
+            if ( actualiser )
+                this.getServletContext()
+                        .getRequestDispatcher(
+                                "/WEB-INF/agent-comptable/declarer-erreur.jsp" )
+                        .forward( request, response );
+            else if ( rediriger )
                 response.sendRedirect( "LoginServlet" );
             else
                 response.sendRedirect( "AccueilAgentComptableServlet" );
@@ -149,7 +150,7 @@ public class DeclarerErreurServlet extends HttpServlet {
             String codeTypeErreurString = getValeurChamp( request, CHAMP_TYPE_ERREUR );
 
             try {
-                validationCodeAgent( codeAgentString, request );
+                validationCodeAgent( codeAgentString );
             } catch ( Exception e ) {
                 setErreur( CHAMP_CODE_AGENT, e.getMessage() );
                 setCodeAgent( null );
@@ -189,18 +190,16 @@ public class DeclarerErreurServlet extends HttpServlet {
 
         /* Validation des champs */
 
-        private void validationCodeAgent( String codeAgentString, HttpServletRequest request ) throws Exception {
+        private void validationCodeAgent( String codeAgentString ) throws Exception {
             if ( codeAgentString != null )
             {
-                if (AgentDAO.selectByCode( codeAgentString ) != null)
+                if ( AgentDAO.selectByCode( codeAgentString ) != null )
                 {
-                	if (AgentDAO.selectByCode( codeAgentString ).getAgence().getCodeAgence() == 
-                	AgentDAO.selectByCode( (String) request.getSession().getAttribute( "codeAgent" )).getAgence().getCodeAgence())
-                	{
-                		setCodeAgent( codeAgentString );
-                	}
-                	else
-                		throw new Exception( "Agent inconnu" );
+                    if ( AgentDAO.selectByCode( codeAgentString ).getAgence().getCodeAgence()
+                            .equalsIgnoreCase( agent.getAgence().getCodeAgence() ) )
+                        setCodeAgent( codeAgentString );
+                    else
+                        throw new Exception( "Agent inconnu" );
                 }
                 else
                     throw new Exception( "Agent inconnu" );
@@ -229,7 +228,7 @@ public class DeclarerErreurServlet extends HttpServlet {
                 }
             }
             else
-            	setErreur(CHAMP_MONTANT, "Saisir le montant de l'erreur");
+                setErreur( CHAMP_MONTANT, "Saisir le montant de l'erreur" );
         }
 
         /* Getters and Setters */

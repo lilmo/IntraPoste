@@ -2,6 +2,20 @@
 </body>
 <head>
 <title>Bilan</title>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#datePeriode").prop('disabled', true);
+	});
+	function change() {
+		if ($("input[type='radio']:checked").attr('id') == "radiojournee") {
+			$("#datePeriode").prop('disabled', true);
+			$("#dateJournee").prop('disabled', false);
+		} else {
+			$("#datePeriode").prop('disabled', false);
+			$("#dateJournee").prop('disabled', true);
+		}
+	};
+</script>
 </head>
 <body>
 	<fieldset>
@@ -10,13 +24,14 @@
 
 			<label for="codeAgence">N° Agence :</label> <input type="text"
 				name="codeAgence" id="codeAgence" tabindex="60" /> <input
-				type="radio" name="checkDate" value="journee" checked> Pour
-			la journée <input type="text" name="dateJournee" id="dateJournee"
-				tabindex="10" /> <input type="radio" name="checkDate"
-				value="periode"> Pour la période jusqu'au <input type="text"
-				name="datePeriode" id="datePeriode" tabindex="20" /> <br> <br>
-			<label for="typeErreur">Type d'erreur :</label> <select
-				name="typeErreur" id="typeErreur" tabindex="30">
+				type="radio" name="checkDate" value="journee" id="radiojournee"
+				checked onClick="change()"> Pour la journée <input
+				type="text" name="dateJournee" id="dateJournee" tabindex="10" /> <input
+				type="radio" name="checkDate" value="periode" onClick="change()">
+			Pour la période jusqu'au <input type="text" name="datePeriode"
+				id="datePeriode" tabindex="20" /> <br> <br> <label
+				for="typeErreur">Type d'erreur :</label> <select name="typeErreur"
+				id="typeErreur" tabindex="30">
 				<option value=""></option>
 				<c:forEach var="typeEnCours" items="${this.typesErreurs}">
 					<option value="${typeEnCours.codeTypeErreur}">${typeEnCours.nomTypeErreur}</option>
